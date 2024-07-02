@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+</head>
+
+<body class="bg-gray-100 p-6">
+    <div class="grid w-full place-items-start overflow-x-scroll rounded-lg lg:overflow-visible mb-10">
+        <div class="flex divide-x divide-gray-800">
+            <button @click="changeContent('employees')"
+                class="align-middle select-none font-sans font-bold text-center uppercase transition-all text-xs py-3 px-6 bg-gray-100 text-black shadow-md hover:bg-blue-700 hover:text-white focus:bg-blue-700 focus:text-white focus:outline-none rounded-l-lg"
+                :class="{ 'bg-blue-700 text-white': currentContent === 'employees' }"
+                type="button">
+                <i class="fas fa-users mr-2"></i> Employees
+            </button>
+            <button @click="changeContent('department')"
+                class="align-middle select-none font-sans font-bold text-center uppercase transition-all text-xs py-3 px-6 bg-gray-100 text-black shadow-md hover:bg-blue-700 hover:text-white focus:bg-blue-700 focus:text-white focus:outline-none"
+                :class="{ 'bg-blue-700 text-white': currentContent === 'department' }"
+                type="button">
+                <i class="fas fa-building mr-2"></i> Departments
+            </button>
+            <button @click="changeContent('attendance')"
+                class="align-middle select-none font-sans font-bold text-center uppercase transition-all text-xs py-3 px-6 bg-gray-100 text-black shadow-md hover:bg-blue-700 hover:text-white focus:bg-blue-700 focus:text-white focus:outline-none"
+                :class="{ 'bg-blue-700 text-white': currentContent === 'attendance' }"
+                type="button">
+                <i class="fas fa-calendar-check mr-2"></i> Attendance
+            </button>
+            <button @click="changeContent('leave')"
+                class="align-middle select-none font-sans font-bold text-center uppercase transition-all text-xs py-3 px-6 bg-gray-100 text-black shadow-md hover:bg-blue-700 hover:text-white focus:bg-blue-700 focus:text-white focus:outline-none"
+                :class="{ 'bg-blue-700 text-white': currentContent === 'leave' }"
+                type="button">
+                <i class="fas fa-plane-departure mr-2"></i> Leave Management
+            </button>
+            <button @click="changeContent('salary')"
+                class="align-middle select-none font-sans font-bold text-center uppercase transition-all text-xs py-3 px-6 bg-gray-100 text-black shadow-md hover:bg-blue-700 hover:text-white focus:bg-blue-700 focus:text-white focus:outline-none"
+                :class="{ 'bg-blue-700 text-white': currentContent === 'salary' }"
+                type="button">
+                <i class="fas fa-dollar-sign mr-2"></i> Salary Payments
+            </button>
+            <button @click="changeContent('holidays')"
+                class="align-middle select-none font-sans font-bold text-center uppercase transition-all text-xs py-3 px-6 bg-gray-100 text-black shadow-md hover:bg-blue-700 hover:text-white focus:bg-blue-700 focus:text-white focus:outline-none"
+                :class="{ 'bg-blue-700 text-white': currentContent === 'holidays' }"
+                type="button">
+                <i class="fas fa-umbrella-beach mr-2"></i> Holidays
+            </button>
+            <button @click="changeContent('notice')"
+                class="align-middle select-none font-sans font-bold text-center uppercase transition-all text-xs py-3 px-6 bg-gray-100 text-black shadow-md hover:bg-blue-700 hover:text-white focus:bg-blue-700 focus:text-white focus:outline-none"
+                :class="{ 'bg-blue-700 text-white': currentContent === 'notice' }"
+                type="button">
+                <i class="fas fa-bullhorn mr-2"></i> Notice
+            </button>
+            <button @click="changeContent('policies')"
+                class="align-middle select-none font-sans font-bold text-center uppercase transition-all text-xs py-3 px-6 bg-gray-100 text-black shadow-md hover:bg-blue-700 hover:text-white focus:bg-blue-700 focus:text-white focus:outline-none rounded-r-lg"
+                :class="{ 'bg-blue-700 text-white': currentContent === 'policies' }"
+                type="button">
+                <i class="fas fa-file-alt mr-2"></i> Policies
+            </button>
+        </div>
+    </div>
+    
+    
+    
+    <div class="flex flex-col md:flex-row justify-between items-start mb-6 space-y-4 md:space-y-0">
+        <h1 class="text-3xl font-bold">Employees</h1>
+        <div x-data="{ currentDate: new Date('2024-01-20') }">
+            <button class="bg-white px-4 py-2 rounded-md shadow flex items-center">
+                <i class="fas fa-calendar-alt mr-2"></i>
+                <span x-text="currentDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })"></span>
+            </button>
+        </div>
+    </div>
+
+    <div class="flex flex-col md:flex-row justify-between items-center mb-6 space-y-4 md:space-y-0">
+        <div class="relative flex items-center w-full md:w-auto mt-4 md:mt-0">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-5 h-5 text-gray-400 dark:text-gray-600">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
+            </span>
+
+            <input type="text" placeholder="Search"
+                class="bg-gray-100 block w-full py-2 pr-5 text-gray-700 border border-gray-200 rounded-lg md:w-80 placeholder-gray-400 pl-10 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
+        </div>
+        <div class="flex justify-center md:justify-start w-full md:w-auto">
+            <button
+                class="flex items-center justify-center w-full md:w-auto px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-black rounded-lg gap-x-2">
+                <i class="fa-solid fa-circle-plus"></i>
+                <span>Add Employees</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+        <div class="max-w-sm">
+            <div class="rounded-lg border bg-white px-4 pt-8 pb-10 shadow-lg">
+                <div class="relative mx-auto w-36 rounded-full">
+                    <span
+                        class="absolute right-0 m-3 h-3 w-3 rounded-full bg-green-500 ring-2 ring-green-300 ring-offset-2"></span>
+                    <img class="mx-auto h-auto w-full rounded-full"
+                        src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
+                        alt="" />
+                </div>
+                <h1 class="my-1 text-center text-xl font-bold leading-8 text-gray-900">Michael Simbal</h1>
+                <ul
+                    class="mt-3 divide-y rounded bg-gray-100 py-2 px-3 text-gray-600 shadow-sm hover:text-gray-700 hover:shadow">
+                    <li class="flex items-center py-3 text-sm">
+                        <span>Status</span>
+                        <span class="ml-auto"><span
+                                class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Open for
+                                side gigs</span></span>
+                    </li>
+                    <li class="flex items-center py-3 text-sm">
+                        <span>Role</span>
+                        <span class="ml-auto"><span
+                                class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Software Developer</span></span>
+                    </li>
+                    <li class="flex items-center py-3 text-sm">
+                        <span>Joined On</span>
+                        <span class="ml-auto">Apr 08, 2022</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="max-w-sm">
+            <div class="rounded-lg border bg-white px-4 pt-8 pb-10 shadow-lg">
+                <div class="relative mx-auto w-36 rounded-full">
+                    <span
+                        class="absolute right-0 m-3 h-3 w-3 rounded-full bg-green-500 ring-2 ring-green-300 ring-offset-2"></span>
+                    <img class="mx-auto h-auto w-full rounded-full"
+                        src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
+                        alt="" />
+                </div>
+                <h1 class="my-1 text-center text-xl font-bold leading-8 text-gray-900">Michael Simbal</h1>
+                <ul
+                    class="mt-3 divide-y rounded bg-gray-100 py-2 px-3 text-gray-600 shadow-sm hover:text-gray-700 hover:shadow">
+                    <li class="flex items-center py-3 text-sm">
+                        <span>Status</span>
+                        <span class="ml-auto"><span
+                                class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Open for
+                                side gigs</span></span>
+                    </li>
+                    <li class="flex items-center py-3 text-sm">
+                        <span>Role</span>
+                        <span class="ml-auto"><span
+                                class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Software Developer</span></span>
+                    </li>
+                    <li class="flex items-center py-3 text-sm">
+                        <span>Joined On</span>
+                        <span class="ml-auto">Apr 08, 2022</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="max-w-sm">
+            <div class="rounded-lg border bg-white px-4 pt-8 pb-10 shadow-lg">
+                <div class="relative mx-auto w-36 rounded-full">
+                    <span
+                        class="absolute right-0 m-3 h-3 w-3 rounded-full bg-green-500 ring-2 ring-green-300 ring-offset-2"></span>
+                    <img class="mx-auto h-auto w-full rounded-full"
+                        src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
+                        alt="" />
+                </div>
+                <h1 class="my-1 text-center text-xl font-bold leading-8 text-gray-900">Michael Simbal</h1>
+                <ul
+                    class="mt-3 divide-y rounded bg-gray-100 py-2 px-3 text-gray-600 shadow-sm hover:text-gray-700 hover:shadow">
+                    <li class="flex items-center py-3 text-sm">
+                        <span>Status</span>
+                        <span class="ml-auto"><span
+                                class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Open for
+                                side gigs</span></span>
+                    </li>
+                    <li class="flex items-center py-3 text-sm">
+                        <span>Role</span>
+                        <span class="ml-auto"><span
+                                class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Software Developer</span></span>
+                    </li>
+                    <li class="flex items-center py-3 text-sm">
+                        <span>Joined On</span>
+                        <span class="ml-auto">Apr 08, 2022</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="max-w-sm">
+            <div class="rounded-lg border bg-white px-4 pt-8 pb-10 shadow-lg">
+                <div class="relative mx-auto w-36 rounded-full">
+                    <span
+                        class="absolute right-0 m-3 h-3 w-3 rounded-full bg-green-500 ring-2 ring-green-300 ring-offset-2"></span>
+                    <img class="mx-auto h-auto w-full rounded-full"
+                        src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
+                        alt="" />
+                </div>
+                <h1 class="my-1 text-center text-xl font-bold leading-8 text-gray-900">Michael Simbal</h1>
+                <ul
+                    class="mt-3 divide-y rounded bg-gray-100 py-2 px-3 text-gray-600 shadow-sm hover:text-gray-700 hover:shadow">
+                    <li class="flex items-center py-3 text-sm">
+                        <span>Status</span>
+                        <span class="ml-auto"><span
+                                class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Open for
+                                side gigs</span></span>
+                    </li>
+                    <li class="flex items-center py-3 text-sm">
+                        <span>Role</span>
+                        <span class="ml-auto"><span
+                                class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Software Developer</span></span>
+                    </li>
+                    <li class="flex items-center py-3 text-sm">
+                        <span>Joined On</span>
+                        <span class="ml-auto">Apr 08, 2022</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="max-w-sm">
+            <div class="rounded-lg border bg-white px-4 pt-8 pb-10 shadow-lg">
+                <div class="relative mx-auto w-36 rounded-full">
+                    <span
+                        class="absolute right-0 m-3 h-3 w-3 rounded-full bg-green-500 ring-2 ring-green-300 ring-offset-2"></span>
+                    <img class="mx-auto h-auto w-full rounded-full"
+                        src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
+                        alt="" />
+                </div>
+                <h1 class="my-1 text-center text-xl font-bold leading-8 text-gray-900">Michael Simbal</h1>
+                <ul
+                    class="mt-3 divide-y rounded bg-gray-100 py-2 px-3 text-gray-600 shadow-sm hover:text-gray-700 hover:shadow">
+                    <li class="flex items-center py-3 text-sm">
+                        <span>Status</span>
+                        <span class="ml-auto"><span
+                                class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Open for
+                                side gigs</span></span>
+                    </li>
+                    <li class="flex items-center py-3 text-sm">
+                        <span>Role</span>
+                        <span class="ml-auto"><span
+                                class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Software Developer</span></span>
+                    </li>
+                    <li class="flex items-center py-3 text-sm">
+                        <span>Joined On</span>
+                        <span class="ml-auto">Apr 08, 2022</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Team Member 1 -->
+        <div class="bg-white rounded-lg shadow-md p-6 my-6 text-center">
+            <img src="https://spacema-dev.com/elevate/assets/images/team/1.jpg" alt="Team Member 1" class="w-full rounded-full mb-4">
+            <h3 class="text-xl font-semibold mb-2">John Doe</h3>
+            <ul
+                class="mt-3 divide-y rounded bg-gray-100 py-2 px-3 text-gray-600 shadow-sm hover:text-gray-700 hover:shadow">
+                <li class="flex items-center py-3 text-sm">
+                    <span>Status</span>
+                    <span class="ml-auto"><span
+                            class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Open for
+                            side gigs</span></span>
+                </li>
+                <li class="flex items-center py-3 text-sm">
+                    <span>Role</span>
+                    <span class="ml-auto"><span
+                            class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Software Developer</span></span>
+                </li>
+                <li class="flex items-center py-3 text-sm">
+                    <span>Joined On</span>
+                    <span class="ml-auto">Apr 08, 2022</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Team Member 2 -->
+        <div class="bg-white rounded-lg shadow-md p-6 my-6 text-center">
+            <img src="https://spacema-dev.com/elevate/assets/images/team/4.jpg" alt="Team Member 2" class="w-full rounded-full mb-4">
+            <h3 class="text-xl font-semibold mb-2">Jane Smith</h3>
+            <ul
+                class="mt-3 divide-y rounded bg-gray-100 py-2 px-3 text-gray-600 shadow-sm hover:text-gray-700 hover:shadow">
+                <li class="flex items-center py-3 text-sm">
+                    <span>Status</span>
+                    <span class="ml-auto"><span
+                            class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Open for
+                            side gigs</span></span>
+                </li>
+                <li class="flex items-center py-3 text-sm">
+                    <span>Role</span>
+                    <span class="ml-auto"><span
+                            class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Software Developer</span></span>
+                </li>
+                <li class="flex items-center py-3 text-sm">
+                    <span>Joined On</span>
+                    <span class="ml-auto">Apr 08, 2022</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Team Member 3 -->
+        <div class="bg-white rounded-lg shadow-md p-6 my-6 text-center">
+            <img src="https://spacema-dev.com/elevate/assets/images/team/3.jpg" alt="Team Member 3" class="w-full rounded-full mb-4">
+            <h3 class="text-xl font-semibold mb-2">Alex Johnson</h3>
+            <ul
+                class="mt-3 divide-y rounded bg-gray-100 py-2 px-3 text-gray-600 shadow-sm hover:text-gray-700 hover:shadow">
+                <li class="flex items-center py-3 text-sm">
+                    <span>Status</span>
+                    <span class="ml-auto"><span
+                            class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Open for
+                            side gigs</span></span>
+                </li>
+                <li class="flex items-center py-3 text-sm">
+                    <span>Role</span>
+                    <span class="ml-auto"><span
+                            class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Software Developer</span></span>
+                </li>
+                <li class="flex items-center py-3 text-sm">
+                    <span>Joined On</span>
+                    <span class="ml-auto">Apr 08, 2022</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Team Member 4 -->
+        <div class="bg-white rounded-lg shadow-md p-6 my-6 text-center">
+            <img src="https://spacema-dev.com/elevate/assets/images/team/2.jpg" alt="Team Member 4" class="w-full rounded-full mb-4">
+            <h3 class="text-xl font-semibold mb-2">Peter Johnson</h3>
+            <ul
+                class="mt-3 divide-y rounded bg-gray-100 py-2 px-3 text-gray-600 shadow-sm hover:text-gray-700 hover:shadow">
+                <li class="flex items-center py-3 text-sm">
+                    <span>Status</span>
+                    <span class="ml-auto"><span
+                            class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Open for
+                            side gigs</span></span>
+                </li>
+                <li class="flex items-center py-3 text-sm">
+                    <span>Role</span>
+                    <span class="ml-auto"><span
+                            class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Software Developer</span></span>
+                </li>
+                <li class="flex items-center py-3 text-sm">
+                    <span>Joined On</span>
+                    <span class="ml-auto">Apr 08, 2022</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Team Member 5 -->
+        <div class="bg-white rounded-lg shadow-md p-6 my-6 text-center">
+            <img src="https://spacema-dev.com/elevate/assets/images/team/5.jpg" alt="Team Member 5" class="w-full rounded-full mb-4">
+            <h3 class="text-xl font-semibold mb-2">Emily Brown</h3>
+            <ul
+                class="mt-3 divide-y rounded bg-gray-100 py-2 px-3 text-gray-600 shadow-sm hover:text-gray-700 hover:shadow">
+                <li class="flex items-center py-3 text-sm">
+                    <span>Status</span>
+                    <span class="ml-auto"><span
+                            class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Open for
+                            side gigs</span></span>
+                </li>
+                <li class="flex items-center py-3 text-sm">
+                    <span>Role</span>
+                    <span class="ml-auto"><span
+                            class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Software Developer</span></span>
+                </li>
+                <li class="flex items-center py-3 text-sm">
+                    <span>Joined On</span>
+                    <span class="ml-auto">Apr 08, 2022</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Team Member 6 -->
+        <div class="bg-white rounded-lg shadow-md p-6 my-6 text-center">
+            <img src="https://spacema-dev.com/elevate/assets/images/team/6.jpg" alt="Team Member 6" class="w-full rounded-full mb-4">
+            <h3 class="text-xl font-semibold mb-2">Michael Davis</h3>
+            <ul
+                class="mt-3 divide-y rounded bg-gray-100 py-2 px-3 text-gray-600 shadow-sm hover:text-gray-700 hover:shadow">
+                <li class="flex items-center py-3 text-sm">
+                    <span>Status</span>
+                    <span class="ml-auto"><span
+                            class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Open for
+                            side gigs</span></span>
+                </li>
+                <li class="flex items-center py-3 text-sm">
+                    <span>Role</span>
+                    <span class="ml-auto"><span
+                            class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Software Developer</span></span>
+                </li>
+                <li class="flex items-center py-3 text-sm">
+                    <span>Joined On</span>
+                    <span class="ml-auto">Apr 08, 2022</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Team Member 7 -->
+        <div class="bg-white rounded-lg shadow-md p-6 my-6 text-center">
+            <img src="https://spacema-dev.com/elevate/assets/images/team/7.jpg" alt="Team Member 7" class="w-full rounded-full mb-4">
+            <h3 class="text-xl font-semibold mb-2">Sarah Johnson</h3>
+            <ul
+                class="mt-3 divide-y rounded bg-gray-100 py-2 px-3 text-gray-600 shadow-sm hover:text-gray-700 hover:shadow">
+                <li class="flex items-center py-3 text-sm">
+                    <span>Status</span>
+                    <span class="ml-auto"><span
+                            class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Open for
+                            side gigs</span></span>
+                </li>
+                <li class="flex items-center py-3 text-sm">
+                    <span>Role</span>
+                    <span class="ml-auto"><span
+                            class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Software Developer</span></span>
+                </li>
+                <li class="flex items-center py-3 text-sm">
+                    <span>Joined On</span>
+                    <span class="ml-auto">Apr 08, 2022</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Team Member 8 -->
+        <div class="bg-white rounded-lg shadow-md p-6 my-6 text-center">
+            <img src="https://spacema-dev.com/elevate/assets/images/team/8.jpg" alt="Team Member 8" class="w-full rounded-full mb-4">
+            <h3 class="text-xl font-semibold mb-2">David Wilson</h3>
+            <ul
+                class="mt-3 divide-y rounded bg-gray-100 py-2 px-3 text-gray-600 shadow-sm hover:text-gray-700 hover:shadow">
+                <li class="flex items-center py-3 text-sm">
+                    <span>Status</span>
+                    <span class="ml-auto"><span
+                            class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Open for
+                            side gigs</span></span>
+                </li>
+                <li class="flex items-center py-3 text-sm">
+                    <span>Role</span>
+                    <span class="ml-auto"><span
+                            class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Software Developer</span></span>
+                </li>
+                <li class="flex items-center py-3 text-sm">
+                    <span>Joined On</span>
+                    <span class="ml-auto">Apr 08, 2022</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

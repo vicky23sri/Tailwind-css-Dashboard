@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+</head>
+
+<body class="bg-gray-100 p-6">
+    <div class="flex divide-x divide-gray-800 mb-6">
+        <button @click="changeContent('invoices')"
+            class="align-middle select-none font-sans font-bold text-center uppercase transition-all text-xs py-3 px-6 bg-gray-100 text-black shadow-md hover:bg-blue-700 hover:text-white focus:bg-blue-700 focus:text-white focus:outline-none rounded-l-lg"
+            :class="{ 'bg-blue-700 text-white': currentContent === 'invoices' }" type="button">
+            <i class="fas fa-file-invoice mr-2"></i> Invoices
+        </button>
+        <button @click="changeContent('purchaseorder')"
+            class="align-middle select-none font-sans font-bold text-center uppercase transition-all text-xs py-3 px-6 bg-gray-100 text-black shadow-md hover:bg-blue-700 hover:text-white focus:bg-blue-700 focus:text-white focus:outline-none"
+            :class="{ 'bg-blue-700 text-white': currentContent === 'purchaseorder' }" type="button">
+            <i class="fas fa-cart-plus mr-2"></i> Purchase Order
+        </button>
+        <button @click="changeContent('quotes')"
+            class="align-middle select-none font-sans font-bold text-center uppercase transition-all text-xs py-3 px-6 bg-gray-100 text-black shadow-md hover:bg-blue-700 hover:text-white focus:bg-blue-700 focus:text-white focus:outline-none"
+            :class="{ 'bg-blue-700 text-white': currentContent === 'quotes' }" type="button">
+            <i class="fas fa-quote-right mr-2"></i> Quotes
+        </button>
+        <button @click="changeContent('income')"
+            class="align-middle select-none font-sans font-bold text-center uppercase transition-all text-xs py-3 px-6 bg-gray-100 text-black shadow-md hover:bg-blue-700 hover:text-white focus:bg-blue-700 focus:text-white focus:outline-none"
+            :class="{ 'bg-blue-700 text-white': currentContent === 'income' }" type="button">
+            <i class="fas fa-money-bill-trend-up mr-2"></i> Income
+        </button>
+        <button @click="changeContent('expense')"
+            class="align-middle select-none font-sans font-bold text-center uppercase transition-all text-xs py-3 px-6 bg-gray-100 text-black shadow-md hover:bg-blue-700 hover:text-white focus:bg-blue-700 focus:text-white focus:outline-none rounded-r-lg"
+            :class="{ 'bg-blue-700 text-white': currentContent === 'expense' }"
+            type="button">
+            <i class="fas fa-file-alt mr-2"></i> Expense
+        </button>
+    </div>
+    </div>
+    <div class="flex flex-col md:flex-row justify-between items-start mb-6 space-y-4 md:space-y-0">
+        <h1 class="text-3xl font-bold">Expense</h1>
+        <div x-data="{ currentDate: new Date('2024-01-20') }">
+            <button class="bg-white px-4 py-2 rounded-md shadow flex items-center">
+                <i class="fas fa-calendar-alt mr-2"></i>
+                <span
+                    x-text="currentDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })"></span>
+            </button>
+        </div>
+    </div>
+
+    <div class="flex flex-col md:flex-row justify-between items-center mb-6 space-y-4 md:space-y-0">
+        <div class="relative flex items-center w-full md:w-auto mt-4 md:mt-0">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-5 h-5 text-gray-400 dark:text-gray-600">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
+            </span>
+
+            <input type="text" placeholder="Search"
+                class="bg-gray-100 block w-full py-2 pr-5 text-gray-700 border border-gray-200 rounded-lg md:w-80 placeholder-gray-400 pl-10 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
+        </div>
+        <div class="flex justify-center md:justify-start w-full md:w-auto">
+            <button
+                class="flex items-center justify-center w-full md:w-auto px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-black rounded-lg gap-x-2">
+                <i class="fa-solid fa-circle-plus"></i>
+                <span>Add Expense</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="bg-white shadow-xl rounded-lg overflow-x-auto" x-data="{ deleting: false }">
+        <table class="min-w-full">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Website
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Indistry
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Country
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                <tr class="hover:bg-gray-50 transition-colors duration-200">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">John Doe</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">ABC Company</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">INV-001</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-06-28</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Due in 30days</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <div class="flex gap-3">
+                            <div class="tooltip">
+                                <button title="Edit"
+                                    class="bg-black text-white rounded-full px-3 py-2 hover:bg-gray-800 hover:text-white transition duration-300 ease-in-out">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </div>
+
+                            <div class="tooltip">
+                                <button title="view"
+                                    class="bg-black text-white rounded-full px-3 py-2 hover:bg-gray-800 hover:text-white transition duration-300 ease-in-out">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+
+                            <div class="tooltip">
+                                <button title="Delete" @click="deleting = true"
+                                    class="bg-black text-white rounded-full px-3 py-2 hover:bg-gray-800 hover:text-white transition duration-300 ease-in-out">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+
+                            <div x-cloak x-show="deleting"
+                                class="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
+                                <div class="bg-white rounded-lg shadow-md max-w-md w-full p-6">
+                                    <div class="flex justify-between items-center mb-4">
+                                        <h3 class="text-lg font-semibold">Confirm Deletion</h3>
+                                        <button @click="deleting = false"
+                                            class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                    <p class="text-sm text-gray-700 mb-4">Are you sure you want to delete this Expense?
+                                    </p>
+                                    <div class="flex justify-end space-x-4">
+                                        <button @click="deleting = false"
+                                            class="text-gray-500 hover:text-gray-700 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none">
+                                            Cancel
+                                        </button>
+                                        <button @click="deletePurchaseOrder()"
+                                            class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg focus:outline-none">
+                                            Delete
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
