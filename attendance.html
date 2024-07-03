@@ -62,16 +62,175 @@
             </button>
         </div>
     </div>
-    
-    
-    
+       
     <div class="flex flex-col md:flex-row justify-between items-start mb-6 space-y-4 md:space-y-0">
-        <h1 class="text-3xl font-bold">Attendance</h1>
+        <h1 class="text-3xl font-bold">Attendance Management</h1>
         <div x-data="{ currentDate: new Date('2024-01-20') }">
             <button class="bg-white px-4 py-2 rounded-md shadow flex items-center">
                 <i class="fas fa-calendar-alt mr-2"></i>
                 <span x-text="currentDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })"></span>
             </button>
+        </div>
+    </div>
+
+    <!-- <div x-data="attendanceManagement()" x-init="initializeApp">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-semibold">Attendance Overview</h2>
+                <div class="flex items-center">
+                    <span class="mr-2">Date:</span>
+                    <input type="date" x-model="selectedDate" @change="updateAttendance" class="border rounded px-2 py-1">
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="py-2 px-4 border-b text-left">Emp ID</th>
+                            <th class="py-2 px-4 border-b text-left">Name and Profile</th>
+                            <th class="py-2 px-4 border-b text-left">Last Absent</th>
+                            <th class="py-2 px-4 border-b text-left">Leaves</th>
+                            <th class="py-2 px-4 border-b text-left">Future Approved Leaves</th>
+                            <th class="py-2 px-4 border-b text-left">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template x-for="employee in employees" :key="employee.id">
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-4 border-b" x-text="employee.id"></td>
+                                <td class="py-2 px-4 border-b">
+                                    <div class="flex items-center">
+                                        <img :src="employee.image" alt="Employee" class="w-10 h-10 rounded-full object-cover mr-3">
+                                        <span x-text="employee.name"></span>
+                                    </div>
+                                </td>
+                                <td class="py-2 px-4 border-b" x-text="employee.lastAbsent"></td>
+                                <td class="py-2 px-4 border-b" x-text="employee.leaves"></td>
+                                <td class="py-2 px-4 border-b" x-text="employee.futureLeaves"></td>
+                                <td class="py-2 px-4 border-b">
+                                    <select 
+                                        x-model="employee.attendance.status"
+                                        @change="updateEmployeeAttendance(employee.id)"
+                                        class="border rounded-md px-2 py-1"
+                                        :class="{
+                                            'text-green-600': employee.attendance.status === 'Present',
+                                            'text-red-600': employee.attendance.status === 'Absent',
+                                            'text-yellow-600': employee.attendance.status.includes('Leave')
+                                        }"
+                                    >
+                                        <option value="Present">Present</option>
+                                        <option value="Absent">Absent</option>
+                                        <option value="Sick Leave">Sick Leave</option>
+                                        <option value="Casual Leave">Casual Leave</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4">Attendance Summary</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-green-100 p-4 rounded-lg">
+                    <h3 class="font-semibold mb-2">Present</h3>
+                    <p class="text-2xl" x-text="getPresentCount()"></p>
+                </div>
+                <div class="bg-red-100 p-4 rounded-lg">
+                    <h3 class="font-semibold mb-2">Absent</h3>
+                    <p class="text-2xl" x-text="getAbsentCount()"></p>
+                </div>
+                <div class="bg-yellow-100 p-4 rounded-lg">
+                    <h3 class="font-semibold mb-2">On Leave</h3>
+                    <p class="text-2xl" x-text="getLeaveCount()"></p>
+                </div>
+            </div>
+        </div> 
+    </div>-->
+
+    <div x-data="attendanceManagement()" x-init="initializeApp">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-semibold">Attendance Overview</h2>
+                <div class="flex items-center">
+                    <span class="mr-2">Date:</span>
+                    <input type="date" x-model="selectedDate" @change="updateAttendance" class="border rounded px-2 py-1" :max="currentDate">
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="py-2 px-4 border-b text-left">Employee</th>
+                            <th class="py-2 px-4 border-b text-left">Position</th>
+                            <th class="py-2 px-4 border-b text-left">Status</th>
+                            <th class="py-2 px-4 border-b text-left">Check-in</th>
+                            <th class="py-2 px-4 border-b text-left">Check-out</th>
+                            <th class="py-2 px-4 border-b text-left">Total Hours</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template x-for="employee in employees" :key="employee.id">
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-4 border-b">
+                                    <div class="flex items-center">
+                                        <img :src="employee.image" alt="Employee" class="w-10 h-10 rounded-full object-cover mr-3">
+                                        <span x-text="employee.name"></span>
+                                    </div>
+                                </td>
+                                <td class="py-2 px-4 border-b" x-text="employee.position"></td>
+                                <td class="py-2 px-4 border-b">
+                                    <select 
+                                        x-model="employee.attendance.status"
+                                        @change="updateEmployeeAttendance(employee.id)"
+                                        class="border rounded-md px-2 py-1"
+                                        :class="{
+                                            'text-green-600': employee.attendance.status === 'Present',
+                                            'text-red-600': employee.attendance.status === 'Absent',
+                                            'text-yellow-600': employee.attendance.status === 'Leave' || employee.attendance.status === 'Sick Leave' || employee.attendance.status === 'Casual Leave'
+                                        }"
+                                    >
+                                        <option value="Present">Present</option>
+                                        <option value="Absent">Absent</option>
+                                        <option value="Leave">Leave</option>
+                                        <option value="Sick Leave">Sick Leave</option>
+                                        <option value="Casual Leave">Casual Leave</option>
+                                    </select>
+                                </td>
+                                <td class="py-2 px-4 border-b">
+                                    <input type="time" x-model="employee.attendance.checkIn" @change="updateEmployeeAttendance(employee.id)" class="border rounded px-2 py-1">
+                                </td>
+                                <td class="py-2 px-4 border-b">
+                                    <input type="time" x-model="employee.attendance.checkOut" @change="updateEmployeeAttendance(employee.id)" class="border rounded px-2 py-1">
+                                </td>
+                                <td class="py-2 px-4 border-b" x-text="calculateTotalHours(employee.attendance.checkIn, employee.attendance.checkOut)"></td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4">Attendance Summary</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-green-100 p-4 rounded-lg">
+                    <h3 class="font-semibold mb-2">Present</h3>
+                    <p class="text-2xl" x-text="getPresentCount()"></p>
+                </div>
+                <div class="bg-red-100 p-4 rounded-lg">
+                    <h3 class="font-semibold mb-2">Absent</h3>
+                    <p class="text-2xl" x-text="getAbsentCount()"></p>
+                </div>
+                <div class="bg-yellow-100 p-4 rounded-lg">
+                    <h3 class="font-semibold mb-2">On Leave</h3>
+                    <p class="text-2xl" x-text="getLeaveCount()"></p>
+                </div>
+            </div>
         </div>
     </div>
 </body>

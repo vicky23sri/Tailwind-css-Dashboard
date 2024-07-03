@@ -1,0 +1,79 @@
+<script>
+        const fileInput = document.getElementById('fileInput');
+        const errorContainer = document.getElementById('errorContainer');
+        const fileList = document.getElementById('fileList');
+        const files = new Set();
+        const allowedTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/png', 'image/gif'];
+    
+        fileInput.addEventListener('change', function(event) {
+            const newFiles = event.target.files;
+            errorContainer.innerHTML = '';
+    
+            for (let file of newFiles) {
+                if (allowedTypes.includes(file.type)) {
+                    if (!files.has(file)) {
+                        files.add(file);
+                        addFileDetails(file);
+                    }
+                } else {
+                    errorContainer.innerHTML += `<p>Error: ${file.name} is not a supported file type.</p>`;
+                }
+            }
+        });
+    
+        function addFileDetails(file) {
+            // Console log the file details
+            console.log('Uploaded File Details:');
+            console.log('Name:', file.name);
+            console.log('Type:', file.type);
+            console.log('Size:', formatFileSize(file.size));
+            console.log('Last Modified:', new Date(file.lastModified).toLocaleString());
+            console.log('-------------------');
+    
+            const fileItem = document.createElement('div');
+            fileItem.className = 'bg-gray-200 p-4 rounded-lg relative';
+    
+            const fileInfo = `
+                <div class="flex items-center">
+                    <span class="text-2xl mr-4">${getFileIcon(file.type)}</span>
+                    <div>
+                        <p class="font-bold">${file.name}</p>
+                        <p>Type: ${file.type}</p>
+                        <p>Size: ${formatFileSize(file.size)}</p>
+                    </div>
+                </div>
+            `;
+    
+            const removeBtn = document.createElement('button');
+            removeBtn.innerHTML = '&times;';
+            removeBtn.className = 'absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center';
+            removeBtn.addEventListener('click', function() {
+                files.delete(file);
+                fileList.removeChild(fileItem);
+                console.log('File removed:', file.name);
+            });
+    
+            fileItem.innerHTML = fileInfo;
+            fileItem.appendChild(removeBtn);
+            fileList.appendChild(fileItem);
+        }
+    
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+    
+        function getFileIcon(fileType) {
+            switch (fileType) {
+                case 'application/pdf':
+                    return '📄';
+                case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+                    return '📝';
+                default:
+                    return '🖼️';
+            }
+        }
+    </script>
