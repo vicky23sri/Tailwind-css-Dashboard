@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New York City Property Locations</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        #map { height: 100vh; width: 100%; }
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+        .blinking-marker {
+            animation: blink 1.5s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script>
+        var map = L.map('map').setView([40.7128, -74.0060], 12);
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            maxZoom: 19
+        }).addTo(map);
+
+        var blinkingIcon = L.divIcon({
+            className: 'blinking-marker',
+            html: '<div style="width: 20px; height: 20px; background-color: #FF5555; border-radius: 50%; box-shadow: 0 0 10px #FF5555;"></div>',
+            iconSize: [20, 20],
+            iconAnchor: [10, 10]
+        });
+
+        var properties = [
+            {
+                name: "Brooklyn Heights Townhouse",
+                center: [40.6962, -73.9937],
+                border: [
+                    [40.6967, -73.9942],
+                    [40.6972, -73.9937],
+                    [40.6967, -73.9932],
+                    [40.6962, -73.9927],
+                    [40.6957, -73.9932],
+                    [40.6957, -73.9942]
+                ],
+                color: '#55FF55',
+                blink: true
+            }
+        ];
+
+        properties.forEach(function(prop) {
+            var marker;
+            if (prop.blink) {
+                marker = L.marker(prop.center, {icon: blinkingIcon}).addTo(map);
+            } else {
+                marker = L.marker(prop.center).addTo(map);
+            }
+            marker.bindPopup(prop.name).openPopup();
+
+            var polygon = L.polygon(prop.border, {
+                color: prop.color,
+                fillColor: prop.color,
+                fillOpacity: 0.3,
+                weight: 3
+            }).addTo(map);
+        });
+    </script>
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New York City Property Locations</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        #map { height: 100vh; width: 100%; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script>
+        var map = L.map('map').setView([40.7128, -74.0060], 12); 
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '© OpenStreetMap contributors, © CARTO',
+            maxZoom: 19
+        }).addTo(map);
+
+        var properties = [
+            {
+                name: "Central Park View Apartment",
+                center: [40.7729, -73.9712],
+                border: [
+                    [40.7739, -73.9722],
+                    [40.7744, -73.9712],
+                    [40.7739, -73.9702],
+                    [40.7724, -73.9702],
+                    [40.7719, -73.9712],
+                    [40.7724, -73.9722]
+                ],
+                color: '#FF5555'
+            },
+            {
+                name: "Manhattan Skyline Condo",
+                center: [40.7484, -73.9857],
+                border: [
+                    [40.7494, -73.9867],
+                    [40.7494, -73.9847],
+                    [40.7474, -73.9847],
+                    [40.7474, -73.9867]
+                ],
+                color: '#55AAFF'
+            },
+            {
+                name: "Brooklyn Heights Townhouse",
+                center: [40.6962, -73.9937],
+                border: [
+                    [40.6967, -73.9942],
+                    [40.6972, -73.9937],
+                    [40.6967, -73.9932],
+                    [40.6962, -73.9927],
+                    [40.6957, -73.9932],
+                    [40.6957, -73.9942]
+                ],
+                color: '#55FF55'
+            }
+        ];
+
+        // Add markers and borders for each property
+        properties.forEach(function(prop) {
+            // Add marker
+            var marker = L.marker(prop.center).addTo(map);
+            marker.bindPopup(prop.name).openPopup();
+
+            // Add border with custom shape
+            var polygon = L.polygon(prop.border, {
+                color: prop.color,
+                fillColor: prop.color,
+                fillOpacity: 0.3,
+                weight: 3
+            }).addTo(map);
+        });
+    </script>
+</body>
+</html> -->

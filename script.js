@@ -270,7 +270,7 @@ function leaveManagement() {
 
         generateRandomLeaveData() {
             this.employees.forEach(employee => {
-                this.leaveData[employee.id] = this.months.map((_, index) => 
+                this.leaveData[employee.id] = this.months.map((_, index) =>
                     index <= this.currentMonth ? Math.floor(Math.random() * 3) : 0
                 );
             });
@@ -286,7 +286,9 @@ function leaveManagement() {
                     this.appliedLeaves[employee.id].push({
                         startDate,
                         endDate,
-                        type: this.leaveTypes[Math.floor(Math.random() * this.leaveTypes.length)]
+                        type: this.leaveTypes[Math.floor(Math.random() * this.leaveTypes.length)],
+                        status: 'pending',
+                        isNew: false
                     });
                 }
             });
@@ -307,9 +309,18 @@ function leaveManagement() {
             this.showCancelConfirmation = true;
         },
 
+        approveLeave(employeeId, leaveIndex) {
+            this.appliedLeaves[employeeId][leaveIndex].status = 'approved';
+            this.appliedLeaves[employeeId][leaveIndex].isNew = false; // Remove the "New" tag when approved
+        },
+
         cancelLeave() {
             const employeeId = this.selectedEmployee.id;
             const leaveIndex = this.selectedLeaveIndex;
+            this.appliedLeaves[employeeId][leaveIndex].status = 'cancelled';
+            this.appliedLeaves[employeeId][leaveIndex].isNew = false; // Remove the "New" tag when cancelled
+
+            // Update the leaveData
             const leave = this.appliedLeaves[employeeId][leaveIndex];
             const startDate = new Date(leave.startDate);
             const endDate = new Date(leave.endDate);
@@ -317,7 +328,6 @@ function leaveManagement() {
             const endMonth = endDate.getMonth();
             const days = (endDate - startDate) / (1000 * 60 * 60 * 24) + 1;
 
-            // Update the leaveData
             for (let i = startMonth; i <= endMonth; i++) {
                 if (i <= this.currentMonth) {
                     this.leaveData[employeeId][i] -= i === endMonth ? days % 30 : Math.min(days, 30 - startDate.getDate() + 1);
@@ -325,8 +335,6 @@ function leaveManagement() {
                 }
             }
 
-            // Remove the leave from appliedLeaves
-            this.appliedLeaves[employeeId].splice(leaveIndex, 1);
             this.showCancelConfirmation = false;
         },
 
@@ -337,9 +345,11 @@ function leaveManagement() {
                 startDate,
                 endDate,
                 type: this.newLeave.type,
-                reason: this.newLeave.reason
+                reason: this.newLeave.reason,
+                status: 'pending',
+                isNew: true
             });
-            
+
             // Update the leaveData
             const startMonth = startDate.getMonth();
             const endMonth = endDate.getMonth();
@@ -353,9 +363,9 @@ function leaveManagement() {
             this.showApplyLeaveModal = false;
             this.newLeave = { startDate: '', endDate: '', type: '', reason: '' };
         },
-        
+
         formatDate(date) {
-            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            return new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
         },
 
         getLeaveColor(type) {
@@ -370,8 +380,8 @@ function leaveManagement() {
         },
 
         getMonthLeaves(employeeId, monthIndex) {
-            return this.appliedLeaves[employeeId].filter(leave => 
-                new Date(leave.startDate).getMonth() <= monthIndex && 
+            return this.appliedLeaves[employeeId].filter(leave =>
+                new Date(leave.startDate).getMonth() <= monthIndex &&
                 new Date(leave.endDate).getMonth() >= monthIndex
             );
         }
@@ -497,7 +507,7 @@ function leaveManagement() {
 //                 appliedDate: new Date(), 
 //                 status: 'Pending'
 //             };
-        
+
 
 //             this.leaves.push(newLeaveEntry);
 //             this.applyLeaveModalOpen = false;
@@ -540,6 +550,254 @@ function leaveManagement() {
 //         }
 //     };
 // }
+
+
+// salary management
+function payrollSystem() {
+    return {
+        employees: [
+            { id: 1, name: 'John Doe', department: 'IT', phone: '555-1234', email: 'john@example.com', status: 'Active', salary: { base: 7500000, bonus: 500000, allowances: 300000, deductions: 200000 } },
+            { id: 2, name: 'Jane Smith', department: 'HR', phone: '555-5678', email: 'jane@example.com', status: 'Active', salary: { base: 7000000, bonus: 400000, allowances: 250000, deductions: 180000 } },
+            { id: 3, name: 'Bob Johnson', department: 'Sales', phone: '555-9876', email: 'bob@example.com', status: 'Inactive', salary: { base: 6500000, bonus: 700000, allowances: 200000, deductions: 150000 } },
+            { id: 4, name: 'Alice Brown', department: 'Marketing', phone: '555-4321', email: 'alice@example.com', status: 'Active', salary: { base: 6800000, bonus: 300000, allowances: 220000, deductions: 170000 } },
+            { id: 5, name: 'Charlie Wilson', department: 'Finance', phone: '555-8765', email: 'charlie@example.com', status: 'Active', salary: { base: 7200000, bonus: 600000, allowances: 280000, deductions: 220000 } },
+        ],
+        selectedEmployee: null,
+        employeeModalOpen: false,
+        generatePayrollModalOpen: false,
+        salaryReportModalOpen: false,
+        salaryChartModalOpen: false,
+        individualPayrollModalOpen: false,
+        payPeriod: '',
+        selectedEmployees: [],
+        salaryReports: [],
+        individualPayroll: null,
+
+        openEmployeeModal(employee) {
+            this.selectedEmployee = employee;
+            this.employeeModalOpen = true;
+        },
+
+        openGeneratePayrollModal() {
+            this.generatePayrollModalOpen = true;
+            this.selectedEmployees = [];
+            this.payPeriod = '';
+        },
+
+        generatePayrollForSelected() {
+            if (!this.payPeriod || this.selectedEmployees.length === 0) {
+                alert('Please select a pay period and at least one employee.');
+                return;
+            }
+
+            this.salaryReports = this.selectedEmployees.map(employeeId => {
+                const employee = this.employees.find(e => e.id === employeeId);
+                const grossSalary = (employee.salary.base + employee.salary.bonus + employee.salary.allowances) / 12;
+                const totalDeductions = employee.salary.deductions / 12;
+                const netSalary = grossSalary - totalDeductions;
+
+                return {
+                    employee: employee,
+                    grossSalary: grossSalary,
+                    totalDeductions: totalDeductions,
+                    netSalary: netSalary
+                };
+            });
+
+            this.generatePayrollModalOpen = false;
+            this.openSalaryReportModal();
+        },
+
+        openSalaryReportModal() {
+            this.salaryReportModalOpen = true;
+        },
+
+        openSalaryChartModal() {
+            this.salaryChartModalOpen = true;
+            this.$nextTick(() => {
+                this.renderSalaryChart();
+            });
+        },
+
+        openIndividualPayrollModal(employee) {
+            this.selectedEmployee = employee;
+            this.generateIndividualPayroll(employee);
+            this.individualPayrollModalOpen = true;
+        },
+
+        calculateTotalSalary(salary) {
+            if (!salary) return 0;
+            return salary.base + salary.bonus + salary.allowances - salary.deductions;
+        },
+
+        calculateTotal(field) {
+            return this.salaryReports.reduce((total, report) => total + report[field], 0);
+        },
+
+        generateIndividualPayroll(employee) {
+            const currentDate = new Date();
+            const month = currentDate.toLocaleString('default', { month: 'long' });
+            const year = currentDate.getFullYear();
+
+            this.individualPayroll = {
+                employee: employee,
+                payPeriod: `${month} ${year}`,
+                earnings: {
+                    baseSalary: employee.salary.base / 12,
+                    bonus: employee.salary.bonus / 12,
+                    allowances: employee.salary.allowances / 12,
+                },
+                deductions: {
+                    tax: (employee.salary.base * 0.2) / 12, 
+                    benefits: employee.salary.deductions / 12,
+                },
+                totalEarnings: (employee.salary.base + employee.salary.bonus + employee.salary.allowances) / 12,
+                totalDeductions: ((employee.salary.base * 0.2) + employee.salary.deductions) / 12,
+                netPay: this.calculateTotalSalary(employee.salary) / 12,
+            };
+        },
+
+        printPayroll(payroll) {
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Payroll for ${payroll.employee.name}</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; }
+                            table { width: 100%; border-collapse: collapse; }
+                            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                            th { background-color: #f2f2f2; }
+                        </style>
+                    </head>
+                    <body>
+                        <h1>Payroll for ${payroll.employee.name}</h1>
+                        <p>Employee ID: ${payroll.employee.id}</p>
+                        <p>Department: ${payroll.employee.department}</p>
+                        <p>Pay Period: ${payroll.payPeriod}</p>
+                        <table>
+                            <tr><th colspan="2">Earnings</th></tr>
+                            <tr><td>Base Salary</td><td>${this.formatCurrency(payroll.earnings.baseSalary)}</td></tr>
+                            <tr><td>Bonus</td><td>${this.formatCurrency(payroll.earnings.bonus)}</td></tr>
+                            <tr><td>Allowances</td><td>${this.formatCurrency(payroll.earnings.allowances)}</td></tr>
+                            <tr><th>Total Earnings</th><th>${this.formatCurrency(payroll.totalEarnings)}</th></tr>
+                            <tr><th colspan="2">Deductions</th></tr>
+                            <tr><td>Tax</td><td>${this.formatCurrency(payroll.deductions.tax)}</td></tr>
+                            <tr><td>Benefits</td><td>${this.formatCurrency(payroll.deductions.benefits)}</td></tr>
+                            <tr><th>Total Deductions</th><th>${this.formatCurrency(payroll.totalDeductions)}</th></tr>
+                            <tr><th>Net Pay</th><th>${this.formatCurrency(payroll.netPay)}</th></tr>
+                        </table>
+                    </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        },
+
+        renderSalaryChart() {
+            const ctx = document.getElementById('salaryChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: this.employees.map(e => e.name),
+                    datasets: [{
+                        label: 'Total Salary',
+                        data: this.employees.map(e => this.calculateTotalSalary(e.salary)),
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(153, 102, 255, 0.6)',
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Salary (INR)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Employee Salary Distribution'
+                        }
+                    }
+                }
+            });
+        },
+
+        formatCurrency(amount) {
+            return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(amount);
+        },
+    };
+}
+
+// notice
+function noticeData() {
+    return {
+        notices: [
+            { id: 1, title: "Company Picnic", date: "2024-07-15", content: "Annual company picnic at Central Park. All employees and their families are invited.", department: "All Departments" },
+            { id: 2, title: "New Project Kickoff", date: "2024-08-01", content: "Exciting new project starting next month. Team leads please prepare your reports.", department: "Development" },
+            { id: 3, title: "Office Renovation", date: "2024-06-10", content: "The 3rd floor will be under renovation from June 10th to June 20th. Please plan accordingly.", department: "Facilities" }
+        ],
+        showSidePanel: false,
+        showDeleteConfirm: false,
+        currentNotice: null,
+        noticeToDelete: null,
+        searchQuery: '',
+        formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        },
+        filteredNotices() {
+            return this.notices.filter(notice => 
+                notice.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                notice.department.toLowerCase().includes(this.searchQuery.toLowerCase())
+            );
+        },
+        saveNotice() {
+            if (this.currentNotice.id) {
+                const index = this.notices.findIndex(n => n.id === this.currentNotice.id);
+                if (index !== -1) {
+                    this.notices[index] = { ...this.currentNotice };
+                }
+            } else {
+                this.notices.push({
+                    ...this.currentNotice,
+                    id: Date.now()
+                });
+            }
+            this.showSidePanel = false;
+        },
+        confirmDelete(notice) {
+            this.noticeToDelete = notice;
+            this.showDeleteConfirm = true;
+        },
+        deleteNotice() {
+            this.notices = this.notices.filter(n => n.id !== this.noticeToDelete.id);
+            this.showDeleteConfirm = false;
+            this.showSidePanel = false;
+        }
+    }
+}
 
 // chart
 function updateChart() {
