@@ -166,7 +166,7 @@
         }
 
         .blue-gradient {
-            background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%);
+            background: #60A5fA;
         }
 
         .floating-shape {
@@ -193,7 +193,7 @@
 </head>
 
 <body class="text-gray-800">
-    <nav id="navbar" class="py-6 fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white shadow-md">
+    <nav id="navbar" class="py-6 fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white shadow-xl">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center">
                 <!-- Logo on the left -->
@@ -202,17 +202,13 @@
                 </div>
     
                 <!-- Navigation links in the center -->
-                <div class="hidden lg:flex items-center justify-center gap-10 flex-grow">
+                <div class="hidden lg:flex items-center justify-end gap-10 flex-grow">
                     <a href="#" class="text-gray-800 px-3 py-2 rounded-md transition duration-300 hover:bg-blue-500 hover:text-white">Home</a>
                     <a href="#" class="text-gray-800 px-3 py-2 rounded-md transition duration-300 hover:bg-blue-500 hover:text-white">Listings</a>
+                    <a href="#" class="text-gray-800 px-3 py-2 rounded-md transition duration-300 hover:bg-blue-500 hover:text-white">Realtors</a>
                     <a href="#" class="text-gray-800 px-3 py-2 rounded-md transition duration-300 hover:bg-blue-500 hover:text-white">About</a>
                     <a href="#" class="text-gray-800 px-3 py-2 rounded-md transition duration-300 hover:bg-blue-500 hover:text-white">Contact</a>
-                </div>
-    
-                <!-- Buttons on the right -->
-                <div class="hidden lg:flex items-center space-x-4">
-                    <a href="#" class="blue-gradient text-white px-6 py-2 rounded-tl-xl rounded-br-xl font-semibold hover:opacity-90 transition duration-300 shadow-md">Sign In</a>
-                    <a href="#" class="blue-gradient text-white px-6 py-2 rounded-tl-xl rounded-br-xl font-semibold hover:opacity-90 transition duration-300 shadow-md">Sign Up</a>
+                    <a href="signIn.html" class="blue-gradient text-white px-6 py-2 rounded-tl-xl rounded-br-xl font-semibold hover:opacity-90 transition duration-300 shadow-md">Sign In</a>
                 </div>
     
                 <!-- Hamburger menu for mobile -->
@@ -237,20 +233,128 @@
             style="--order: 3">About</a>
         <a href="#" class="menu-item text-blue-800 text-4xl mb-8 transition duration-300"
             style="--order: 4">Contact</a>
-        <a href="#"
-            class="menu-item blue-gradient text-white px-8 py-3 rounded-tl-xl rounded-br-xl font-semibold transition duration-300 shadow-md text-2xl mb-8"
-            style="--order: 5">Sign In</a>
-        <a href="#"
-            class="menu-item blue-gradient text-white px-8 py-3 rounded-tl-xl rounded-br-xl font-semibold transition duration-300 shadow-md text-2xl mb-8"
-            style="--order: 5">Sign Up</a>
+        <a href="#" class="menu-item text-blue-800 text-4xl mb-8 transition duration-300"
+            style="--order: 4">Realtors</a>
+        <a href="signIn.html" 
+            class="menu-item blue-gradient text-white px-8 py-3 rounded-tl-xl rounded-br-xl font-semibold transition duration-300 shadow-md text-2xl mb-8" style="--order: 5">
+            Sign In</a>
     </div>
 
-    <section class="min-h-screen relative overflow-hidden pt-10">
+    <section class="min-h-screen relative overflow-hidden pt-10 lg:pt-24 bg-gradient-to-br from-gray-50 to-gray-100">
+        <div class="floating-shape w-64 h-64 top-10 left-10"></div>
+        <div class="floating-shape w-48 h-48 bottom-10 right-10" style="animation-delay: -3s;"></div>
+        <div class="min-h-screen container mx-auto px-4 sm:px-6 lg:px-8 flex items-center relative">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
+                <div class="w-full space-y-12 pb-60 animate-on-scroll">
+                    <h1 class="text-6xl md:text-7xl font-bold leading-tight">
+                        <span class="text-blue-400 whitespace-nowrap">Find</span>
+                        <span class="bg-clip-text text-black">your Dream Home</span>
+                        <span class="text-blue-400">Today</span>
+                    </h1>                    
+                    <p class="text-lg md:text-xl text-gray-600 leading-relaxed">
+                        Search our inventory for homes you won't find anywhere else. 
+                    </p>
+        
+                    <div class="flex flex-col ">
+                        <div class="flex  gap-28 md:gap-36">
+                            <div class="relative">
+                                <div class="w-10 h-5 bg-blue-500 rounded-t-full transform -rotate-45"></div>
+                                <div class="absolute top-0 left-4 ">
+                                    <span class="text-black text-5xl font-bold">100+</span>
+                                    <span class="text-black text-md font-medium block mt-2">Listing Home</span>
+                                </div>
+                            </div>
+                            <div class="relative">
+                                <div class="w-10 h-5 bg-red-500 rounded-t-full transform -rotate-45"></div>
+                                <div class="absolute top-0 left-4 ">
+                                    <span class="text-black text-5xl font-bold">100+</span>
+                                    <span class="text-black text-md font-medium block mt-2">Home Sale</span>
+                                </div>
+                            </div>
+                            <div class="relative">
+                                <div class="w-10 h-5 bg-green-500 rounded-t-full transform -rotate-45"></div>
+                                <div class="absolute top-0 left-4 ">
+                                    <span class="text-black text-5xl font-bold">99+</span>
+                                    <span class="text-black text-md font-medium block mt-2">Realtors</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="hidden lg:block w-full h-full">
+                    <img src="/images/image/Group 56.png" alt="Dream Home" class="w-full h-full object-cover">
+                </div>
+            </div>
+        
+            <!-- Property Search Section -->
+            <div class="absolute bottom-[10px] md:bottom-[80px] lg:bottom-[50px] xl:bottom-[200px] left-0 lg:left-9 lg:right-1/4 w-full lg:w-3/5 bg-white rounded-lg p-8 transition-all duration-300">
+                <div class="flex flex-wrap -mx-2">
+                    <div class="w-full sm:w-1/2 lg:w-1/2 xl:w-1/4 px-2 mb-4 flex flex-col">
+                      <label for="location" class="block mb-2 text-sm font-medium text-gray-700">Location</label>
+                      <select id="location" class="w-full px-4 py-3 bg-gray-50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">Select Location</option>
+                        <option value="new-york">New York</option>
+                        <option value="los-angeles">Los Angeles</option>
+                        <option value="chicago">Chicago</option>
+                        <option value="add">+ Add Location</option>
+                      </select>
+                    </div>
+                  
+                    <div class="hidden xl:flex xl:items-center xl:px-2">
+                        <div class="h-14 w-px bg-gray-300"></div>
+                    </div>
+                  
+                    <div class="w-full sm:w-1/2 lg:w-1/2 xl:w-1/4 px-2 mb-4 flex flex-col">
+                      <label for="bedrooms" class="block mb-2 text-sm font-medium text-gray-700">Bedrooms</label>
+                      <select id="bedrooms" class="w-full px-4 py-3 bg-gray-50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">Select Bedrooms</option>
+                        <option value="1">1 Bedroom</option>
+                        <option value="2">2 Bedrooms</option>
+                        <option value="3">3 Bedrooms</option>
+                        <option value="4">4+ Bedrooms</option>
+                        <option value="add">+ Add Bedroom Option</option>
+                      </select>
+                    </div>
+                  
+                    <div class="hidden xl:flex xl:items-center xl:px-2">
+                        <div class="h-14 w-px bg-gray-300"></div>
+                    </div>
+                  
+                    <div class="w-full sm:w-1/2 lg:w-1/2 xl:w-1/4 px-2 mb-4 flex flex-col">
+                      <label for="bathrooms" class="block mb-2 text-sm font-medium text-gray-700">Bathrooms</label>
+                      <select id="bathrooms" class="w-full px-4 py-3 bg-gray-50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">Select Bathrooms</option>
+                        <option value="1">1 Bathroom</option>
+                        <option value="2">2 Bathrooms</option>
+                        <option value="3">3 Bathrooms</option>
+                        <option value="4">4+ Bathrooms</option>
+                        <option value="add">+ Add Bathroom Option</option>
+                      </select>
+                    </div>
+                  
+                    <div class="hidden xl:flex xl:items-center xl:px-2">
+                        <div class="h-14 w-px bg-gray-300"></div>
+                    </div>
+                  
+                    <div class="w-full sm:w-1/2 lg:w-1/2 xl:w-1/6 px-2 mb-4 flex flex-col justify-end">
+                      <button class="w-full bg-blue-400 text-white px-6 py-3 rounded-tl-3xl rounded-br-3xl mb-2 hover:bg-blue-600 transition-colors duration-300 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        Search
+                      </button>
+                    </div>
+                  </div>                  
+            </div>
+        </div>
+    </section>
+
+    <!-- <section class="min-h-screen relative overflow-hidden pt-24">
         <div class="floating-shape w-64 h-64 top-10 left-10"></div>
         <div class="floating-shape w-48 h-48 bottom-10 right-10" style="animation-delay: -3s;"></div>
         <div class="min-h-screen container mx-auto px-4 sm:px-6 lg:px-8 flex items-center relative">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <!-- Left side content -->
                 <div class="w-full space-y-8 animate-on-scroll">
                     <h1 class="text-6xl md:text-7xl font-bold leading-tight">
                         <span class="text-black whitespace-nowrap">Find your</span>
@@ -286,48 +390,56 @@
                             </div>
                         </div>
         
-                        <!-- Property Search Section -->
-                        <div class="bg-white rounded-lg shadow-md p-6 transition-all duration-300 hover:shadow-lg">
-                            <h2 class="text-2xl font-semibold mb-6">Search Our Private Listing</h2>
-                            <div class="flex flex-wrap -mx-2">
-                                <div class="w-full sm:w-1/2 lg:w-1/4 px-2 mb-4">
-                                    <select class="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                        <option value="">Location</option>
-                                        <!-- Add more options as needed -->
+                        <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl shadow-2xl p-8 transition-all duration-300 hover:shadow-3xl lg:w-3/4 mx-auto transform translate-y-1/4 hover:-translate-y-2">
+                            <h2 class="text-3xl font-semibold mb-6 text-center">Find Your Perfect Home</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                <div class="search-card">
+                                    <label for="location" class="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                                    <input type="text" id="location" class="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter city or ZIP code">
+                                </div>
+                                <div class="search-card">
+                                    <label for="bedrooms" class="block text-sm font-medium text-gray-700 mb-1">Bedrooms</label>
+                                    <select id="bedrooms" class="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                        <option value="">Any</option>
+                                        <option value="1">1+</option>
+                                        <option value="2">2+</option>
+                                        <option value="3">3+</option>
+                                        <option value="4">4+</option>
                                     </select>
                                 </div>
-                                <div class="w-full sm:w-1/2 lg:w-1/4 px-2 mb-4">
-                                    <select class="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                        <option value="">Bedrooms</option>
-                                        <!-- Add more options as needed -->
-                                    </select>
+                                <div class="search-card">
+                                    <label for="price-range" class="block text-sm font-medium text-gray-700 mb-1">Price Range</label>
+                                    <input type="range" id="price-range" class="w-full" min="0" max="1000000" step="10000">
+                                    <div class="flex justify-between text-sm text-gray-600 mt-1">
+                                        <span>$0</span>
+                                        <span>$1M+</span>
+                                    </div>
                                 </div>
-                                <div class="w-full sm:w-1/2 lg:w-1/4 px-2 mb-4">
-                                    <select class="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                        <option value="">Bathrooms</option>
-                                        <!-- Add more options as needed -->
-                                    </select>
-                                </div>
-                                <div class="w-full sm:w-1/2 lg:w-1/4 px-2 mb-4">
-                                    <button class="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors duration-300 flex items-center justify-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                        </svg>
-                                        Search
-                                    </button>
+                                <div class="search-card">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Amenities</label>
+                                    <div class="flex flex-wrap gap-2">
+                                        <button class="amenity-toggle">Pool</button>
+                                        <button class="amenity-toggle">Garage</button>
+                                        <button class="amenity-toggle">Garden</button>
+                                    </div>
                                 </div>
                             </div>
+                            <button class="mt-6 w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 flex items-center justify-center text-lg font-semibold">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                                Search Now
+                            </button>
                         </div>
                     </div>
                 </div>
     
-                <!-- Right side image -->
                 <div class="hidden lg:block w-full h-full">
-                    <img src="/images/hero.png" alt="Dream Home" class="w-full h-full object-cover">
+                    <img src="/images/image/Group 56.png" alt="Dream Home" class="w-full h-full object-cover">
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <section class="px-4 sm:px-6 lg:px-8 py-24 bg-gradient-to-br from-gray-100 to-gray-200">
         <div class="container mx-auto">
@@ -371,17 +483,24 @@
                     </a>
                 </div>
                 <div class="lg:w-1/2  animate-on-scroll">
-                    <div class="relative group">
-                        <img src="/images/Group 57.png" alt="Featured Property"
+                    <!-- <div class="relative group">
+                        <img src="/images/image/Group 57 (1).png" alt="Featured Property"
                             class="w-full h-auto rounded-lg transition duration-300 group-hover:shadow-3xl">
-                        <div
-                            class="absolute inset-0 bg-blue-600 bg-opacity-0 group-hover:bg-opacity-20 transition duration-300 rounded-lg flex items-center justify-center">
-                            <span
-                                class="text-white cursor-pointer text-2xl font-bold opacity-0 group-hover:opacity-100 transition duration-300 transform scale-0 group-hover:scale-100">
-                                Explore Now
-                            </span>
+                    </div> -->
+                    <div class="relative max-w-lg mx-auto mt-12 mb-16">
+                        <img src="/images/image/chat.png" alt="Featured Property" class="w-full h-auto">
+                        <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 bg-white p-4 rounded-lg shadow-lg border border-blue-600 max-w-xs w-full">
+                          <div class="relative">
+                            <div class="absolute -top-8 right-0 bg-blue-500 rounded-full p-2 shadow-lg">
+                              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                              </svg>
+                            </div>
+                            <h2 class="text-lg font-semibold text-gray-800 mb-2">Find the best deal</h2>
+                            <p class="text-sm text-gray-600">Browse thousands of properties</p>
+                          </div>
                         </div>
-                    </div>
+                      </div>   
                 </div>
             </div>
         </div>
@@ -389,42 +508,42 @@
 
     <section class="px-4 sm:px-6 lg:px-8 py-16 bg-white">
         <div class="container mx-auto">
-            <div class="flex flex-col lg:flex-row items-center justify-between space-y-12 lg:space-y-0 lg:space-x-12">
-                <div class="lg:w-1/2  animate-on-scroll">
+            <div class="flex flex-col animate-on-scroll lg:flex-row items-center bg-blue-50 border-2 border-blue-500 rounded-2xl px-10 py-20 justify-between space-y-12 lg:space-y-0 lg:space-x-12 shadow-lg">
+                <div class="lg:w-1/2 animate-on-scroll">
                     <h2 class="text-4xl font-bold mb-6 leading-tight">
-                        Built By Top Realtors For Realtors</span>
+                        Built By Top Realtors For Realtors
                     </h2>
-                    <h3 class="text-lg font-light text-gray-500 mb-8 leading-relaxed">
+                    <h3 class="text-lg font-light text-gray-600 mb-8 leading-relaxed">
                         Leverage Data and AI to take control of your business. Control the sale and streamline the
                         process. Gain deep knowledge of properties and processes.
                     </h3>
-                    <ul class="space-y-4 mb-8">
+                    <ul class="space-y-6 mb-8">
                         <li class="flex items-start">
-                            <img src="./images/Vector.svg" alt="Expert Guidance Icon" class="w-8 h-8 mr-4 mt-1 flex-shrink-0">
+                            <img src="./images/Vector.svg" alt="Expert Guidance Icon" class="w-6 h-6 mr-4 mt-1 flex-shrink-0 text-blue-500">
                             <span class="text-lg text-gray-700">Streamline The Buying Process</span>
                         </li>
                         <li class="flex items-start">
-                            <img src="./images/Vector.svg" alt="Expert Guidance Icon" class="w-8 h-8 mr-4 mt-1 flex-shrink-0">
+                            <img src="./images/Vector.svg" alt="Expert Guidance Icon" class="w-6 h-6 mr-4 mt-1 flex-shrink-0 text-blue-500">
                             <span class="text-lg text-gray-700">Help Sellers Maximize Value</span>
                         </li>
                         <li class="flex items-start">
-                            <img src="./images/Vector.svg" alt="Expert Guidance Icon" class="w-8 h-8 mr-4 mt-1 flex-shrink-0">
+                            <img src="./images/Vector.svg" alt="Expert Guidance Icon" class="w-6 h-6 mr-4 mt-1 flex-shrink-0 text-blue-500">
                             <span class="text-lg text-gray-700">Give Realtors the Tools to Succeed</span>
                         </li>
                     </ul>
                     <a href="#"
-                        class="inline-block bg-blue-500 text-white px-8 py-4 rounded-tl-3xl rounded-br-3xl font-semibold hover:bg-blue-700 transition duration-300 transform hover:scale-105 shadow-lg text-lg">
+                        class="inline-block bg-blue-600 text-white px-8 py-4 rounded-tl-3xl rounded-br-3xl font-semibold hover:bg-blue-700 transition duration-300 transform hover:scale-105 shadow-lg text-lg">
                         View all Realtors
                     </a>
                 </div>
-                <div class="lg:w-1/2  animate-on-scroll">
+                <div class="lg:w-1/2 animate-on-scroll">
                     <div class="relative">
-                        <img src="/images/realtors.png" alt="Featured Property"
+                        <img src="/images/image/Group 14082.png" alt="Featured Property"
                             class="w-full h-auto transition duration-300">
-                        <div class="absolute -bottom-6 -right-6 bg-blue-600 text-white p-4 rounded-lg shadow-lg">
+                        <!-- <div class="absolute -bottom-6 -right-6 bg-blue-600 text-white p-4 rounded-lg shadow-lg">
                             <p class="text-2xl font-bold">100+</p>
                             <p class="text-sm">Expert Realtors</p>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -600,7 +719,7 @@
     
                 <!-- Right side: Image -->
                 <div class="w-full lg:w-1/2 mt-12 lg:mt-0 animate-on-scroll">
-                    <img src="/images/Group 55.png" alt="Description of image" class="w-full h-auto">
+                    <img src="/images/image/Group 55.png" alt="Description of image" class="w-full h-auto">
                 </div>
             </div>
         </div>
@@ -864,6 +983,31 @@
                 handleNavbarScroll();
             });
         });
+    </script>
+
+    <script>
+        // Simple animation for counting up
+        function animateValue(id, start, end, duration) {
+            let current = start;
+            const range = end - start;
+            const increment = end > start ? 1 : -1;
+            const stepTime = Math.abs(Math.floor(duration / range));
+            const obj = document.getElementById(id);
+            const timer = setInterval(() => {
+                current += increment;
+                obj.innerHTML = current + "+";
+                if (current == end) {
+                    clearInterval(timer);
+                }
+            }, stepTime);
+        }
+
+        // Run animations when the page loads
+        window.onload = function() {
+            animateValue("listingCount", 0, 100, 2000);
+            animateValue("homeSaleCount", 0, 100, 2000);
+            animateValue("realtorCount", 0, 99, 2000);
+        }
     </script>
 
 </body>

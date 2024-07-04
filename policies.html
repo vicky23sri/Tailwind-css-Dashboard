@@ -65,13 +65,169 @@
     
     
     
-    <div class="flex flex-col md:flex-row justify-between items-start mb-6 space-y-4 md:space-y-0">
+    <!-- <div class="flex flex-col md:flex-row justify-between items-start mb-6 space-y-4 md:space-y-0">
         <h1 class="text-3xl font-bold">Policies</h1>
         <div x-data="{ currentDate: new Date('2024-01-20') }">
             <button class="bg-white px-4 py-2 rounded-md shadow flex items-center">
                 <i class="fas fa-calendar-alt mr-2"></i>
                 <span x-text="currentDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })"></span>
             </button>
+        </div>
+    </div> -->
+
+    <div x-data="{ 
+        policies: [
+            { id: 1, title: 'Work from Home Policy', content: 'Employees may work from home up to 2 days per week...', date: '2024-01-15', category: 'Operations', color: 'blue', icon: 'fa-home' },
+            { id: 2, title: 'Vacation Policy', content: 'All full-time employees are entitled to 20 days of paid vacation per year...', date: '2024-01-10', category: 'HR', color: 'green', icon: 'fa-umbrella-beach' },
+            { id: 3, title: 'Code of Conduct', content: 'All employees are expected to maintain professional behavior...', date: '2024-01-05', category: 'Ethics', color: 'purple', icon: 'fa-handshake' },
+            { id: 4, title: 'Health and Safety Guidelines', content: 'Ensuring a safe workplace for all employees...', date: '2024-01-20', category: 'Safety', color: 'red', icon: 'fa-shield-alt' },
+            { id: 5, title: 'Employee Training Program', content: 'Continuous learning and development opportunities...', date: '2024-01-25', category: 'Development', color: 'yellow', icon: 'fa-graduation-cap' }
+        ],
+        showSidePanel: false,
+        currentPolicy: null,
+        showDeleteConfirm: false,
+        policyToDelete: null,
+        searchQuery: '',
+        filteredPolicies() {
+            return this.policies.filter(policy => 
+                policy.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                policy.category.toLowerCase().includes(this.searchQuery.toLowerCase())
+            );
+        }
+    }">
+
+        <!-- Header -->
+        <header class="mb-10">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">HR Policies Dashboard</h1>
+            <div class="flex flex-col sm:flex-row justify-between items-center">
+                <p class="text-gray-600 mb-4 sm:mb-0">Manage and view company policies</p>
+                <div class="relative">
+                    <input x-model="searchQuery" type="text" placeholder="Search policies..."
+                        class="pl-10 pr-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Featured Policy -->
+        <div class="mb-10 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl p-8 text-white shadow-lg">
+            <h2 class="text-3xl font-bold mb-4">Featured Policy</h2>
+            <p class="text-xl mb-6">Work from Home Policy - Updated for 2024</p>
+            <button @click="currentPolicy = policies[0]; showSidePanel = true"
+                class="bg-white text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-100 transition duration-300 font-semibold">
+                Read More
+            </button>
+        </div>
+
+        <!-- Add New Policy Button -->
+        <div class="mb-8">
+            <button @click="currentPolicy = { title: '', content: '', date: '', category: '', color: 'gray', icon: 'fa-file' }; showSidePanel = true" 
+                class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg transition duration-300 flex items-center shadow-lg">
+                <i class="fas fa-plus mr-2"></i> Add New Policy
+            </button>
+        </div>
+
+        <!-- Policy Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <template x-for="policy in filteredPolicies()" :key="policy.id">
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-1"
+                    :class="`border-t-4 border-${policy.color}-500`">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <i :class="`fas ${policy.icon} text-2xl text-${policy.color}-500 mr-3`"></i>
+                            <h3 class="text-xl font-semibold" x-text="policy.title"></h3>
+                        </div>
+                        <p class="text-gray-600 mb-4" x-text="policy.category"></p>
+                        <p class="text-gray-700 mb-4 line-clamp-3" x-text="policy.content"></p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500" x-text="policy.date"></span>
+                            <button @click="currentPolicy = policy; showSidePanel = true" 
+                                class="text-blue-600 hover:text-blue-800 transition duration-300 flex items-center">
+                                <span>View Details</span>
+                                <i class="fas fa-chevron-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <!-- Side Panel for Viewing/Editing Policy -->
+        <div x-show="showSidePanel" 
+            class="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-300"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0">
+            <div class="w-full max-w-2xl bg-white h-full overflow-auto shadow-2xl transform transition-transform duration-300"
+                :class="showSidePanel ? 'translate-x-0' : 'translate-x-full'">
+                <div class="p-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-3xl font-bold text-gray-800">Policy Details</h3>
+                        <button @click="showSidePanel = false" class="text-gray-500 hover:text-gray-700 transition duration-300">
+                            <i class="fas fa-times text-2xl"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Policy Title</label>
+                            <input x-model="currentPolicy.title" type="text" 
+                                class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                            <input x-model="currentPolicy.category" type="text" 
+                                class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Policy Content</label>
+                            <textarea x-model="currentPolicy.content" 
+                                class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300" rows="8"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                            <input x-model="currentPolicy.date" type="date" 
+                                class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300">
+                        </div>
+                        <div class="flex justify-between">
+                            <button @click="
+                                let index = policies.findIndex(p => p.id === currentPolicy.id);
+                                if (index !== -1) {
+                                    policies[index] = {...currentPolicy};
+                                } else {
+                                    policies.push({...currentPolicy, id: Date.now()});
+                                }
+                                showSidePanel = false;
+                            " class="px-6 py-3 bg-green-500 text-white text-lg font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 transition duration-300">
+                                Save Changes
+                            </button>
+                            <button @click="policyToDelete = currentPolicy; showDeleteConfirm = true" 
+                                class="px-6 py-3 bg-red-500 text-white text-lg font-semibold rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75 transition duration-300">
+                                Delete Policy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete Confirmation Modal -->
+        <div x-show="showDeleteConfirm" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" x-cloak>
+            <div class="bg-white rounded-lg p-8 max-w-md w-full">
+                <h3 class="text-2xl font-bold mb-4">Confirm Deletion</h3>
+                <p class="mb-6">Are you sure you want to delete the policy: <span class="font-semibold" x-text="policyToDelete?.title"></span>?</p>
+                <div class="flex justify-end space-x-4">
+                    <button @click="showDeleteConfirm = false" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition duration-300">
+                        Cancel
+                    </button>
+                    <button @click="policies = policies.filter(p => p.id !== policyToDelete.id); showDeleteConfirm = false; showSidePanel = false;" 
+                        class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-300">
+                        Confirm Delete
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </body>
