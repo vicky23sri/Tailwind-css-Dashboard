@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 
 <head>
     <meta charset="UTF-8">
@@ -9,40 +9,61 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-    
+
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
-    
+
         .animate-fadeIn {
             animation: fadeIn 0.5s ease-out;
         }
-    
+
         .animate-pulse {
             animation: pulse 0.5s ease-in-out;
         }
-    
+
         .transition-all {
             transition: all 0.3s ease-in-out;
+        }
+
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
         }
     </style>
 </head>
 
-<body class="bg-white">
-    <div class="min-h-screen flex items-center justify-center p-4">
-        <div class="bg-white rounded-lg p-8 w-full max-w-lg">
-            <h1 class="text-4xl md:text-4xl font-bold mb-4 text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+<body>
+    <div class="min-h-screen flex items-center justify-center p-4 mt-16">
+        <div class="bg-white rounded-lg p-8 w-full max-w-xl">
+            <h1
+                class="text-4xl md:text-4xl font-bold mb-4 text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
                 Finish creating an account
             </h1>
             <p class="text-gray-500 mb-8 text-sm">
                 Signing in as <span class="underline">maxivicky143@gmail.com</span>
             </p>
-    
+
             <form id="authForm" class="space-y-10">
                 <div>
                     <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">
@@ -61,7 +82,8 @@
                     <input type="password" id="password" name="password"
                         class="w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
                         placeholder="*****" required>
-                    <p id="passwordError" class="mt-1 text-red-500 text-xs hidden">Password must be 5 to 128 characters long.</p>
+                    <p id="passwordError" class="mt-1 text-red-500 text-xs hidden">Password must be 5 to 128 characters
+                        long.</p>
                 </div>
                 <div>
                     <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">
@@ -72,100 +94,92 @@
                         placeholder="Enter your mobile number">
                     <p id="phoneError" class="mt-1 text-red-500 text-xs hidden">Please enter a valid phone number.</p>
                 </div>
-                <div class="flex items-center text-sm font-semibold mb-2 mt-6">
-                    Are you a Realtor?
-                    <div class="ml-4 flex">
-                        <div class="flex items-center mr-4">
-                            <input id="realtor-yes" type="radio" value="yes" name="is-realtor" class="w-4 h-4 text-blue-600 bg-gray-100 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 border-none">
-                            <label for="realtor-yes" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Yes</label>
+                <div class="space-y-6 mt-8">
+                    <div class="bg-gray-50 p-4 rounded-xl shadow-sm">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-3">Professional Information</h3>
+                        <div class="flex items-center text-sm font-medium mb-4">
+                            <span class="mr-4">Are you a Realtor?</span>
+                            <div class="flex space-x-4">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" class="form-radio text-blue-600" name="is-realtor" value="yes"
+                                        id="realtor-yes">
+                                    <span class="ml-2">Yes</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" class="form-radio text-blue-600" name="is-realtor" value="no"
+                                        id="realtor-no" checked>
+                                    <span class="ml-2">No</span>
+                                </label>
+                            </div>
                         </div>
-                        <div class="flex items-center">
-                            <input id="realtor-no" type="radio" value="no" name="is-realtor" class="w-4 h-4 text-blue-600 bg-gray-100 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 border-none" checked>
-                            <label for="realtor-no" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">No</label>
+                        <div id="dre-number-field" class="hidden transition-all duration-300 ease-in-out">
+                            <label for="dre-number" class="block text-sm font-medium text-gray-700 mb-1">DRE
+                                Number</label>
+                            <input type="text" id="dre-number" name="dre-number"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+                                placeholder="Enter your DRE number">
                         </div>
                     </div>
                 </div>
-                <div id="dre-number-field" class="mb-4 hidden">
-                    <label for="dre-number" class="block text-sm font-medium text-gray-900 dark:text-gray-300">DRE Number</label>
-                    <input type="text" id="dre-number" name="dre-number" class="mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm w-full">
-                </div>
                 <button type="submit" id="submitButton"
-                    class="w-full flex justify-center py-4 px-4 mb-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition duration-200">
+                    class="w-full flex justify-center py-4 px-4 mb-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition duration-200 transform hover:-translate-y-1">
                     Confirm
                 </button>
             </form>
             <div class="mt-4 mb-4 text-center">
-                <a class="text-sm text-blue-600 mt-4 hover:text-blue-800" href="reset-password.html">
+                <a class="text-sm text-blue-600 mt-4 hover:text-blue-800 transition-colors" href="reset-password.html">
                     Forgot your password?
                 </a>
             </div>
 
             <h1 class="text-sm mb-2 text-gray-800">
-                Your information is protected by our <span class="underline">Privacy Policy.</span>
+                Your information is protected by our <span
+                    class="underline cursor-pointer hover:text-blue-600 transition-colors">Privacy Policy.</span>
             </h1>
             <p class="text-gray-500 mb-8 text-sm">
-                By clicking "Confirm" I consent to receive marketing calls and texts from PrivateOpenHouse and its affiliates 
-                to the number provided, including by automated means. I may opt out at any time and consent is not a 
+                By clicking "Confirm" I consent to receive marketing calls and texts from PrivateOpenHouse and its
+                affiliates
+                to the number provided, including by automated means. I may opt out at any time and consent is not a
                 condition of purchase.
             </p>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-    const realtorYes = document.getElementById('realtor-yes');
-    const realtorNo = document.getElementById('realtor-no');
-    const dreNumberField = document.getElementById('dre-number-field');
+        document.addEventListener('DOMContentLoaded', function () {
+            const realtorYes = document.getElementById('realtor-yes');
+            const realtorNo = document.getElementById('realtor-no');
+            const dreNumberField = document.getElementById('dre-number-field');
 
-    function toggleDreNumberField() {
-        if (realtorYes.checked) {
-            dreNumberField.classList.remove('hidden');
-            setTimeout(() => {
-                dreNumberField.classList.add('animate-fadeIn');
-            }, 50);
-        } else {
-            dreNumberField.classList.remove('animate-fadeIn');
-            dreNumberField.classList.add('animate-fadeOut');
-            setTimeout(() => {
-                dreNumberField.classList.add('hidden');
-                dreNumberField.classList.remove('animate-fadeOut');
-            }, 300);
-        }
-    }
+            function toggleDreNumberField() {
+                if (realtorYes.checked) {
+                    dreNumberField.classList.remove('hidden');
+                    dreNumberField.classList.add('animate-fadeIn');
+                } else {
+                    dreNumberField.classList.remove('animate-fadeIn');
+                    dreNumberField.classList.add('animate-fadeOut');
+                    setTimeout(() => {
+                        dreNumberField.classList.add('hidden');
+                        dreNumberField.classList.remove('animate-fadeOut');
+                    }, 300);
+                }
+            }
 
-    realtorYes.addEventListener('change', toggleDreNumberField);
-    realtorNo.addEventListener('change', toggleDreNumberField);
+            realtorYes.addEventListener('change', toggleDreNumberField);
+            realtorNo.addEventListener('change', toggleDreNumberField);
 
-    // Initial check
-    toggleDreNumberField();
+            // Initial check
+            toggleDreNumberField();
 
-    // Add animation classes
-    const radioLabels = document.querySelectorAll('[name="is-realtor"] + div');
-    radioLabels.forEach(label => {
-        label.addEventListener('click', function() {
-            radioLabels.forEach(l => l.classList.remove('scale-105', 'shadow-lg', 'animate-pulse'));
-            this.classList.add('scale-105', 'shadow-lg', 'animate-pulse');
+            // Add focus animation to DRE number input
+            const dreNumberInput = document.getElementById('dre-number');
+            dreNumberInput.addEventListener('focus', () => {
+                dreNumberInput.classList.add('ring-2', 'ring-blue-500');
+            });
+            dreNumberInput.addEventListener('blur', () => {
+                dreNumberInput.classList.remove('ring-2', 'ring-blue-500');
+            });
         });
-    });
-
-    // Add hover effect to the Realtor section
-    const realtorSection = document.querySelector('.bg-gray-100');
-    realtorSection.addEventListener('mouseenter', () => {
-        realtorSection.classList.add('shadow-md');
-    });
-    realtorSection.addEventListener('mouseleave', () => {
-        realtorSection.classList.remove('shadow-md');
-    });
-
-    // Add focus animation to DRE number input
-    const dreNumberInput = document.getElementById('dre-number');
-    dreNumberInput.addEventListener('focus', () => {
-        dreNumberInput.classList.add('animate-pulse');
-    });
-    dreNumberInput.addEventListener('blur', () => {
-        dreNumberInput.classList.remove('animate-pulse');
-    });
-});
     </script>
 </body>
 
