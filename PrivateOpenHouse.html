@@ -7,6 +7,8 @@
     <title>Private Open House</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.0.2.x/dist/cdn.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
         rel="stylesheet">
     <style>
@@ -30,6 +32,88 @@
                 transform: translateY(0);
                 opacity: 1;
             }
+        }
+
+        /* property */
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .animate-float-delayed {
+            animation: float 6s ease-in-out 3s infinite;
+        }
+
+        .property-slider {
+            width: 100%;
+            position: relative;
+        }
+
+        .slider-container {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .property-card {
+            flex: 0 0 100%;
+            max-width: 100%;
+            padding: 0 10px;
+        }
+
+        @media (min-width: 640px) {
+            .property-card {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .property-card {
+                flex: 0 0 33.333%;
+                max-width: 33.333%;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.5s ease-out;
         }
 
         .full-screen-menu {
@@ -66,17 +150,17 @@
         }
 
         .full-screen-menu.active .menu-item {
-        opacity: 1;
-        transform: translateY(0);
-    }
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-    .nav-link.active {
-        color: #3B82F6;
-    }
+        .nav-link.active {
+            color: #3B82F6;
+        }
 
-    .nav-link.active span {
-        transform: scaleX(1);
-    }
+        .nav-link.active span {
+            transform: scaleX(1);
+        }
 
         .hamburger {
             cursor: pointer;
@@ -122,14 +206,38 @@
             transform: translate3d(0, 0, 0);
         }
 
-        .hamburger span:nth-child(1) { top: 0px; }
-        .hamburger span:nth-child(2), .hamburger span:nth-child(3) { top: 8px; }
-        .hamburger span:nth-child(4) { top: 16px; }
+        .hamburger span:nth-child(1) {
+            top: 0px;
+        }
 
-        .hamburger.open span:nth-child(1) { top: 18px; width: 0%; left: 50%; }
-        .hamburger.open span:nth-child(2) { transform: rotate(45deg); }
-        .hamburger.open span:nth-child(3) { transform: rotate(-45deg); }
-        .hamburger.open span:nth-child(4) { top: 18px; width: 0%; left: 50%; }
+        .hamburger span:nth-child(2),
+        .hamburger span:nth-child(3) {
+            top: 8px;
+        }
+
+        .hamburger span:nth-child(4) {
+            top: 16px;
+        }
+
+        .hamburger.open span:nth-child(1) {
+            top: 18px;
+            width: 0%;
+            left: 50%;
+        }
+
+        .hamburger.open span:nth-child(2) {
+            transform: rotate(45deg);
+        }
+
+        .hamburger.open span:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+
+        .hamburger.open span:nth-child(4) {
+            top: 18px;
+            width: 0%;
+            left: 50%;
+        }
 
 
         /* .hamburger span:nth-child(1) {
@@ -210,44 +318,57 @@
 </head>
 
 <body class="text-gray-800">
-    <nav id="navbar" class="py-6 fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white shadow-xl">
+    <nav id="navbar" class="py-6 fixed top-0 left-0 right-0 z-10 transition-all duration-300 bg-white shadow-xl">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center">
                 <!-- Logo on the left -->
                 <div class="flex-shrink-0">
                     <img src="/images/logo1.png" alt="Luxe Real Estate Logo" class="h-12 w-auto">
                 </div>
-    
+
                 <!-- Navigation links in the center -->
                 <div class="hidden lg:flex items-center justify-end gap-8 flex-grow relative">
-                    <a href="#" class="nav-link text-gray-800 px-3 py-2 rounded-md transition-all duration-300 ease-in-out transform hover:text-blue-600 relative group">
+                    <a href="#"
+                        class="nav-link text-gray-800 px-3 py-2 rounded-md transition-all duration-300 ease-in-out transform hover:text-blue-600 relative group">
                         Home
-                        <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></span>
+                        <span
+                            class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></span>
                     </a>
-                    <a href="#" class="nav-link text-gray-800 px-3 py-2 rounded-md transition-all duration-300 ease-in-out transform hover:text-blue-600 relative group">
+                    <a href="#"
+                        class="nav-link text-gray-800 px-3 py-2 rounded-md transition-all duration-300 ease-in-out transform hover:text-blue-600 relative group">
                         Listings
-                        <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></span>
+                        <span
+                            class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></span>
                     </a>
-                    <a href="#" class="nav-link text-gray-800 px-3 py-2 rounded-md transition-all duration-300 ease-in-out transform hover:text-blue-600 relative group">
+                    <a href="#"
+                        class="nav-link text-gray-800 px-3 py-2 rounded-md transition-all duration-300 ease-in-out transform hover:text-blue-600 relative group">
                         Realtors
-                        <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></span>
+                        <span
+                            class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></span>
                     </a>
-                    <a href="#" class="nav-link text-gray-800 px-3 py-2 rounded-md transition-all duration-300 ease-in-out transform hover:text-blue-600 relative group">
+                    <a href="#"
+                        class="nav-link text-gray-800 px-3 py-2 rounded-md transition-all duration-300 ease-in-out transform hover:text-blue-600 relative group">
                         About
-                        <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></span>
+                        <span
+                            class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></span>
                     </a>
-                    <a href="#" class="nav-link text-gray-800 px-3 py-2 rounded-md transition-all duration-300 ease-in-out transform hover:text-blue-600 relative group">
+                    <a href="#"
+                        class="nav-link text-gray-800 px-3 py-2 rounded-md transition-all duration-300 ease-in-out transform hover:text-blue-600 relative group">
                         Contact
-                        <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></span>
+                        <span
+                            class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></span>
                     </a>
-                    <a href="signIn.html" class="bg-blue-400 text-white px-6 py-3 rounded-tl-3xl rounded-br-3xl font-semibold hover:bg-blue-500 transition-all duration-300 shadow-md transform hover:scale-105 hover:shadow-lg flex items-center justify-center">
+                    <a href="signIn.html"
+                        class="bg-blue-400 text-white px-6 py-3 rounded-tl-3xl rounded-br-3xl font-semibold hover:bg-blue-500 transition-all duration-300 shadow-md transform hover:scale-105 hover:shadow-lg flex items-center justify-center">
                         <span class="mr-2">Sign In</span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            <path fill-rule="evenodd"
+                                d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z"
+                                clip-rule="evenodd" />
                         </svg>
                     </a>
                 </div>
-    
+
                 <!-- Hamburger menu for mobile -->
                 <div id="hamburger" class="lg:hidden hamburger">
                     <span></span>
@@ -258,34 +379,47 @@
             </div>
         </div>
     </nav>
-    
+
     <!-- Full-screen menu (keep this outside the nav) -->
-    <div id="full-screen-menu" class="fixed inset-0 bg-white bg-opacity-95 z-50 flex flex-col items-center justify-center hidden">
+    <div id="full-screen-menu"
+        class="fixed inset-0 bg-white bg-opacity-95 z-50 flex flex-col items-center justify-center hidden">
         <div id="close-btn" class="absolute top-6 right-6 text-4xl cursor-pointer text-blue-400">&times;</div>
-        <a href="#" class="menu-item text-blue-800 text-4xl mb-8 transition-all duration-300 transform hover:scale-110 hover:text-blue-600" style="--order: 1">Home</a>
-        <a href="#" class="menu-item text-blue-800 text-4xl mb-8 transition-all duration-300 transform hover:scale-110 hover:text-blue-600" style="--order: 2">Listings</a>
-        <a href="#" class="menu-item text-blue-800 text-4xl mb-8 transition-all duration-300 transform hover:scale-110 hover:text-blue-600" style="--order: 3">About</a>
-        <a href="#" class="menu-item text-blue-800 text-4xl mb-8 transition-all duration-300 transform hover:scale-110 hover:text-blue-600" style="--order: 4">Contact</a>
-        <a href="#" class="menu-item text-blue-800 text-4xl mb-8 transition-all duration-300 transform hover:scale-110 hover:text-blue-600" style="--order: 5">Realtors</a>
-        <a href="signIn.html" class="menu-item bg-blue-400 text-white px-8 py-3 rounded-md font-semibold transition-all duration-300 shadow-md text-2xl mb-8 transform hover:scale-110 hover:bg-blue-700" style="--order: 6">Sign In</a>
+        <a href="#"
+            class="menu-item text-blue-800 text-4xl mb-8 transition-all duration-300 transform hover:scale-110 hover:text-blue-600"
+            style="--order: 1">Home</a>
+        <a href="#"
+            class="menu-item text-blue-800 text-4xl mb-8 transition-all duration-300 transform hover:scale-110 hover:text-blue-600"
+            style="--order: 2">Listings</a>
+        <a href="#"
+            class="menu-item text-blue-800 text-4xl mb-8 transition-all duration-300 transform hover:scale-110 hover:text-blue-600"
+            style="--order: 3">About</a>
+        <a href="#"
+            class="menu-item text-blue-800 text-4xl mb-8 transition-all duration-300 transform hover:scale-110 hover:text-blue-600"
+            style="--order: 4">Contact</a>
+        <a href="#"
+            class="menu-item text-blue-800 text-4xl mb-8 transition-all duration-300 transform hover:scale-110 hover:text-blue-600"
+            style="--order: 5">Realtors</a>
+        <a href="signIn.html"
+            class="menu-item bg-blue-400 text-white px-8 py-3 rounded-md font-semibold transition-all duration-300 shadow-md text-2xl mb-8 transform hover:scale-110 hover:bg-blue-700"
+            style="--order: 6">Sign In</a>
     </div>
 
     <section class="min-h-screen relative overflow-hidden pt-10 lg:pt-24 bg-gradient-to-br from-gray-50 to-gray-100">
         <div class="floating-shape w-64 h-64 top-10 left-10"></div>
         <div class="floating-shape w-48 h-48 bottom-10 right-10" style="animation-delay: -3s;"></div>
         <div class="min-h-screen container mx-auto px-4 sm:px-6 lg:px-8 flex items-center relative">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
-                <div class="w-full space-y-12 pb-60 animate-on-scroll">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-10 md:mb-20">
+                <div class="w-full space-y-0 md:space-y-12 pb-60 animate-on-scroll">
                     <h1 class="text-6xl md:text-7xl font-bold leading-tight">
                         <span class="text-blue-400 whitespace-nowrap">Find</span>
                         <span class="bg-clip-text text-black">your Dream Home</span>
                         <span class="text-blue-400">Today</span>
-                    </h1>                    
-                    <p class="text-lg md:text-xl text-gray-600 leading-relaxed">
-                        Search our inventory for homes you won't find anywhere else. 
+                    </h1>
+                    <p class="text-lg md:text-xl text-gray-600 leading-relaxed mb-4">
+                        Search our inventory for homes you won't find anywhere else.
                     </p>
-        
-                    <div class="flex flex-col ">
+
+                    <div class="hidden md:flex flex-col ">
                         <div class="flex  gap-28 md:gap-36">
                             <div class="relative">
                                 <div class="w-10 h-5 bg-blue-500 rounded-t-full transform -rotate-45"></div>
@@ -311,74 +445,421 @@
                         </div>
                     </div>
                 </div>
-        
+
                 <div class="hidden lg:block w-full h-full">
                     <img src="/images/image/Group 56.png" alt="Dream Home" class="w-full h-full object-cover">
                 </div>
             </div>
-        
+
             <!-- Property Search Section -->
-            <div class="absolute bottom-[10px] md:bottom-[80px] lg:bottom-[50px] xl:bottom-[200px] left-0 lg:left-9 lg:right-1/4 w-full lg:w-3/5 bg-white rounded-lg p-8 transition-all duration-300">
+            <div
+                class="absolute bottom-[10px] md:bottom-[80px] lg:bottom-[50px] xl:bottom-[200px] left-3 lg:left-9 lg:right-1/4 w-full lg:w-3/5 bg-white rounded-lg p-8 transition-all duration-300">
                 <div class="flex flex-wrap -mx-2">
                     <div class="w-full sm:w-1/2 lg:w-1/2 xl:w-1/4 px-2 mb-4 flex flex-col">
-                      <label for="location" class="block mb-2 text-sm font-medium text-gray-700">Location</label>
-                      <select id="location" class="w-full px-4 py-3 bg-gray-50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                        <option value="">Select Location</option>
-                        <option value="new-york">New York</option>
-                        <option value="los-angeles">Los Angeles</option>
-                        <option value="chicago">Chicago</option>
-                        <option value="add">+ Add Location</option>
-                      </select>
+                        <label for="location" class="block mb-2 text-sm font-medium text-gray-700">Location</label>
+                        <select id="location"
+                            class="w-full px-4 py-3 bg-gray-50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">Location</option>
+                            <option value="new-york">New York</option>
+                            <option value="los-angeles">Los Angeles</option>
+                            <option value="chicago">Chicago</option>
+                            <option value="add">+ Add Location</option>
+                        </select>
                     </div>
-                  
+
                     <div class="hidden xl:flex xl:items-center xl:px-2">
                         <div class="h-14 w-px bg-gray-300"></div>
                     </div>
-                  
+
                     <div class="w-full sm:w-1/2 lg:w-1/2 xl:w-1/4 px-2 mb-4 flex flex-col">
-                      <label for="bedrooms" class="block mb-2 text-sm font-medium text-gray-700">Bedrooms</label>
-                      <select id="bedrooms" class="w-full px-4 py-3 bg-gray-50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                        <option value="">Select Bedrooms</option>
-                        <option value="1">1 Bedroom</option>
-                        <option value="2">2 Bedrooms</option>
-                        <option value="3">3 Bedrooms</option>
-                        <option value="4">4+ Bedrooms</option>
-                        <option value="add">+ Add Bedroom Option</option>
-                      </select>
+                        <label for="bedrooms" class="block mb-2 text-sm font-medium text-gray-700">Bedrooms</label>
+                        <select id="bedrooms"
+                            class="w-full px-4 py-3 bg-gray-50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">Bedrooms</option>
+                            <option value="1">1 Bedroom</option>
+                            <option value="2">2 Bedrooms</option>
+                            <option value="3">3 Bedrooms</option>
+                            <option value="4">4+ Bedrooms</option>
+                            <option value="add">+ Add Bedroom Option</option>
+                        </select>
                     </div>
-                  
+
                     <div class="hidden xl:flex xl:items-center xl:px-2">
                         <div class="h-14 w-px bg-gray-300"></div>
                     </div>
-                  
+
                     <div class="w-full sm:w-1/2 lg:w-1/2 xl:w-1/4 px-2 mb-4 flex flex-col">
-                      <label for="bathrooms" class="block mb-2 text-sm font-medium text-gray-700">Bathrooms</label>
-                      <select id="bathrooms" class="w-full px-4 py-3 bg-gray-50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                        <option value="">Select Bathrooms</option>
-                        <option value="1">1 Bathroom</option>
-                        <option value="2">2 Bathrooms</option>
-                        <option value="3">3 Bathrooms</option>
-                        <option value="4">4+ Bathrooms</option>
-                        <option value="add">+ Add Bathroom Option</option>
-                      </select>
+                        <label for="bathrooms" class="block mb-2 text-sm font-medium text-gray-700">Bathrooms</label>
+                        <select id="bathrooms"
+                            class="w-full px-4 py-3 bg-gray-50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">Bathrooms</option>
+                            <option value="1">1 Bathroom</option>
+                            <option value="2">2 Bathrooms</option>
+                            <option value="3">3 Bathrooms</option>
+                            <option value="4">4+ Bathrooms</option>
+                            <option value="add">+ Add Bathroom Option</option>
+                        </select>
                     </div>
-                  
+
                     <div class="hidden xl:flex xl:items-center xl:px-2">
                         <div class="h-14 w-px bg-gray-300"></div>
                     </div>
-                  
+
                     <div class="w-full sm:w-1/2 lg:w-1/2 xl:w-1/6 px-2 mb-4 flex flex-col justify-end">
-                      <button class="w-full bg-blue-400 text-white px-6 py-3 rounded-tl-3xl rounded-br-3xl mb-2 hover:bg-blue-400 transition-colors duration-300 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                        Search
-                      </button>
+                        <button
+                            class="w-full bg-blue-400 text-white px-6 py-3 rounded-tl-3xl rounded-br-3xl mb-2 hover:bg-blue-400 transition-colors duration-300 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                            Search
+                        </button>
                     </div>
-                  </div>                  
+                </div>
             </div>
         </div>
     </section>
+
+    <!-- <section class="relative overflow-hidden bg-white">
+        <div class="floating-shape w-64 h-64 top-10 left-10"></div>
+        <div class="floating-shape w-48 h-48 bottom-10 right-10" style="animation-delay: -3s;"></div>
+        <div class="container mx-auto py-10 md:py-10 px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">Featured Properties</h2>
+            <div class="property-slider overflow-hidden">
+                <div class="slider-container flex transition-transform duration-500 ease-in-out gap-2">
+                    <div class="property-card animate-on-scroll max-w-sm mx-auto bg-white rounded-lg overflow-hidden shadow-lg transform transition duration-500 hover:scale-105">
+                        <div class="relative">
+                            <img class="w-full h-64 object-cover" src="https://img.freepik.com/free-photo/modern-residential-district-with-green-roof-balcony-generated-by-ai_188544-10276.jpg?w=1380&t=st=1688547677~exp=1688548277~hmac=5f0a1b2d4f3d6e15b8d7079628a6eb7fc3f6cc6c8b7827a61ecf00b3cdb893d9" alt="Luxury Villa">
+                            <div class="absolute bottom-1 left-0 bg-blue-500 text-white px-3 py-2 m-2 rounded-md text-sm font-bold">
+                                $8,500,000
+                            </div>
+                            <button class="like-button absolute top-4 right-4 bg-white bg-opacity-90 p-2 rounded-full shadow-lg transition-colors duration-300 text-gray-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-2xl font-bold text-black">Tranquil Retreat</span>
+                                <div class="flex space-x-2">
+                                    <span class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-1 rounded-full">Beachfront</span>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">123 Serenity Lane, Beverly Hills, CA</p>
+                            <div class="flex justify-between text-sm text-gray-600 mb-4">
+                                <span><i class="fas fa-bed mr-2"></i>4 Beds</span>
+                                <span><i class="fas fa-bath mr-2"></i>3.5 Baths</span>
+                                <span><i class="fas fa-ruler-combined mr-2"></i>5,200 sqft</span>
+                            </div>
+                            <button class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:rotate-1">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="property-card animate-on-scroll max-w-sm mx-auto bg-white rounded-lg overflow-hidden shadow-lg transform transition duration-500 hover:scale-105">
+                        <div class="relative">
+                            <img class="w-full h-64 object-cover" src="https://img.freepik.com/free-photo/modern-residential-district-with-green-roof-balcony-generated-by-ai_188544-10276.jpg?w=1380&t=st=1688547677~exp=1688548277~hmac=5f0a1b2d4f3d6e15b8d7079628a6eb7fc3f6cc6c8b7827a61ecf00b3cdb893d9" alt="Luxury Villa">
+                            <div class="absolute bottom-1 left-0 bg-blue-500 text-white px-3 py-2 m-2 rounded-md text-sm font-bold">
+                                $8,500,000
+                            </div>
+                            <button class="like-button absolute top-4 right-4 bg-white bg-opacity-90 p-2 rounded-full shadow-lg transition-colors duration-300 text-gray-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-2xl font-bold text-black">Tranquil Retreat</span>
+                                <div class="flex space-x-2">
+                                    <span class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-1 rounded-full">Beachfront</span>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">123 Serenity Lane, Beverly Hills, CA</p>
+                            <div class="flex justify-between text-sm text-gray-600 mb-4">
+                                <span><i class="fas fa-bed mr-2"></i>4 Beds</span>
+                                <span><i class="fas fa-bath mr-2"></i>3.5 Baths</span>
+                                <span><i class="fas fa-ruler-combined mr-2"></i>5,200 sqft</span>
+                            </div>
+                            <button class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:rotate-1">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="property-card animate-on-scroll max-w-sm mx-auto bg-white rounded-lg overflow-hidden shadow-lg transform transition duration-500 hover:scale-105">
+                        <div class="relative">
+                            <img class="w-full h-64 object-cover" src="https://img.freepik.com/free-photo/modern-residential-district-with-green-roof-balcony-generated-by-ai_188544-10276.jpg?w=1380&t=st=1688547677~exp=1688548277~hmac=5f0a1b2d4f3d6e15b8d7079628a6eb7fc3f6cc6c8b7827a61ecf00b3cdb893d9" alt="Luxury Villa">
+                            <div class="absolute bottom-1 left-0 bg-blue-500 text-white px-3 py-2 m-2 rounded-md text-sm font-bold">
+                                $8,500,000
+                            </div>
+                            <button class="like-button absolute top-4 right-4 bg-white bg-opacity-90 p-2 rounded-full shadow-lg transition-colors duration-300 text-gray-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-2xl font-bold text-black">Tranquil Retreat</span>
+                                <div class="flex space-x-2">
+                                    <span class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-1 rounded-full">Beachfront</span>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">123 Serenity Lane, Beverly Hills, CA</p>
+                            <div class="flex justify-between text-sm text-gray-600 mb-4">
+                                <span><i class="fas fa-bed mr-2"></i>4 Beds</span>
+                                <span><i class="fas fa-bath mr-2"></i>3.5 Baths</span>
+                                <span><i class="fas fa-ruler-combined mr-2"></i>5,200 sqft</span>
+                            </div>
+                            <button class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:rotate-1">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="property-card animate-on-scroll max-w-sm mx-auto bg-white rounded-lg overflow-hidden shadow-lg transform transition duration-500 hover:scale-105">
+                        <div class="relative">
+                            <img class="w-full h-64 object-cover" src="https://img.freepik.com/free-photo/modern-residential-district-with-green-roof-balcony-generated-by-ai_188544-10276.jpg?w=1380&t=st=1688547677~exp=1688548277~hmac=5f0a1b2d4f3d6e15b8d7079628a6eb7fc3f6cc6c8b7827a61ecf00b3cdb893d9" alt="Luxury Villa">
+                            <div class="absolute bottom-1 left-0 bg-blue-500 text-white px-3 py-2 m-2 rounded-md text-sm font-bold">
+                                $8,500,000
+                            </div>
+                            <button class="like-button absolute top-4 right-4 bg-white bg-opacity-90 p-2 rounded-full shadow-lg transition-colors duration-300 text-gray-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-2xl font-bold text-black">Tranquil Retreat</span>
+                                <div class="flex space-x-2">
+                                    <span class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-1 rounded-full">Beachfront</span>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">123 Serenity Lane, Beverly Hills, CA</p>
+                            <div class="flex justify-between text-sm text-gray-600 mb-4">
+                                <span><i class="fas fa-bed mr-2"></i>4 Beds</span>
+                                <span><i class="fas fa-bath mr-2"></i>3.5 Baths</span>
+                                <span><i class="fas fa-ruler-combined mr-2"></i>5,200 sqft</span>
+                            </div>
+                            <button class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:rotate-1">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="property-card animate-on-scroll max-w-sm mx-auto bg-white rounded-lg overflow-hidden shadow-lg transform transition duration-500 hover:scale-105">
+                        <div class="relative">
+                            <img class="w-full h-64 object-cover" src="https://img.freepik.com/free-photo/modern-residential-district-with-green-roof-balcony-generated-by-ai_188544-10276.jpg?w=1380&t=st=1688547677~exp=1688548277~hmac=5f0a1b2d4f3d6e15b8d7079628a6eb7fc3f6cc6c8b7827a61ecf00b3cdb893d9" alt="Luxury Villa">
+                            <div class="absolute bottom-1 left-0 bg-blue-500 text-white px-3 py-2 m-2 rounded-md text-sm font-bold">
+                                $8,500,000
+                            </div>
+                            <button class="like-button absolute top-4 right-4 bg-white bg-opacity-90 p-2 rounded-full shadow-lg transition-colors duration-300 text-gray-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-2xl font-bold text-black">Tranquil Retreat</span>
+                                <div class="flex space-x-2">
+                                    <span class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-1 rounded-full">Beachfront</span>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">123 Serenity Lane, Beverly Hills, CA</p>
+                            <div class="flex justify-between text-sm text-gray-600 mb-4">
+                                <span><i class="fas fa-bed mr-2"></i>4 Beds</span>
+                                <span><i class="fas fa-bath mr-2"></i>3.5 Baths</span>
+                                <span><i class="fas fa-ruler-combined mr-2"></i>5,200 sqft</span>
+                            </div>
+                            <button class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:rotate-1">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="property-card animate-on-scroll max-w-sm mx-auto bg-white rounded-lg overflow-hidden shadow-lg transform transition duration-500 hover:scale-105">
+                        <div class="relative">
+                            <img class="w-full h-64 object-cover" src="https://img.freepik.com/free-photo/modern-residential-district-with-green-roof-balcony-generated-by-ai_188544-10276.jpg?w=1380&t=st=1688547677~exp=1688548277~hmac=5f0a1b2d4f3d6e15b8d7079628a6eb7fc3f6cc6c8b7827a61ecf00b3cdb893d9" alt="Luxury Villa">
+                            <div class="absolute bottom-1 left-0 bg-blue-500 text-white px-3 py-2 m-2 rounded-md text-sm font-bold">
+                                $8,500,000
+                            </div>
+                            <button class="like-button absolute top-4 right-4 bg-white bg-opacity-90 p-2 rounded-full shadow-lg transition-colors duration-300 text-gray-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-2xl font-bold text-black">Tranquil Retreat</span>
+                                <div class="flex space-x-2">
+                                    <span class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-1 rounded-full">Beachfront</span>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">123 Serenity Lane, Beverly Hills, CA</p>
+                            <div class="flex justify-between text-sm text-gray-600 mb-4">
+                                <span><i class="fas fa-bed mr-2"></i>4 Beds</span>
+                                <span><i class="fas fa-bath mr-2"></i>3.5 Baths</span>
+                                <span><i class="fas fa-ruler-combined mr-2"></i>5,200 sqft</span>
+                            </div>
+                            <button class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:rotate-1">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+            <div class="slider-controls mt-6 flex justify-center">
+                <button class="prev-btn mx-2 px-4 py-2 bg-blue-500 text-white rounded">Prev</button>
+                <button class="next-btn mx-2 px-4 py-2 bg-blue-500 text-white rounded">Next</button>
+            </div>
+        </div>
+    </section> -->
+
+    <section class="relative overflow-hidden bg-white">
+        <div class="floating-shape w-48 h-48 top-10 right-10"></div>
+        <div class="floating-shape w-64 h-64 bottom-10 left-10" style="animation-delay: -3s;"></div>
+        <div class="container mx-auto py-10 md:py-10 px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">Featured Properties</h2>
+            <div class="property-slider overflow-hidden">
+                <div class="slider-container flex transition-transform duration-500 ease-in-out">
+                    <div class="container mx-auto py-8">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
+                            <!-- Property Card 1 -->
+                            <div
+                                class="property-card animate-on-scroll max-w-xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg transform transition duration-500 hover:scale-105">
+                                <div class="relative overflow-hidden rounded-xl">
+                                    <img class="w-full h-64 object-cover"
+                                         src="https://homez-appdir.vercel.app/_next/image?url=%2Fimages%2Flistings%2Fg1-1.jpg&w=384&q=75"
+                                         alt="Luxury Villa">
+                                    <div class="absolute bottom-1 left-0 bg-blue-500 text-white px-3 py-2 m-2 rounded-md text-sm font-bold">
+                                        $8,500,000
+                                    </div>
+                                    <button
+                                        class="like-button absolute top-4 right-4 bg-white bg-opacity-90 p-2 rounded-full shadow-lg transition-colors duration-300 text-gray-400">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="p-6">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-2xl font-bold text-black">Tranquil Retreat</span>
+                                        <div class="flex space-x-2">
+                                            <span
+                                                class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-1 rounded-full">Beachfront</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-600 text-sm mb-4">123 Serenity Lane, Beverly Hills, CA</p>
+                                    <div class="flex justify-between text-sm text-gray-600 mb-4">
+                                        <span><i class="fas fa-bed mr-2"></i>4 Beds</span>
+                                        <span><i class="fas fa-bath mr-2"></i>3.5 Baths</span>
+                                        <span><i class="fas fa-ruler-combined mr-2"></i>5,200 sqft</span>
+                                    </div>
+                                    <a href="propertydetails.html" 
+                                        class="bg-blue-400 text-white font-bold py-3 px-4 w-fit rounded-tl-3xl rounded-br-3xl hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:rotate-1 inline-block">
+                                        View Details
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Property Card 2 -->
+                            <div
+                                class="property-card animate-on-scroll max-w-sm mx-auto bg-white rounded-lg overflow-hidden shadow-lg transform transition duration-500 hover:scale-105">
+                                <div class="relative overflow-hidden rounded-xl">
+                                    <img class="w-full h-64 object-cover"
+                                        src="https://cdn.pixabay.com/photo/2017/06/13/22/42/kitchen-2400367_640.jpg"
+                                        alt="Luxury Villa">
+                                    <div
+                                        class="absolute bottom-1 left-0 bg-blue-500 text-white px-3 py-2 m-2 rounded-md text-sm font-bold">
+                                        $8,500,000
+                                    </div>
+                                    <button
+                                        class="like-button absolute top-4 right-4 bg-white bg-opacity-90 p-2 rounded-full shadow-lg transition-colors duration-300 text-gray-400">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="p-6">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-2xl font-bold text-black">Tranquil Retreat</span>
+                                        <div class="flex space-x-2">
+                                            <span
+                                                class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-1 rounded-full">Beachfront</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-600 text-sm mb-4">123 Serenity Lane, Beverly Hills, CA</p>
+                                    <div class="flex justify-between text-sm text-gray-600 mb-4">
+                                        <span><i class="fas fa-bed mr-2"></i>4 Beds</span>
+                                        <span><i class="fas fa-bath mr-2"></i>3.5 Baths</span>
+                                        <span><i class="fas fa-ruler-combined mr-2"></i>5,200 sqft</span>
+                                    </div>
+                                    <button
+                                        class="bg-blue-400 text-white font-bold py-3 px-4 w-fit rounded-tl-3xl rounded-br-3xl hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:rotate-1">
+                                        View Details
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Property Card 3 -->
+                            <div
+                                class="property-card animate-on-scroll max-w-sm mx-auto bg-white rounded-lg overflow-hidden shadow-lg transform transition duration-500 hover:scale-105">
+                                <div class="relative overflow-hidden rounded-xl">
+                                    <img class="w-full h-64 object-cover"
+                                        src="https://cdn.pixabay.com/photo/2017/07/08/02/16/house-2483336_640.jpg"
+                                        alt="Luxury Villa">
+                                    <div
+                                        class="absolute bottom-1 left-0 bg-blue-500 text-white px-3 py-2 m-2 rounded-md text-sm font-bold">
+                                        $8,500,000
+                                    </div>
+                                    <button
+                                        class="like-button absolute top-4 right-4 bg-white bg-opacity-90 p-2 rounded-full shadow-lg transition-colors duration-300 text-gray-400">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="p-6">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-2xl font-bold text-black">Tranquil Retreat</span>
+                                        <div class="flex space-x-2">
+                                            <span
+                                                class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-1 rounded-full">Beachfront</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-600 text-sm mb-4">123 Serenity Lane, Beverly Hills, CA</p>
+                                    <div class="flex justify-between text-sm text-gray-600 mb-4">
+                                        <span><i class="fas fa-bed mr-2"></i>4 Beds</span>
+                                        <span><i class="fas fa-bath mr-2"></i>3.5 Baths</span>
+                                        <span><i class="fas fa-ruler-combined mr-2"></i>5,200 sqft</span>
+                                    </div>
+                                    <button
+                                        class="bg-blue-400 text-white font-bold py-3 px-4 w-fit rounded-tl-3xl rounded-br-3xl hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:rotate-1">
+                                        View Details
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <!-- <section class="min-h-screen relative overflow-hidden pt-24">
         <div class="floating-shape w-64 h-64 top-10 left-10"></div>
@@ -480,25 +961,30 @@
                     </h2>
                     <ul class="space-y-6 mb-10">
                         <li class="flex items-start">
-                            <img src="./images/Vector.svg" alt="Expert Guidance Icon" class="w-8 h-8 mr-4 mt-1 flex-shrink-0">
+                            <img src="./images/Vector.svg" alt="Expert Guidance Icon"
+                                class="w-8 h-8 mr-4 mt-1 flex-shrink-0">
                             <div>
                                 <h3 class="text-xl font-semibold text-gray-800 mb-2">Expert Guidance</h3>
                                 <p class="text-gray-600 text-lg">
-                                    Work directly with the property expert to understand if the property is the right one for you.
+                                    Work directly with the property expert to understand if the property is the right
+                                    one for you.
                                 </p>
                             </div>
                         </li>
                         <li class="flex items-start">
-                            <img src="./images/Vector.svg" alt="Expert Guidance Icon" class="w-8 h-8 mr-4 mt-1 flex-shrink-0">
+                            <img src="./images/Vector.svg" alt="Expert Guidance Icon"
+                                class="w-8 h-8 mr-4 mt-1 flex-shrink-0">
                             <div>
                                 <h3 class="text-xl font-semibold text-gray-800 mb-2">Comprehensive Home Search</h3>
                                 <p class="text-gray-600 text-lg">
-                                    Access the entire inventory of available homes, including Coming Soon, Make-me-move, and Off Market listings.
+                                    Access the entire inventory of available homes, including Coming Soon, Make-me-move,
+                                    and Off Market listings.
                                 </p>
                             </div>
                         </li>
                         <li class="flex items-start">
-                            <img src="./images/Vector.svg" alt="Expert Guidance Icon" class="w-8 h-8 mr-4 mt-1 flex-shrink-0">
+                            <img src="./images/Vector.svg" alt="Expert Guidance Icon"
+                                class="w-8 h-8 mr-4 mt-1 flex-shrink-0">
                             <div>
                                 <h3 class="text-xl font-semibold text-gray-800 mb-2">AI-Powered Search</h3>
                                 <p class="text-gray-600 text-lg">
@@ -519,18 +1005,22 @@
                     </div> -->
                     <div class="relative max-w-lg mx-auto mt-12 mb-16">
                         <img src="/images/image/chat.png" alt="Featured Property" class="w-full h-auto">
-                        <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 bg-white p-4 rounded-lg shadow-lg border border-blue-400 max-w-xs w-full">
-                          <div class="relative">
-                            <div class="absolute -top-8 right-0 bg-blue-500 rounded-full p-2 shadow-lg">
-                              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-                              </svg>
+                        <div
+                            class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 bg-white p-4 rounded-lg shadow-lg border border-blue-400 max-w-xs w-full">
+                            <div class="relative">
+                                <div class="absolute -top-8 right-0 bg-blue-500 rounded-full p-2 shadow-lg">
+                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <h2 class="text-lg font-semibold text-gray-800 mb-2">Find the best deal</h2>
+                                <p class="text-sm text-gray-600">Browse thousands of properties</p>
                             </div>
-                            <h2 class="text-lg font-semibold text-gray-800 mb-2">Find the best deal</h2>
-                            <p class="text-sm text-gray-600">Browse thousands of properties</p>
-                          </div>
                         </div>
-                      </div>   
+                    </div>
                 </div>
             </div>
         </div>
@@ -538,7 +1028,8 @@
 
     <section class="px-4 sm:px-6 lg:px-8 py-16 bg-white">
         <div class="container mx-auto">
-            <div class="flex flex-col animate-on-scroll lg:flex-row items-center bg-blue-50 border-2 border-blue-500 rounded-2xl px-10 py-20 justify-between space-y-12 lg:space-y-0 lg:space-x-12 shadow-lg">
+            <div
+                class="flex flex-col animate-on-scroll lg:flex-row items-center bg-blue-50 border-2 border-blue-500 rounded-2xl px-10 py-20 justify-between space-y-12 lg:space-y-0 lg:space-x-12 shadow-lg">
                 <div class="lg:w-1/2 animate-on-scroll">
                     <h2 class="text-4xl font-bold mb-6 leading-tight">
                         Built By Top Realtors For Realtors
@@ -549,15 +1040,18 @@
                     </h3>
                     <ul class="space-y-6 mb-8">
                         <li class="flex items-start">
-                            <img src="./images/Vector.svg" alt="Expert Guidance Icon" class="w-6 h-6 mr-4 mt-1 flex-shrink-0 text-blue-500">
+                            <img src="./images/Vector.svg" alt="Expert Guidance Icon"
+                                class="w-6 h-6 mr-4 mt-1 flex-shrink-0 text-blue-500">
                             <span class="text-lg text-gray-700">Streamline The Buying Process</span>
                         </li>
                         <li class="flex items-start">
-                            <img src="./images/Vector.svg" alt="Expert Guidance Icon" class="w-6 h-6 mr-4 mt-1 flex-shrink-0 text-blue-500">
+                            <img src="./images/Vector.svg" alt="Expert Guidance Icon"
+                                class="w-6 h-6 mr-4 mt-1 flex-shrink-0 text-blue-500">
                             <span class="text-lg text-gray-700">Help Sellers Maximize Value</span>
                         </li>
                         <li class="flex items-start">
-                            <img src="./images/Vector.svg" alt="Expert Guidance Icon" class="w-6 h-6 mr-4 mt-1 flex-shrink-0 text-blue-500">
+                            <img src="./images/Vector.svg" alt="Expert Guidance Icon"
+                                class="w-6 h-6 mr-4 mt-1 flex-shrink-0 text-blue-500">
                             <span class="text-lg text-gray-700">Give Realtors the Tools to Succeed</span>
                         </li>
                     </ul>
@@ -664,30 +1158,36 @@
                         <div
                             class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:-translate-y-1  animate-on-scroll">
                             <div class="mb-6">
-                                <img src="./images/carbon_security.svg" alt="Expert Guidance Icon" class="w-10 h-10 mr-4 mt-1 flex-shrink-0">
+                                <img src="./images/carbon_security.svg" alt="Expert Guidance Icon"
+                                    class="w-10 h-10 mr-4 mt-1 flex-shrink-0">
                             </div>
                             <p class="text-gray-700">Control the privacy and security of your largest asset.</p>
                         </div>
                         <div
                             class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:-translate-y-1  animate-on-scroll">
                             <div class="mb-6">
-                                <img src="./images/mdi_work-outline.svg" alt="Expert Guidance Icon" class="w-10 h-10 mr-4 mt-1 flex-shrink-0">
+                                <img src="./images/mdi_work-outline.svg" alt="Expert Guidance Icon"
+                                    class="w-10 h-10 mr-4 mt-1 flex-shrink-0">
                             </div>
                             <p class="text-gray-700">Work with qualified buyers to streamline the process..</p>
                         </div>
                         <div
                             class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 animate-on-scroll">
                             <div class="mb-6">
-                                <img src="./images/icon-park-outline_transaction.svg" alt="Expert Guidance Icon" class="w-10 h-10 mr-4 mt-1 flex-shrink-0">
+                                <img src="./images/icon-park-outline_transaction.svg" alt="Expert Guidance Icon"
+                                    class="w-10 h-10 mr-4 mt-1 flex-shrink-0">
                             </div>
-                            <p class="text-gray-700">Set your terms and timeline and let an expert handle the largest transaction of your life.</p>
+                            <p class="text-gray-700">Set your terms and timeline and let an expert handle the largest
+                                transaction of your life.</p>
                         </div>
                         <div
                             class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 animate-on-scroll">
                             <div class="mb-6">
-                                <img src="./images/hugeicons_ai-innovation-02.png" alt="Expert Guidance Icon" class="w-10 h-10 mr-4 mt-1 flex-shrink-0">
+                                <img src="./images/hugeicons_ai-innovation-02.png" alt="Expert Guidance Icon"
+                                    class="w-10 h-10 mr-4 mt-1 flex-shrink-0">
                             </div>
-                            <p class="text-gray-700">Leverage Data and AI to understand the most likely value of your home.</p>
+                            <p class="text-gray-700">Leverage Data and AI to understand the most likely value of your
+                                home.</p>
                         </div>
                     </div>
                 </div>
@@ -705,14 +1205,15 @@
     <section class="bg-gray-100 py-20 px-4 sm:px-6 lg:px-8">
         <div class="container mx-auto">
             <h2 class="text-4xl font-bold text-start mb-16">Private Open House</h2>
-            
+
             <div class="flex flex-col lg:flex-row items-start justify-between gap-14 animate-on-scroll">
                 <!-- Left side: Content -->
                 <div class="w-full lg:w-1/2 space-y-12 container mx-auto">
                     <div>
                         <h3 class="text-2xl font-semibold mb-4">Mission and Origin</h3>
                         <p class="text-gray-600 mb-6">
-                            Private Open House was established in Silicon Valley by leading Realtors to enhance the buying and selling process.
+                            Private Open House was established in Silicon Valley by leading Realtors to enhance the
+                            buying and selling process.
                             The initiative aims to ensure optimal representation for both buyers and sellers.
                         </p>
                     </div>
@@ -721,32 +1222,37 @@
                     <div>
                         <h3 class="text-2xl font-semibold mb-4">Commitment and Benefits</h3>
                         <p class="text-gray-600 mb-6">
-                            The service is free of charge and carries no obligation to engage in buying or selling. The goal is to equip agents with 
-                            advanced tools and technology, provide buyers with comprehensive property listings, and offer sellers accurate property 
+                            The service is free of charge and carries no obligation to engage in buying or selling. The
+                            goal is to equip agents with
+                            advanced tools and technology, provide buyers with comprehensive property listings, and
+                            offer sellers accurate property
                             valuation data and confidence in their home sale.
                         </p>
                     </div>
                     <hr class="border-gray-400 dark:border-gray-700">
-    
+
                     <div>
                         <h3 class="text-2xl font-semibold mb-4">Agent Tools and Buyer Inventory</h3>
                         <p class="text-gray-600 mb-6">
-                            Our AI driven algorithm will find homes that meet your criteria and you won't find anywhere else and alert you before 
+                            Our AI driven algorithm will find homes that meet your criteria and you won't find anywhere
+                            else and alert you before
                             they hit the market.
                         </p>
                     </div>
                     <hr class="border-gray-400 dark:border-gray-700">
-    
+
                     <div>
                         <h3 class="text-2xl font-semibold mb-4">Seller Confidence and Privacy</h3>
                         <p class="text-gray-600 mb-6">
-                            Sellers are provided with data to understand the true value of their properties and tools to ensure a secure and confident 
-                            sale process. The service places a high priority on user privacy, ensuring all personal information is kept confidential.
+                            Sellers are provided with data to understand the true value of their properties and tools to
+                            ensure a secure and confident
+                            sale process. The service places a high priority on user privacy, ensuring all personal
+                            information is kept confidential.
                         </p>
                     </div>
                     <hr class="border-gray-400 dark:border-gray-700">
                 </div>
-    
+
                 <!-- Right side: Image -->
                 <div class="w-full lg:w-1/2 mt-12 lg:mt-0 animate-on-scroll">
                     <img src="/images/image/Group 55.png" alt="Description of image" class="w-full h-auto">
@@ -755,11 +1261,11 @@
         </div>
     </section>
 
-    <section class="px-4 sm:px-6 lg:px-8 py-5 bg-black animate-on-scroll">
+    <section class="px-4 sm:px-6 lg:px-8 py-5 bg-black ">
         <div class="h-full bg-primary">
             <div class="container px-4 py-2 mx-auto">
                 <div data-aos="zoom-in" class="grid pt-5 md:grid-cols-3">
-                    <div class="px-4 py-8 animate-on-scroll">
+                    <div class="px-4 py-8 ">
                         <h1
                             class="flex items-center gap-3 mb-3 text-xl font-bold text-justify sm:text-3xl sm:text-left">
                             <a href="/">
@@ -814,7 +1320,7 @@
 
                     <div class="grid grid-cols-1 col-span-2 sm:grid-cols-2 md:grid-cols-3 md:pl-10">
                         <div>
-                            <div class="px-4 py-8  animate-on-scroll">
+                            <div class="px-4 py-8  ">
                                 <h1 class="mb-3 text-xl font-bold text-justify text-white sm:text-xl sm:text-left">
                                     Product
                                 </h1>
@@ -828,7 +1334,7 @@
                             </div>
                         </div>
                         <div>
-                            <div class="px-4 py-8 animate-on-scroll">
+                            <div class="px-4 py-8 ">
                                 <h1 class="mb-3 text-xl font-bold text-justify text-white sm:text-xl sm:text-left">
                                     Resources
                                 </h1>
@@ -844,7 +1350,7 @@
                         </div>
 
                         <div>
-                            <div class="px-4 py-8 animate-on-scroll">
+                            <div class="px-4 py-8 ">
                                 <h1 class="mb-3 text-xl font-bold text-justify text-white sm:text-xl sm:text-left">
                                     Company
                                 </h1>
@@ -945,8 +1451,6 @@
         </div>
     </section>
 
-    
-
     <script>
         const hamburger = document.getElementById('hamburger');
         const fullScreenMenu = document.getElementById('full-screen-menu');
@@ -955,37 +1459,37 @@
         const navLinks = document.querySelectorAll('.nav-link');
 
         function toggleMenu() {
-        hamburger.classList.toggle('open');
-        fullScreenMenu.classList.toggle('hidden');
-        document.body.classList.toggle('overflow-hidden');
+            hamburger.classList.toggle('open');
+            fullScreenMenu.classList.toggle('hidden');
+            document.body.classList.toggle('overflow-hidden');
 
-        if (!fullScreenMenu.classList.contains('hidden')) {
-            menuItems.forEach((item, index) => {
-                item.style.animation = `fadeInUp 0.5s ease forwards ${index * 0.1}s`;
-            });
-        } else {
-            menuItems.forEach(item => {
-                item.style.animation = '';
-            });
+            if (!fullScreenMenu.classList.contains('hidden')) {
+                menuItems.forEach((item, index) => {
+                    item.style.animation = `fadeInUp 0.5s ease forwards ${index * 0.1}s`;
+                });
+            } else {
+                menuItems.forEach(item => {
+                    item.style.animation = '';
+                });
+            }
         }
-    }
 
         hamburger.addEventListener('click', toggleMenu);
-    closeBtn.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', toggleMenu);
 
-    fullScreenMenu.addEventListener('click', (event) => {
-        if (event.target.tagName === 'A') {
-            toggleMenu();
-        }
-    });
-
-    // Add active class to clicked nav link
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            navLinks.forEach(l => l.classList.remove('active'));
-            e.target.classList.add('active');
+        fullScreenMenu.addEventListener('click', (event) => {
+            if (event.target.tagName === 'A') {
+                toggleMenu();
+            }
         });
-    });
+
+        // Add active class to clicked nav link
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                navLinks.forEach(l => l.classList.remove('active'));
+                e.target.classList.add('active');
+            });
+        });
 
 
         function handleScrollAnimation() {
@@ -1008,9 +1512,9 @@
         function handleNavbarScroll() {
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 100) {
-                navbar.classList.add('bg-black', 'shadow-md');
+                navbar.classList.add('bg-white', 'shadow-md');
             } else {
-                navbar.classList.remove('bg-black', 'shadow-md');
+                navbar.classList.remove('bg-white', 'shadow-md');
             }
         }
 
@@ -1042,11 +1546,83 @@
         }
 
         // Run animations when the page loads
-        window.onload = function() {
+        window.onload = function () {
             animateValue("listingCount", 0, 100, 2000);
             animateValue("homeSaleCount", 0, 100, 2000);
             animateValue("realtorCount", 0, 99, 2000);
         }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const propertyCards = document.querySelectorAll('.property-card');
+
+            propertyCards.forEach(card => {
+                const likeButton = card.querySelector('.like-button');
+                const viewDetailsButton = card.querySelector('.view-details-button');
+
+                // Like button functionality
+                likeButton.addEventListener('click', function () {
+                    this.classList.toggle('text-red-500');
+                    this.classList.toggle('text-gray-400');
+                    const svg = this.querySelector('svg');
+                    if (this.classList.contains('text-red-500')) {
+                        svg.setAttribute('fill', 'currentColor');
+                    } else {
+                        svg.setAttribute('fill', 'none');
+                    }
+                });
+
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const slider = document.querySelector('.slider-container');
+            const cards = slider.children;
+            let cardWidth = cards[0].offsetWidth;
+            let currentIndex = 0;
+            const totalCards = cards.length;
+            let visibleCards = window.innerWidth >= 1024 ? 3 : (window.innerWidth >= 640 ? 2 : 1);
+
+            function slideNext() {
+                currentIndex = (currentIndex + 1) % (totalCards - visibleCards + 1);
+                updateSliderPosition();
+            }
+
+            function slidePrev() {
+                currentIndex = (currentIndex - 1 + totalCards) % (totalCards - visibleCards + 1);
+                updateSliderPosition();
+            }
+
+            function updateSliderPosition() {
+                slider.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+            }
+
+            // Auto slide every 5 seconds
+            let autoSlideInterval = setInterval(slideNext, 5000);
+
+            // Add event listeners to buttons
+            document.querySelector('.next-btn').addEventListener('click', function () {
+                clearInterval(autoSlideInterval);
+                slideNext();
+                autoSlideInterval = setInterval(slideNext, 5000);
+            });
+
+            document.querySelector('.prev-btn').addEventListener('click', function () {
+                clearInterval(autoSlideInterval);
+                slidePrev();
+                autoSlideInterval = setInterval(slideNext, 5000);
+            });
+
+            // Update card width and visible cards on window resize
+            window.addEventListener('resize', function () {
+                cardWidth = cards[0].offsetWidth;
+                visibleCards = window.innerWidth >= 1024 ? 3 : (window.innerWidth >= 640 ? 2 : 1);
+                updateSliderPosition();
+            });
+        });
     </script>
 
 </body>
