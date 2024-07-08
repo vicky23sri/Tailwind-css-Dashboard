@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realton - Innovative Real Estate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .hover-scale {
+            transition: transform 0.3s ease-in-out;
+        }
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 0;
+            background-color: #3B82F6;
+            z-index: 9999;
+        }
+        .nav-dots {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            z-index: 9999;
+        }
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #3B82F6;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .nav-dot:hover, .nav-dot.active {
+            transform: scale(1.5);
+        }
+    </style>
+</head>
+<body class="bg-gray-100" x-data="{ scrolled: 0 }" x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100 })">
+    <div class="scroll-indicator" :style="`height: ${scrolled}%`"></div>
+    
+    <nav class="nav-dots">
+        <a href="#hero" class="nav-dot" data-aos="fade-left" data-aos-delay="100"></a>
+        <a href="#about" class="nav-dot" data-aos="fade-left" data-aos-delay="200"></a>
+        <a href="#services" class="nav-dot" data-aos="fade-left" data-aos-delay="300"></a>
+        <a href="#why-choose" class="nav-dot" data-aos="fade-left" data-aos-delay="400"></a>
+        <a href="#find-home" class="nav-dot" data-aos="fade-left" data-aos-delay="500"></a>
+    </nav>
+
+    <main>
+        <section id="hero" class="h-screen flex items-center justify-center parallax" style="background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');">
+            <div class="absolute inset-0 bg-black opacity-50"></div>
+            <div class="relative text-center text-white z-10" data-aos="fade-up" data-aos-duration="1000">
+                <h1 class="text-6xl font-bold mb-4 text-shadow">Realton</h1>
+                <p class="text-2xl mb-8 text-shadow">Redefining Real Estate Experience</p>
+                <a href="#services" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full transition duration-300 hover-scale inline-block">Explore Our Vision</a>
+            </div>
+        </section>
+
+        <section id="about" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-bold text-center text-gray-800 mb-12" data-aos="fade-up">Our Story</h2>
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div data-aos="fade-right" data-aos-anchor-placement="center-bottom">
+                        <p class="text-lg text-gray-700 mb-6">
+                            At Realton, we're not just selling properties; we're crafting lifestyles. Our journey began with a simple idea: to transform the way people interact with real estate.
+                        </p>
+                        <p class="text-lg text-gray-700 mb-6">
+                            Today, we stand at the forefront of innovation, blending cutting-edge technology with personalized service to create unparalleled real estate experiences.
+                        </p>
+                    </div>
+                    <div data-aos="fade-left" data-aos-anchor-placement="center-bottom">
+                        <img src="https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Realton team" class="rounded-lg shadow-xl hover-scale">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="py-20 bg-gray-100">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-bold text-center text-gray-800 mb-12" data-aos="fade-up">Our Innovative Approach</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover-scale" data-aos="flip-left" data-aos-duration="1000" data-aos-anchor-placement="top-bottom">
+                        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Virtual Reality Tours" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Virtual Reality Tours</h3>
+                            <p class="text-gray-600">Experience properties like never before with our immersive VR technology.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover-scale" data-aos="flip-left" data-aos-duration="1000" data-aos-delay="100" data-aos-anchor-placement="top-bottom">
+                        <img src="https://images.unsplash.com/photo-1582407947304-fd86f028f716?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="AI-Powered Matching" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">AI-Powered Matching</h3>
+                            <p class="text-gray-600">Our algorithms find your perfect property match with unprecedented accuracy.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover-scale" data-aos="flip-left" data-aos-duration="1000" data-aos-delay="200" data-aos-anchor-placement="top-bottom">
+                        <img src="https://images.unsplash.com/photo-1560518883-b2275502b86f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Blockchain Transactions" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Blockchain Transactions</h3>
+                            <p class="text-gray-600">Secure, transparent, and efficient property transactions using blockchain technology.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="why-choose" class="py-20 bg-blue-600 text-white parallax" style="background-image: url('https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');">
+            <div class="container mx-auto px-6 relative z-10">
+                <h2 class="text-4xl font-bold text-center mb-12" data-aos="fade-up">Why Choose Realton?</h2>
+                <div class="grid md:grid-cols-4 gap-8">
+                    <div class="text-center bg-white bg-opacity-20 p-6 rounded-lg backdrop-filter backdrop-blur-lg" data-aos="zoom-in" data-aos-delay="100">
+                        <i class="fas fa-users text-4xl mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Expert Team</h3>
+                        <p>Our dedicated professionals bring years of experience and local market knowledge.</p>
+                    </div>
+                    <div class="text-center bg-white bg-opacity-20 p-6 rounded-lg backdrop-filter backdrop-blur-lg" data-aos="zoom-in" data-aos-delay="200">
+                        <i class="fas fa-handshake text-4xl mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Personalized Service</h3>
+                        <p>We tailor our services to meet your unique needs and preferences.</p>
+                    </div>
+                    <div class="text-center bg-white bg-opacity-20 p-6 rounded-lg backdrop-filter backdrop-blur-lg" data-aos="zoom-in" data-aos-delay="300">
+                        <i class="fas fa-globe text-4xl mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Global Reach</h3>
+                        <p>With a network of partners worldwide, we help you find properties globally.</p>
+                    </div>
+                    <div class="text-center bg-white bg-opacity-20 p-6 rounded-lg backdrop-filter backdrop-blur-lg" data-aos="zoom-in" data-aos-delay="400">
+                        <i class="fas fa-thumbs-up text-4xl mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Client Satisfaction</h3>
+                        <p>Our success is measured by your satisfaction. We go the extra mile to ensure it.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="find-home" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-bold text-center text-gray-800 mb-12" data-aos="fade-up">Find Your Dream Home</h2>
+                <div class="flex justify-center">
+                    <div class="bg-white p-8 rounded-lg shadow-lg w-full md:w-1/2" data-aos="fade-up">
+                        <form action="#" method="POST">
+                            <div class="mb-6">
+                                <label for="location" class="block text-gray-700 font-bold mb-2">Location</label>
+                                <input type="text" id="location" name="location" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                            </div>
+                            <div class="mb-6">
+                                <label for="property-type" class="block text-gray-700 font-bold mb-2">Property Type</label>
+                                <select id="property-type" name="property-type" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                                    <option value="apartment">Apartment</option>
+                                    <option value="house">House</option>
+                                    <option value="condo">Condo</option>
+                                </select>
+                            </div>
+                            <div class="mb-6">
+                                <label for="budget" class="block text-gray-700 font-bold mb-2">Budget</label>
+                                <input type="text" id="budget" name="budget" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full transition duration-300">Search Now</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        AOS.init();
+    </script>
+</body>
+</html>

@@ -58,52 +58,42 @@
         </article>
 
         <div class="container mx-auto my-8">
-            <div class="flex flex-col lg:flex-row gap-8">
-                <div class="lg:w-1/2 relative overflow-hidden rounded-xl shadow-lg transform transition duration-500 hover:scale-105 image-hover">
-                    <img src="https://img.freepik.com/free-photo/photorealistic-house-with-wooden-architecture-timber-structure_23-2151302742.jpg?ga=GA1.1.2112617978.1720160883&semt=ais_user" alt="Large image" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-black bg-opacity-30 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="flex flex-col lg:flex-row gap-4">
+                <!-- Left Side - Single Large Image -->
+                <div class="lg:w-1/2 relative overflow-hidden rounded-xl shadow-lg group">
+                    <div class="h-[400px] lg:h-[600px]">
+                        <img src="https://img.freepik.com/free-photo/photorealistic-house-with-wooden-architecture-timber-structure_23-2151302742.jpg?ga=GA1.1.2112617978.1720160883&semt=ais_user" alt="Large image" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
-                
-                <div class="lg:w-1/2">
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                        <div class="relative overflow-hidden rounded-lg shadow-md transform transition duration-500 hover:scale-110 image-hover">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLwsfo9NC1pzBgR2nmp8LIBDIPbZSqODx4Sg&s" alt="Grid image 1" class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-black bg-opacity-30 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+        
+                <!-- Right Side - Grid of 4 Images -->
+                <div class="lg:w-1/2 grid grid-cols-2 gap-4">
+                    <div class="relative overflow-hidden rounded-xl shadow-lg group">
+                        <div class="h-[180px] lg:h-[290px]">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLwsfo9NC1pzBgR2nmp8LIBDIPbZSqODx4Sg&s" alt="Grid image 1" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                         </div>
-                        <div class="relative overflow-hidden rounded-lg shadow-md transform transition duration-500 hover:scale-110 image-hover">
-                            <img src="https://images.pexels.com/photos/186077/pexels-photo-186077.jpeg?cs=srgb&dl=pexels-binyaminmellish-186077.jpg&fm=jpg" alt="Grid image 2" class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-black bg-opacity-30 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    <div class="relative overflow-hidden rounded-xl shadow-lg group">
+                        <div class="h-[180px] lg:h-[290px]">
+                            <img src="https://images.pexels.com/photos/186077/pexels-photo-186077.jpeg?cs=srgb&dl=pexels-binyaminmellish-186077.jpg&fm=jpg" alt="Grid image 2" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                         </div>
-                        <div class="relative overflow-hidden rounded-lg shadow-md transform transition duration-500 hover:scale-110 image-hover">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3_6uMM_X8sVQZbz3lbEFs1YDmV5PephgwGHlihgTSuzvSi1ApMxQRy0gs7TmG7GkgpEo&usqp=CAU" alt="Grid image 2" class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-black bg-opacity-30 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    <div class="relative overflow-hidden rounded-xl shadow-lg group">
+                        <div class="h-[180px] lg:h-[290px]">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3_6uMM_X8sVQZbz3lbEFs1YDmV5PephgwGHlihgTSuzvSi1ApMxQRy0gs7TmG7GkgpEo&usqp=CAU" alt="Grid image 3" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                         </div>
-                        <div class="relative overflow-hidden rounded-lg shadow-md transform transition duration-500 hover:scale-110 image-hover">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBoiOlNizLXLvvt_yRoF8NJCxyhDBQaHab9yI3iVJeQ530uYYy0HwVFpeNd6_ILZ85ztw&usqp=CAU" alt="Grid image 2" class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-black bg-opacity-30 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    <div class="relative overflow-hidden rounded-xl shadow-lg group">
+                        <div class="h-[180px] lg:h-[290px]">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4XlpgIiwXH0ecv1jJwU1sub-KGgqOl6nPNA&s" alt="Grid image 4" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                         </div>
-                        <div class="relative overflow-hidden rounded-lg shadow-md transform transition duration-500 hover:scale-110 image-hover">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHRMUkARPIiS7mCzFVm-Nhfd18RTbtpifLJ3Y1W9NgJwtff_e1WHPNeDfaQneCiucUgYA&usqp=CAU" alt="Grid image 2" class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-black bg-opacity-30 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-                        </div>
-                        <div class="relative overflow-hidden rounded-lg shadow-md transform transition duration-500 hover:scale-110 image-hover">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3_6uMM_X8sVQZbz3lbEFs1YDmV5PephgwGHlihgTSuzvSi1ApMxQRy0gs7TmG7GkgpEo&usqp=CAU" alt="Grid image 2" class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-black bg-opacity-30 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-                        </div>
-                        <div class="relative overflow-hidden rounded-lg shadow-md transform transition duration-500 hover:scale-110 image-hover">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBoiOlNizLXLvvt_yRoF8NJCxyhDBQaHab9yI3iVJeQ530uYYy0HwVFpeNd6_ILZ85ztw&usqp=CAU" alt="Grid image 2" class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-black bg-opacity-30 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-                        </div>
-                        <div class="relative overflow-hidden rounded-lg shadow-md transform transition duration-500 hover:scale-110 image-hover">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHRMUkARPIiS7mCzFVm-Nhfd18RTbtpifLJ3Y1W9NgJwtff_e1WHPNeDfaQneCiucUgYA&usqp=CAU" alt="Grid image 2" class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-black bg-opacity-30 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-                        </div>
-                        <div class="relative overflow-hidden rounded-lg shadow-md transform transition duration-500 hover:scale-110 image-hover">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4XlpgIiwXH0ecv1jJwU1sub-KGgqOl6nPNA&s" alt="Grid image 6" class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-black bg-opacity-30 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-                            <div class="absolute bottom-1 right-2 bg-black bg-opacity-75 text-white text-xs font-bold px-3 py-2 rounded-xl">
-                                10+ images
-                            </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute bottom-2 right-2 bg-white/80 text-black text-xs font-bold px-4 py-2 rounded-lg">
+                            10+ images
                         </div>
                     </div>
                 </div>
