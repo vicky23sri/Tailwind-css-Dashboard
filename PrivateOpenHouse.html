@@ -12,15 +12,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
         rel="stylesheet">
     <style>
-        body {
-            font-family: "Rubik", sans-serif;
-        }
-
-        h1,
-        h2,
-        h3 {
-            font-family: "Rubik", sans-serif;
-        }
 
         @keyframes slideUp {
             from {
@@ -318,7 +309,7 @@
 </head>
 
 <body class="text-gray-800">
-    <nav id="navbar" class="py-6 fixed top-0 left-0 right-0 z-10 transition-all duration-300 bg-white shadow-xl">
+    <nav id="navbar" class="py-6 fixed top-0 left-0 right-0 z-10 transition-all duration-300 bg-gray-50 shadow-xl">
         <div class="container mx-auto">
             <div class="flex justify-between items-center">
                 <!-- Logo on the left -->
@@ -404,7 +395,7 @@
             style="--order: 6">Sign In</a>
     </div>
 
-    <section class="min-h-screen relative overflow-hidden pt-10 lg:pt-24 bg-gradient-to-br from-gray-50 to-gray-100">
+    <!-- <section class="min-h-screen relative overflow-hidden pt-10 lg:pt-24 bg-gradient-to-br from-gray-50 to-gray-100">
         <div class="floating-shape w-64 h-64 top-10 left-10"></div>
         <div class="floating-shape w-48 h-48 bottom-10 right-10" style="animation-delay: -3s;"></div>
         <div class="min-h-screen container mx-auto px-4 sm:px-6 lg:px-8 flex items-center relative">
@@ -451,7 +442,6 @@
                 </div>
             </div>
 
-            <!-- Property Search Section -->
             <div
                 class="absolute bottom-[10px] md:bottom-[80px] lg:bottom-[50px] xl:bottom-[200px] left-3 lg:left-9 lg:right-1/4 w-full lg:w-3/5 bg-white rounded-lg p-8 transition-all duration-300">
                 <div class="flex flex-wrap -mx-2">
@@ -519,7 +509,132 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
+
+    <section class="min-h-screen relative overflow-hidden pt-10 lg:pt-24 bg-gradient-to-br from-gray-50 to-gray-100"
+    style="background-image: url('https://img.jamesedition.com/listing_images/2024/05/17/15/30/33/34511086-c136-437e-bd38-b21aa3632784/je/1900xxs.jpg'); background-size: cover; background-position: center;">
+
+    <!-- Floating Shapes -->
+    <div class="floating-shape w-64 h-64 top-10 left-10"></div>
+    <div class="floating-shape w-48 h-48 bottom-10 right-10" style="animation-delay: -3s;"></div>
+
+    <!-- Content Container -->
+    <div class="min-h-screen container mx-auto px-4 sm:px-6 lg:px-8 flex items-center relative">
+
+        <!-- Grid Layout for Content -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-10 md:mb-20">
+
+            <!-- Text Content -->
+            <div class="w-full space-y-0 md:space-y-12 pb-60 animate-on-scroll">
+                <h1 class="text-6xl md:text-7xl font-bold leading-tight text-white">
+                    <span class="text-white whitespace-nowrap">Find</span>
+                    <span class="bg-clip-text text-black">your Dream Home</span>
+                    <span class="text-white">Today</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-50 leading-relaxed mb-4">
+                    Search our inventory for homes you won't find anywhere else.
+                </p>
+
+                <!-- Statistic Boxes -->
+                <div class="flex gap-28 md:gap-36">
+                    <div class="relative">
+                        <div class="w-10 h-5 bg-blue-500 rounded-t-full transform -rotate-45"></div>
+                        <div class="absolute top-0 left-4 ">
+                            <span class="text-white text-5xl font-bold">100+</span>
+                            <span class="text-white text-md font-medium block mt-2">Listing Home</span>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <div class="w-10 h-5 bg-red-500 rounded-t-full transform -rotate-45"></div>
+                        <div class="absolute top-0 left-4 ">
+                            <span class="text-white text-5xl font-bold">100+</span>
+                            <span class="text-white text-md font-medium block mt-2">Home Sale</span>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <div class="w-10 h-5 bg-green-500 rounded-t-full transform -rotate-45"></div>
+                        <div class="absolute top-0 left-4 ">
+                            <span class="text-white text-5xl font-bold">99+</span>
+                            <span class="text-white text-md font-medium block mt-2">Realtors</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image (Optional) -->
+            <!-- <div class="hidden lg:block w-full h-full">
+                <img src="https://img.jamesedition.com/listing_images/2024/06/25/16/26/21/b0b47bb8-8aba-4701-a147-d16a9b486030/je/1900xxsxm.jpg" alt="Dream Home" class="w-full h-full object-cover">
+            </div> -->
+
+        </div>
+
+        <!-- Property Search Section -->
+        <div class="absolute bottom-[10px] md:bottom-[80px] lg:bottom-[50px] xl:bottom-[200px] left-3 lg:left-9 lg:right-1/4 w-full lg:w-3/5 bg-white rounded-lg p-8 transition-all duration-300">
+            <div class="flex flex-wrap -mx-2">
+                <!-- Location Select -->
+                <div class="w-full sm:w-1/2 lg:w-1/2 xl:w-1/4 px-2 mb-4 flex flex-col">
+                    <label for="location" class="block mb-2 text-sm font-medium text-gray-700">Location</label>
+                    <select id="location"
+                        class="w-full px-4 py-3 bg-gray-50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">Location</option>
+                        <option value="new-york">New York</option>
+                        <option value="los-angeles">Los Angeles</option>
+                        <option value="chicago">Chicago</option>
+                        <option value="add">+ Add Location</option>
+                    </select>
+                </div>
+
+                <!-- Bedrooms Select -->
+                <div class="hidden xl:flex xl:items-center xl:px-2">
+                    <div class="h-14 w-px bg-gray-300"></div>
+                </div>
+                <div class="w-full sm:w-1/2 lg:w-1/2 xl:w-1/4 px-2 mb-4 flex flex-col">
+                    <label for="bedrooms" class="block mb-2 text-sm font-medium text-gray-700">Bedrooms</label>
+                    <select id="bedrooms"
+                        class="w-full px-4 py-3 bg-gray-50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">Bedrooms</option>
+                        <option value="1">1 Bedroom</option>
+                        <option value="2">2 Bedrooms</option>
+                        <option value="3">3 Bedrooms</option>
+                        <option value="4">4+ Bedrooms</option>
+                        <option value="add">+ Add Bedroom Option</option>
+                    </select>
+                </div>
+
+                <!-- Bathrooms Select -->
+                <div class="hidden xl:flex xl:items-center xl:px-2">
+                    <div class="h-14 w-px bg-gray-300"></div>
+                </div>
+                <div class="w-full sm:w-1/2 lg:w-1/2 xl:w-1/4 px-2 mb-4 flex flex-col">
+                    <label for="bathrooms" class="block mb-2 text-sm font-medium text-gray-700">Bathrooms</label>
+                    <select id="bathrooms"
+                        class="w-full px-4 py-3 bg-gray-50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">Bathrooms</option>
+                        <option value="1">1 Bathroom</option>
+                        <option value="2">2 Bathrooms</option>
+                        <option value="3">3 Bathrooms</option>
+                        <option value="4">4+ Bathrooms</option>
+                        <option value="add">+ Add Bathroom Option</option>
+                    </select>
+                </div>
+
+                <!-- Search Button -->
+                <div class="hidden xl:flex xl:items-center xl:px-2">
+                    <div class="h-14 w-px bg-gray-300"></div>
+                </div>
+                <div class="w-full sm:w-1/2 lg:w-1/2 xl:w-1/6 px-2 mb-4 flex flex-col justify-end">
+                    <button class="w-full bg-blue-400 text-white px-6 py-3 rounded-tl-3xl rounded-br-3xl mb-2 hover:bg-blue-500 transition-colors duration-300 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        Search
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 
     <!-- <section class="relative overflow-hidden bg-white">
         <div class="floating-shape w-64 h-64 top-10 left-10"></div>
@@ -1329,7 +1444,7 @@
             </div>
         </div>
     </section>
-
+    
     <section class="px-4 sm:px-6 lg:px-8 py-5 bg-black ">
         <div class="h-full bg-primary">
             <div class="container px-4 py-2 mx-auto">
@@ -1571,7 +1686,7 @@
                 if (isVisible) {
                     setTimeout(() => {
                         el.classList.add('animated');
-                    }, index * 100);
+                    }, index * 50);
                 } else {
                     el.classList.remove('animated');
                 }

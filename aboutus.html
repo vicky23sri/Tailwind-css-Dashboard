@@ -1,195 +1,806 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Realton - Innovative Real Estate</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+    <title>PrivateOpenHouse - Redefining Luxury Real Estate</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.11.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.11.5/dist/ScrollTrigger.min.js"></script>
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
+        .bg-luxury {
+            background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
         }
+
+        .text-primary {
+            color: black;
+        }
+
+        .border-primary {
+            border-color: #0066cc;
+        }
+
+        .luxury-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 102, 204, 0.3);
+        }
+
         .parallax {
             background-attachment: fixed;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
         }
-        .text-shadow {
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+
+        .clip-path-diagonal {
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
         }
+
+        .animated-border::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #0066cc, #4d94ff, #0066cc);
+            z-index: -1;
+            filter: blur(5px);
+            animation: glowing 20s linear infinite;
+        }
+
+        @keyframes glowing {
+            0% {
+                background-position: 0 0;
+            }
+
+            50% {
+                background-position: 400% 0;
+            }
+
+            100% {
+                background-position: 0 0;
+            }
+        }
+
         .hover-scale {
             transition: transform 0.3s ease-in-out;
         }
+
         .hover-scale:hover {
             transform: scale(1.05);
         }
-        .scroll-indicator {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 5px;
-            height: 0;
-            background-color: #3B82F6;
-            z-index: 9999;
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
         }
-        .nav-dots {
-            position: fixed;
-            top: 50%;
-            right: 20px;
-            transform: translateY(-50%);
-            z-index: 9999;
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
         }
-        .nav-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: #3B82F6;
-            margin: 10px 0;
-            cursor: pointer;
-            transition: transform 0.3s ease;
+
+        .bg-gradient-to-br {
+            background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
         }
-        .nav-dot:hover, .nav-dot.active {
-            transform: scale(1.5);
+
+        .from-gray-900 {
+            --tw-gradient-from: #111827;
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(17, 24, 39, 0));
+        }
+
+        .to-blue-900 {
+            --tw-gradient-to: #1e3a8a;
+        }
+
+        .bg-clip-text {
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        #prestigious-properties {
+            will-change: transform;
         }
     </style>
 </head>
-<body class="bg-gray-100" x-data="{ scrolled: 0 }" x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100 })">
-    <div class="scroll-indicator" :style="`height: ${scrolled}%`"></div>
-    
-    <nav class="nav-dots">
-        <a href="#hero" class="nav-dot" data-aos="fade-left" data-aos-delay="100"></a>
-        <a href="#about" class="nav-dot" data-aos="fade-left" data-aos-delay="200"></a>
-        <a href="#services" class="nav-dot" data-aos="fade-left" data-aos-delay="300"></a>
-        <a href="#why-choose" class="nav-dot" data-aos="fade-left" data-aos-delay="400"></a>
-        <a href="#find-home" class="nav-dot" data-aos="fade-left" data-aos-delay="500"></a>
-    </nav>
 
+<body>
     <main>
-        <section id="hero" class="h-screen flex items-center justify-center parallax" style="background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');">
-            <div class="absolute inset-0 bg-black opacity-50"></div>
-            <div class="relative text-center text-white z-10" data-aos="fade-up" data-aos-duration="1000">
-                <h1 class="text-6xl font-bold mb-4 text-shadow">Realton</h1>
-                <p class="text-2xl mb-8 text-shadow">Redefining Real Estate Experience</p>
-                <a href="#services" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full transition duration-300 hover-scale inline-block">Explore Our Vision</a>
-            </div>
-        </section>
+        <!-- Hero Section with About Us -->
+        <!-- <section class="relative overflow-hidden min-h-screen flex items-center">
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-500 animate-gradient-x"></div>
 
-        <section id="about" class="py-20 bg-white">
-            <div class="container mx-auto px-6">
-                <h2 class="text-4xl font-bold text-center text-gray-800 mb-12" data-aos="fade-up">Our Story</h2>
-                <div class="grid md:grid-cols-2 gap-12 items-center">
-                    <div data-aos="fade-right" data-aos-anchor-placement="center-bottom">
-                        <p class="text-lg text-gray-700 mb-6">
-                            At Realton, we're not just selling properties; we're crafting lifestyles. Our journey began with a simple idea: to transform the way people interact with real estate.
+            <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                <div class="absolute w-12 h-12 bg-blue-500 rounded-full animate-float" style="top: 10%; left: 5%;">
+                </div>
+                <div class="absolute w-8 h-8 bg-green-500 rounded-full animate-float animation-delay-1000"
+                    style="top: 70%; right: 10%;"></div>
+                <div class="absolute w-16 h-16 bg-red-500 rounded-full animate-float animation-delay-2000"
+                    style="bottom: 15%; left: 15%;"></div>
+            </div>
+
+            <div class="container mx-auto px-4 py-16 sm:py-24 lg:py-32 relative z-10">
+                <div class="flex flex-col lg:flex-row items-center">
+                    <div class="lg:w-1/2 lg:pr-12 mb-10 lg:mb-0">
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4">
+                            <span class="animate-text-reveal inline-block">Redefining</span><br>
+                            <span class="animate-text-reveal inline-block text-blue-200 animation-delay-500">Real
+                                Estate</span>
+                        </h1>
+                        <p class="text-xl text-gray-100 mb-8 leading-relaxed animate-fade-in-up">
+                            With over two decades of experience, we bring unparalleled knowledge and innovative
+                            solutions to every transaction.
                         </p>
-                        <p class="text-lg text-gray-700 mb-6">
-                            Today, we stand at the forefront of innovation, blending cutting-edge technology with personalized service to create unparalleled real estate experiences.
-                        </p>
+                        <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                            <a href="#our-approach"
+                                class="group relative inline-flex items-center justify-center px-8 py-3 bg-white text-blue-600 font-semibold rounded-lg overflow-hidden">
+                                <span
+                                    class="absolute w-0 h-0 transition-all duration-300 ease-out bg-blue-600 rounded-full group-hover:w-56 group-hover:h-56"></span>
+                                <span class="relative group-hover:text-white transition-colors duration-300">Our
+                                    Approach</span>
+                            </a>
+                            <a href="#contact-us"
+                                class="group inline-flex items-center justify-center px-8 py-3 bg-transparent text-white font-semibold rounded-lg border-2 border-white transition duration-300 hover:bg-white hover:text-blue-600">
+                                Contact Us
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 ml-2 transform group-hover:translate-x-1 transition-transform"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                </svg>
+                            </a>
+                        </div>
                     </div>
-                    <div data-aos="fade-left" data-aos-anchor-placement="center-bottom">
-                        <img src="https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Realton team" class="rounded-lg shadow-xl hover-scale">
+                    <div class="lg:w-1/2 relative">
+                        <div
+                            class="relative z-10 bg-white p-6 rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300">
+                            <img src="https://img.freepik.com/free-photo/colleagues-discussing-new-ideas-business-meeting_176420-5047.jpg?uid=R75331262&ga=GA1.1.1292211247.1718182866&semt=ais_hybrid"
+                                alt="Our Innovative Team" class="rounded-lg w-full">
+                            <div
+                                class="absolute -bottom-6 -right-6 bg-blue-600 px-6 py-4 rounded-lg shadow-lg text-white">
+                                <p class="font-semibold">Trusted by</p>
+                                <p class="text-3xl font-bold">10,000+ Clients</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <section id="services" class="py-20 bg-gray-100">
-            <div class="container mx-auto px-6">
-                <h2 class="text-4xl font-bold text-center text-gray-800 mb-12" data-aos="fade-up">Our Innovative Approach</h2>
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover-scale" data-aos="flip-left" data-aos-duration="1000" data-aos-anchor-placement="top-bottom">
-                        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Virtual Reality Tours" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Virtual Reality Tours</h3>
-                            <p class="text-gray-600">Experience properties like never before with our immersive VR technology.</p>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover-scale" data-aos="flip-left" data-aos-duration="1000" data-aos-delay="100" data-aos-anchor-placement="top-bottom">
-                        <img src="https://images.unsplash.com/photo-1582407947304-fd86f028f716?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="AI-Powered Matching" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold text-gray-800 mb-4">AI-Powered Matching</h3>
-                            <p class="text-gray-600">Our algorithms find your perfect property match with unprecedented accuracy.</p>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover-scale" data-aos="flip-left" data-aos-duration="1000" data-aos-delay="200" data-aos-anchor-placement="top-bottom">
-                        <img src="https://images.unsplash.com/photo-1560518883-b2275502b86f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Blockchain Transactions" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Blockchain Transactions</h3>
-                            <p class="text-gray-600">Secure, transparent, and efficient property transactions using blockchain technology.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="why-choose" class="py-20 bg-blue-600 text-white parallax" style="background-image: url('https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');">
+        </section> -->
+        <section id="about-us" class="relative h-[50vh] bg-cover bg-center bg-no-repeat flex items-center" style="background-image: url('https://img.freepik.com/free-photo/movie-night-by-pool-whole-family_1268-31098.jpg?uid=R75331262&ga=GA1.1.1292211247.1718182866&semt=ais_user');">
+            <div class="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-transparent"></div>
             <div class="container mx-auto px-6 relative z-10">
-                <h2 class="text-4xl font-bold text-center mb-12" data-aos="fade-up">Why Choose Realton?</h2>
-                <div class="grid md:grid-cols-4 gap-8">
-                    <div class="text-center bg-white bg-opacity-20 p-6 rounded-lg backdrop-filter backdrop-blur-lg" data-aos="zoom-in" data-aos-delay="100">
-                        <i class="fas fa-users text-4xl mb-4"></i>
-                        <h3 class="text-xl font-semibold mb-2">Expert Team</h3>
-                        <p>Our dedicated professionals bring years of experience and local market knowledge.</p>
+                <div class="max-w-2xl">
+                    <span class="inline-block px-3 py-1 mb-4 text-sm font-semibold tracking-wider text-blue-600 uppercase bg-blue-100 rounded-full">
+                        About Us
+                    </span>
+                    <h2 class="mb-4 text-4xl font-bold text-gray-900 sm:text-5xl">
+                        Welcome to Private Open House
+                    </h2>
+                    <p class="mb-6 text-xl text-gray-700 leading-relaxed">
+                        At Private Open House, we specialize in connecting clients with exclusive properties that epitomize luxury, comfort, and style. Our mission is to redefine the real estate experience with unparalleled service and market expertise.
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+
+
+        <!-- Featured Properties -->
+        <section class="py-24 bg-white overflow-hidden">
+            <div class="container mx-auto px-6">
+                <h2 class="text-6xl font-bold text-center text-primary mb-20" id="properties-title">Featured Estates
+                </h2>
+                <div class="relative">
+                    <div class="grid md:grid-cols-2 gap-16 relative z-10">
+                        <div class="group" id="property-1">
+                            <div class="relative overflow-hidden rounded-lg shadow-xl">
+                                <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                                    alt="Luxury Villa"
+                                    class="w-full h-[500px] object-cover transition duration-500 ease-in-out transform group-hover:scale-110">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70">
+                                </div>
+                                <div class="absolute bottom-0 left-0 right-0 p-8">
+                                    <h3 class="text-3xl font-semibold text-white mb-3">Celestial Haven</h3>
+                                    <p class="text-gray-200 mb-4">A palatial residence offering unparalleled views and
+                                        amenities</p>
+                                    <a href="#"
+                                        class="inline-block bg-primary text-white font-semibold py-4 px-6 bg-blue-400 rounded-tl-3xl rounded-br-3xl transition duration-300 ease-in-out hover:bg-blue-700">Explore
+                                        Property</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="group mt-16 md:mt-32" id="property-2">
+                            <div class="relative overflow-hidden rounded-lg shadow-xl">
+                                <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                                    alt="Luxury Penthouse"
+                                    class="w-full h-[500px] object-cover transition duration-500 ease-in-out transform group-hover:scale-110">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70">
+                                </div>
+                                <div class="absolute bottom-0 left-0 right-0 p-8">
+                                    <h3 class="text-3xl font-semibold text-white mb-3">Empyrean Penthouse</h3>
+                                    <p class="text-gray-200 mb-4">An urban oasis atop the world, redefining skyline
+                                        living</p>
+                                    <a href="#"
+                                        class="inline-block bg-primary text-white font-semibold py-4 px-6 bg-blue-400 rounded-tl-3xl rounded-br-3xl transition duration-300 ease-in-out hover:bg-blue-700">Explore
+                                        Property</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="text-center bg-white bg-opacity-20 p-6 rounded-lg backdrop-filter backdrop-blur-lg" data-aos="zoom-in" data-aos-delay="200">
-                        <i class="fas fa-handshake text-4xl mb-4"></i>
-                        <h3 class="text-xl font-semibold mb-2">Personalized Service</h3>
-                        <p>We tailor our services to meet your unique needs and preferences.</p>
-                    </div>
-                    <div class="text-center bg-white bg-opacity-20 p-6 rounded-lg backdrop-filter backdrop-blur-lg" data-aos="zoom-in" data-aos-delay="300">
-                        <i class="fas fa-globe text-4xl mb-4"></i>
-                        <h3 class="text-xl font-semibold mb-2">Global Reach</h3>
-                        <p>With a network of partners worldwide, we help you find properties globally.</p>
-                    </div>
-                    <div class="text-center bg-white bg-opacity-20 p-6 rounded-lg backdrop-filter backdrop-blur-lg" data-aos="zoom-in" data-aos-delay="400">
-                        <i class="fas fa-thumbs-up text-4xl mb-4"></i>
-                        <h3 class="text-xl font-semibold mb-2">Client Satisfaction</h3>
-                        <p>Our success is measured by your satisfaction. We go the extra mile to ensure it.</p>
+                    <div
+                        class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[200%] h-[200%] bg-gray-100 rounded-full opacity-10 z-0">
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="find-home" class="py-20 bg-white">
+        <!-- See How PrivateOpenHouse Can Help -->
+        <section id="find-home" class="py-20 bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden relative">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="relative mx-auto max-w-5xl text-center">
+                    <span class="text-black text-4xl font-bold my-3 flex items-center justify-center font-medium uppercase tracking-wider">
+                        Why Choose Us
+                    </span>
+                    <h2 class="block w-full text-gray-400 bg-clip-text font-bold text-transparent text-3xl sm:text-4xl">
+                        Discover Excellence in Real Estate
+                    </h2>
+                    <p class="mx-auto my-4 w-full max-w-xl bg-transparent text-center font-medium leading-relaxed tracking-wide text-gray-400">
+                        At Private Open House, we redefine luxury living by connecting discerning clients with exclusive properties that embody elegance and sophistication.
+                    </p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-12">
+                    <div class="service-card" data-service="buy">
+                        <div class="bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                            <div class="p-8 flex flex-col items-center">
+                                <img src="https://homez-appdir.vercel.app/images/icon/property-buy.svg" alt="Buy Property" class="w-[150px] h-[150px] object-cover mb-6">
+                                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Luxury Acquisitions</h3>
+                                <p class="text-gray-600 mb-6 text-center">Discover our exclusive range of luxury properties with state-of-the-art amenities.</p>
+                                <a href="#"
+                                class="inline-block bg-primary text-white font-semibold py-4 px-6 bg-blue-400 rounded-tl-3xl rounded-br-3xl transition duration-300 ease-in-out hover:bg-blue-700">Explore
+                                Property</a>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="service-card" data-service="sell">
+                        <div class="bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                            <div class="p-8 flex flex-col items-center">
+                                <img src="https://homez-appdir.vercel.app/images/icon/property-sell.svg" alt="Sell Property" class="w-[150px] h-[150px] object-cover mb-6">
+                                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Premium Sales</h3>
+                                <p class="text-gray-600 mb-6 text-center">Maximize the value of your property with our bespoke marketing strategies and global network.</p>
+                                
+                                <a href="#"
+                                class="inline-block bg-primary text-white font-semibold py-4 px-6 bg-blue-400 rounded-tl-3xl rounded-br-3xl transition duration-300 ease-in-out hover:bg-blue-700">Valuation Request</a>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="service-card" data-service="rent">
+                        <div class="bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                            <div class="p-8 flex flex-col items-center">
+                                <img src="https://homez-appdir.vercel.app/images/icon/property-rent.svg" alt="Rent Property" class="w-[150px] h-[150px] object-cover mb-6">
+                                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Luxury Rentals</h3>
+                                <p class="text-gray-600 mb-6 text-center">Experience opulent living with our curated selection of high-end rental properties.</p>
+                                <a href="#"
+                                class="inline-block bg-primary text-white font-semibold py-4 px-6 bg-blue-400 rounded-tl-3xl rounded-br-3xl transition duration-300 ease-in-out hover:bg-blue-700">Browse Rentals</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative mx-auto max-w-5xl text-center mt-16">
+                    <h2 class="block w-full bg-gradient-to-b from-white to-gray-400 bg-clip-text font-bold text-transparent text-3xl sm:text-4xl">
+                        Our Commitment to You
+                    </h2>
+                    <p class="mx-auto my-4 w-full max-w-xl bg-transparent text-center font-medium leading-relaxed tracking-wide text-gray-400">
+                        At Private Open House, our mission is to provide an exceptional real estate experience that exceeds your expectations. We are committed to integrity, professionalism, and unparalleled service in every transaction.
+                    </p>
+                </div>
+            </div>
+        
+            <!-- Decorative elements -->
+            <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10">
+                <div class="absolute w-96 h-96 bg-blue-400 rounded-full -top-20 -left-20"></div>
+                <div class="absolute w-96 h-96 bg-purple-400 rounded-full -bottom-20 -right-20"></div>
+            </div>
+        </section>
+
+        <!-- Client Experience -->
+        <section class="py-24 bg-gray-50">
             <div class="container mx-auto px-6">
-                <h2 class="text-4xl font-bold text-center text-gray-800 mb-12" data-aos="fade-up">Find Your Dream Home</h2>
-                <div class="flex justify-center">
-                    <div class="bg-white p-8 rounded-lg shadow-lg w-full md:w-1/2" data-aos="fade-up">
-                        <form action="#" method="POST">
-                            <div class="mb-6">
-                                <label for="location" class="block text-gray-700 font-bold mb-2">Location</label>
-                                <input type="text" id="location" name="location" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                <h2 class="text-6xl font-bold text-center text-primary mb-16" id="experience-title">The PrivateOpenHouse
+                    Experience</h2>
+                <div class="flex flex-col md:flex-row items-center justify-between">
+                    <div class="md:w-1/2 mb-12 md:mb-0" id="experience-content">
+                        <h3 class="text-4xl font-semibold text-primary mb-6">Unrivaled Luxury, Unparalleled Service</h3>
+                        <p class="text-gray-700 mb-8 text-xl">At PrivateOpenHouse, we transcend the ordinary, curating a
+                            realm of exclusivity for the world's most discerning clientele. Our bespoke approach ensures
+                            that every interaction is tailored to your unique tastes and aspirations.</p>
+                        <ul class="text-gray-700 text-xl">
+                            <li class="mb-4"><i class="fas fa-check-circle text-primary mr-2"></i>Private jet viewings
+                                of international properties</li>
+                            <li class="mb-4"><i class="fas fa-check-circle text-primary mr-2"></i>Customized digital
+                                portfolios of curated estates</li>
+                            <li class="mb-4"><i class="fas fa-check-circle text-primary mr-2"></i>Exclusive access to
+                                off-market luxury properties</li>
+                            <li><i class="fas fa-check-circle text-primary mr-2"></i>Personalized concierge services for
+                                all lifestyle needs</li>
+                        </ul>
+                    </div>
+                    <div class="md:w-1/2 relative" id="experience-image">
+                        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                            alt="Luxury Experience" class="w-full h-96 object-cover rounded-lg shadow-2xl">
+                        <div class="absolute -bottom-6 -right-6 w-64 h-64 border-4 border-primary rounded-lg"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Prestigious Properties Showcase -->
+        <section id="prestigious-properties"
+            class="py-24 bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden relative">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="flex flex-col lg:flex-row items-center">
+                    <div class="lg:w-3/5 mb-12 lg:mb-0">
+                        <div class="grid grid-cols-12 gap-4 h-[700px]">
+                            <div class="col-span-8 row-span-4 transform hover:scale-[1.02] transition-transform duration-300">
+                                <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                                    alt="Luxury Mansion" class="w-full h-full object-cover rounded-xl shadow-lg">
                             </div>
-                            <div class="mb-6">
-                                <label for="property-type" class="block text-gray-700 font-bold mb-2">Property Type</label>
-                                <select id="property-type" name="property-type" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
-                                    <option value="apartment">Apartment</option>
-                                    <option value="house">House</option>
-                                    <option value="condo">Condo</option>
-                                </select>
+                            <div class="col-span-4 row-span-2 transform hover:scale-[1.02] transition-transform duration-300">
+                                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                                    alt="Modern Interior" class="w-full h-full object-cover rounded-xl shadow-lg">
                             </div>
-                            <div class="mb-6">
-                                <label for="budget" class="block text-gray-700 font-bold mb-2">Budget</label>
-                                <input type="text" id="budget" name="budget" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                            <div class="col-span-4 row-span-2 transform hover:scale-[1.02] transition-transform duration-300">
+                                <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                                    alt="Luxury Pool" class="w-full h-full object-cover rounded-xl shadow-lg">
                             </div>
-                            <div class="text-center">
-                                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full transition duration-300">Search Now</button>
+                            <!-- <div class="col-span-6 row-span-2 transform hover:scale-[1.02] transition-transform duration-300">
+                                <img src="https://images.unsplash.com/photo-1600607687126-a2f0a568e9b5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                                    alt="Elegant Living Room" class="w-full h-full object-cover rounded-xl shadow-lg">
                             </div>
-                        </form>
+                            <div class="col-span-6 row-span-2 transform hover:scale-[1.02] transition-transform duration-300">
+                                <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                                    alt="Modern Exterior" class="w-full h-full object-cover rounded-xl shadow-lg">
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <div class="lg:w-2/5 lg:pl-16">
+                        <h2 class="text-5xl font-bold text-gray-800 mb-6 leading-tight">Discover Unparalleled Luxury
+                        </h2>
+                        <p class="text-xl text-gray-600 mb-8 leading-relaxed">Immerse yourself in a world of refinement
+                            and elegance. Our curated collection of prestigious properties offers an unmatched living
+                            experience for the most discerning clientele.</p>
+                        <a href="#"
+                            class="block w- bg-blue-400 text-white text-center font-bold py-4 px-8 rounded-lg hover:from-blue-600 hover:to-purple-700 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
+                            Schedule a Private Viewing
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="absolute top-0 left-0 w-64 h-64 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse">
+            </div>
+            <div
+                class="absolute bottom-0 right-0 w-80 h-80 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse animation-delay-2000">
+            </div>
+        </section>
+
+        <!-- Featured Property of the Month -->
+        <section class="py-24 bg-gradient-to-br from-gray-900 to-blue-900 relative overflow-hidden">
+            <!-- Decorative elements -->
+            <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10">
+                <div class="absolute w-96 h-96 bg-blue-400 rounded-full -top-20 -left-20"></div>
+                <div class="absolute w-96 h-96 bg-purple-400 rounded-full -bottom-20 -right-20"></div>
+            </div>
+
+            <div class="container mx-auto px-6 relative z-10">
+                <h2 class="text-5xl md:text-7xl font-bold text-center text-white mb-16" id="featured-property-title">
+                    <span class="block transform hover:scale-105 transition-transform duration-300">Featured
+                        Property</span>
+                    <span
+                        class="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 transform hover:scale-105 transition-transform duration-300">of
+                        the Month</span>
+                </h2>
+
+                <div class="relative bg-white rounded-3xl shadow-2xl overflow-hidden">
+                    <div
+                        class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 opacity-75">
+                    </div>
+
+                    <div class="relative z-10 flex flex-col lg:flex-row items-stretch">
+                        <!-- Image Section -->
+                        <div class="lg:w-3/5 relative overflow-hidden group">
+                            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                                alt="Luxury Home"
+                                class="w-full h-full object-cover transition-transform duration-700 transform group-hover:scale-110">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70">
+                            </div>
+                            <div
+                                class="absolute bottom-0 left-0 right-0 p-8 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                                <h3 class="text-4xl font-bold text-white mb-2">Majestic Manor</h3>
+                                <p class="text-xl text-gray-200 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                    Beverly Hills, California
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Content Section -->
+                        <div class="lg:w-2/5 p-8 flex flex-col justify-between bg-white">
+                            <div>
+                                <h4 class="text-3xl font-semibold text-gray-800 mb-6">Property Highlights</h4>
+                                <ul class="grid grid-cols-2 gap-6 text-gray-600">
+                                    <li
+                                        class="flex flex-col items-center p-4 bg-gray-100 rounded-lg transform hover:scale-105 transition-transform duration-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mb-2 text-blue-500"
+                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                        </svg>
+                                        <span class="font-semibold">10,000 sq ft</span>
+                                    </li>
+                                    <li
+                                        class="flex flex-col items-center p-4 bg-gray-100 rounded-lg transform hover:scale-105 transition-transform duration-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mb-2 text-blue-500"
+                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                        </svg>
+                                        <span class="font-semibold">6 Bedrooms</span>
+                                    </li>
+                                    <li
+                                        class="flex flex-col items-center p-4 bg-gray-100 rounded-lg transform hover:scale-105 transition-transform duration-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mb-2 text-blue-500"
+                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                        <span class="font-semibold">8 Bathrooms</span>
+                                    </li>
+                                    <li
+                                        class="flex flex-col items-center p-4 bg-gray-100 rounded-lg transform hover:scale-105 transition-transform duration-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mb-2 text-blue-500"
+                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+                                        </svg>
+                                        <span class="font-semibold">Private Helipad</span>
+                                    </li>
+                                    <li
+                                        class="flex flex-col items-center p-4 bg-gray-100 rounded-lg transform hover:scale-105 transition-transform duration-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mb-2 text-blue-500"
+                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                        <span class="font-semibold">8 Bathrooms</span>
+                                    </li>
+                                    <li
+                                        class="flex flex-col items-center p-4 bg-gray-100 rounded-lg transform hover:scale-105 transition-transform duration-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mb-2 text-blue-500"
+                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+                                        </svg>
+                                        <span class="font-semibold">Private Helipad</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="mt-8">
+                                <p class="text-gray-600 mb-6 leading-relaxed">
+                                    Experience unparalleled luxury living in this architectural masterpiece.
+                                    State-of-the-art smart home technology and breathtaking design combine to create the
+                                    ultimate estate with panoramic ocean views.
+                                </p>
+                                <a href="#"
+                                    class="block w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white text-center font-bold py-4 px-8 rounded-lg hover:from-blue-600 hover:to-purple-700 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
+                                    Schedule a Private Viewing
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
+
     <script>
-        AOS.init();
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero Section Animation
+        gsap.from("#hero-title", { opacity: 0, y: 50, duration: 1, delay: 0.5 });
+        gsap.from("#hero-subtitle", { opacity: 0, y: 50, duration: 1, delay: 0.8 });
+
+        // Luxury Categories Section Animation
+        gsap.from("#luxury-categories-title", {
+            scrollTrigger: {
+                trigger: "#luxury-categories-title",
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play reverse play reverse"
+            },
+            opacity: 0,
+            y: 50,
+            duration: 1
+        });
+
+        gsap.from(["#category-card-1", "#category-card-2", "#category-card-3"], {
+            scrollTrigger: {
+                trigger: "#category-card-1",
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play reverse play reverse"
+            },
+            opacity: 0,
+            y: 50,
+            stagger: 0.2,
+            duration: 1
+        });
+
+        // Featured Properties Animation
+        gsap.from("#properties-title", {
+            scrollTrigger: {
+                trigger: "#properties-title",
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play reverse play reverse"
+            },
+            opacity: 0,
+            y: 50,
+            duration: 1
+        });
+
+        gsap.from(["#property-1", "#property-2"], {
+            scrollTrigger: {
+                trigger: "#property-1",
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play reverse play reverse"
+            },
+            opacity: 0,
+            x: -50,
+            stagger: 0.2,
+            duration: 1
+        });
+
+        // Client Experience Animation
+        gsap.from("#experience-title", {
+            scrollTrigger: {
+                trigger: "#experience-title",
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play reverse play reverse"
+            },
+            opacity: 0,
+            y: 50,
+            duration: 1
+        });
+
+        gsap.from("#experience-content", {
+            scrollTrigger: {
+                trigger: "#experience-content",
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play reverse play reverse"
+            },
+            opacity: 0,
+            x: -50,
+            duration: 1
+        });
+
+        gsap.from("#experience-image", {
+            scrollTrigger: {
+                trigger: "#experience-image",
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play reverse play reverse"
+            },
+            opacity: 0,
+            x: 50,
+            duration: 1
+        });
+
+        // Featured Property of the Month Animation
+        gsap.from("#featured-property-title", {
+            scrollTrigger: {
+                trigger: "#featured-property-title",
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play reverse play reverse"
+            },
+            opacity: 0,
+            y: 50,
+            duration: 1
+        });
+
+        gsap.from("#featured-property-title + div > div", {
+            scrollTrigger: {
+                trigger: "#featured-property-title + div",
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play reverse play reverse"
+            },
+            opacity: 0,
+            x: (index) => index === 0 ? -50 : 50,
+            stagger: 0.2,
+            duration: 1
+        });
+
+        // See How PrivateOpenHouse Can Help Animation
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Animate the title
+        gsap.from("#find-home h2", {
+            scrollTrigger: {
+                trigger: "#find-home",
+                start: "top 80%",
+                end: "top 20%",
+                scrub: 1,
+                toggleActions: "restart pause reverse pause"
+            },
+            opacity: 0,
+            y: 50,
+            duration: 1
+        });
+
+        // Animate the service cards
+        gsap.from(".service-card", {
+            scrollTrigger: {
+                trigger: "#find-home",
+                start: "top 60%",
+                end: "center center",
+                scrub: 1,
+                toggleActions: "restart pause reverse pause"
+            },
+            opacity: 0,
+            y: 100,
+            stagger: {
+                each: 0.2,
+                from: "start"
+            },
+            duration: 1
+        });
+
+        // Parallax effect for decorative elements
+        gsap.utils.toArray(".absolute.w-96.h-96").forEach((element, i) => {
+            const speed = i === 0 ? 0.2 : -0.2;
+            gsap.to(element, {
+                y: () => ScrollTrigger.maxScroll(window) * speed,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: "#find-home",
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true,
+                    invalidateOnRefresh: true
+                }
+            });
+        });
+
+        // Continuous hover animation
+        const hoverAnimation = (card) => {
+            gsap.to(card, {
+                y: -10,
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+                duration: 0.3
+            });
+        };
+
+        const resetAnimation = (card) => {
+            gsap.to(card, {
+                y: 0,
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                duration: 0.3
+            });
+        };
+
+        document.querySelectorAll('.service-card > div').forEach(card => {
+            card.addEventListener('mouseenter', () => hoverAnimation(card));
+            card.addEventListener('mouseleave', () => resetAnimation(card));
+        });
+
+        // Scroll-triggered animations for each card
+        gsap.utils.toArray('.service-card').forEach((card, index) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 80%",
+                    end: "bottom 20%",
+                    toggleActions: "restart pause reverse pause",
+                    onEnter: () => animateCard(card, true),
+                    onLeave: () => animateCard(card, false),
+                    onEnterBack: () => animateCard(card, true),
+                    onLeaveBack: () => animateCard(card, false)
+                }
+            });
+        });
+
+        function animateCard(card, isEntering) {
+            gsap.to(card, {
+                y: isEntering ? 0 : 50,
+                opacity: isEntering ? 1 : 0.5,
+                scale: isEntering ? 1 : 0.95,
+                duration: 0.5,
+                ease: "power2.out"
+            });
+        }
+
+
+        // Prestigious Properties Showcase Animation
+        gsap.from("#prestigious-properties h2", {
+            scrollTrigger: {
+                trigger: "#prestigious-properties",
+                start: "top 80%",
+                end: "top 30%",
+                scrub: 1,
+                toggleActions: "play none none reverse"
+            },
+            opacity: 0,
+            y: 50,
+            duration: 1
+        });
+
+        gsap.from("#prestigious-properties .lg\\:w-3\\/5 > div > div", {
+            scrollTrigger: {
+                trigger: "#prestigious-properties",
+                start: "top 70%",
+                end: "top 20%",
+                scrub: 1,
+                toggleActions: "play none none reverse"
+            },
+            opacity: 0,
+            y: 30,
+            stagger: 0.1,
+            duration: 1
+        });
+
+        gsap.from("#prestigious-properties .lg\\:w-2\\/5", {
+            scrollTrigger: {
+                trigger: "#prestigious-properties",
+                start: "top 70%",
+                end: "top 20%",
+                scrub: 1,
+                toggleActions: "play none none reverse"
+            },
+            opacity: 0,
+            x: 50,
+            duration: 1
+        });
+
+        gsap.from("#prestigious-properties .absolute", {
+            scrollTrigger: {
+                trigger: "#prestigious-properties",
+                start: "top 80%",
+                end: "top 30%",
+                scrub: 1,
+                toggleActions: "play none none reverse"
+            },
+            opacity: 0,
+            scale: 0.9,
+            duration: 1.5,
+            stagger: 0.2
+        });
     </script>
 </body>
+
 </html>

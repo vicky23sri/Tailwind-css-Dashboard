@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Documents</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap');
+
+        :root {
+            --primary-color: #1a2639;
+            --secondary-color: #f0b67f;
+            --accent-color: #d6e0f0;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --btn-bg-color: #1a2639;
+            --btn-hover-color: #f0b67f;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--accent-color);
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .logo {
+            max-width: 300px;
+        }
+
+        .login-btn {
+            background-color: var(--btn-bg-color);
+            text-decoration: none;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .login-btn:hover {
+            background-color: var(--btn-hover-color);
+            color: var(--btn-bg-color);
+        }
+
+        .property-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .property-image {
+            flex: 1 1 300px;
+            max-width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .property-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .property-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .property-details {
+            flex: 1 1 300px;
+            padding: 10px;
+        }
+
+        .property-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2em;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .property-address {
+            font-size: 1.2em;
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .property-highlights {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .highlight-item {
+            text-align: center;
+        }
+
+        .highlight-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            display: block;
+        }
+
+        .highlight-label {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .property-description {
+            margin-bottom: 20px;
+        }
+
+        .shared-by {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            background-color: var(--accent-color);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            border: 2px solid var(--secondary-color);
+        }
+
+        .documents-section {
+            margin-top: 50px;
+        }
+
+        .documents-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .documents-title {
+            font-size: 1.5em;
+            color: var(--primary-color);
+        }
+
+        .documents-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .search-bar {
+            padding: 10px;
+            border: 1px solid var(--accent-color);
+            border-radius: 5px;
+            outline: none;
+            min-width: 200px;
+        }
+
+        .download-all-btn {
+            background-color: var(--btn-bg-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .download-all-btn:hover {
+            background-color: var(--btn-hover-color);
+            color: var(--btn-bg-color);
+        }
+
+        .documents-list {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .document-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--accent-color);
+            transition: background-color 0.3s;
+            flex-wrap: wrap;
+        }
+
+        .document-item:hover {
+            background-color: var(--accent-color);
+        }
+
+        .document-item:last-child {
+            border-bottom: none;
+        }
+
+        .document-icon {
+            font-size: 1.5em;
+            color: var(--primary-color);
+            margin-right: 15px;
+        }
+
+        .document-details {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .document-name {
+            font-weight: 600;
+        }
+
+        .document-meta {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .document-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .document-action-btn {
+            background-color: var(--btn-bg-color);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s;
+        }
+
+        .document-action-btn:hover {
+            background-color: var(--btn-hover-color);
+            color: var(--btn-bg-color);
+        }
+
+        .property-location {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .property-section {
+                flex-direction: column;
+            }
+
+            .property-image, .property-details {
+                flex: 1 1 100%;
+            }
+
+            .documents-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .documents-actions {
+                margin-top: 10px;
+            }
+
+            .document-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .document-actions {
+                margin-top: 10px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <img src="https://myrealtytech.com/assets/realty-logo-bAZ1hoeQ.png" alt="Company Logo" class="logo">
+            <a href="https://stage.myrealtytech.com/auth" class="login-btn">Login</a>
+        </header>
+
+        <section class="property-section">
+            <div class="property-image">
+                <img src="https://stage.myrealtytech.com/assets/image5-min-NQFyDn71.jpg" alt="1790 Rawhide Drive">
+            </div>
+            <div class="property-details">
+                <h1 class="property-title">1790 Rawhide Drive</h1>
+                <p class="property-location"><i class="fas fa-map-marker-alt"></i> Arnold, CA</p>
+                <div class="property-highlights">
+                    <div class="highlight-item">
+                        <i class="fas fa-dollar-sign"></i>
+                        <span class="highlight-value">$850,000</span>
+                        <span class="highlight-label">Price</span>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fas fa-bed"></i>
+                        <span class="highlight-value">3</span>
+                        <span class="highlight-label">Bedrooms</span>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fas fa-bath"></i>
+                        <span class="highlight-value">3</span>
+                        <span class="highlight-label">Bathrooms</span>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fas fa-ruler-combined"></i>
+                        <span class="highlight-value">2,500</span>
+                        <span class="highlight-label">Sq. Ft.</span>
+                    </div>
+                </div>
+                <div class="shared-by">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbpF3IRjq3K2vF74PNI4mpc-kzYwXmegSupg&s" alt="Rodney Rodr" class="avatar">
+                    <span>Shared by: Rodney Rodr</span>
+                </div>
+                <!-- <p>This stunning property offers high investment potential in a prime location. With its spacious layout and modern amenities, it's perfect for those looking for a luxurious lifestyle or a lucrative investment opportunity.</p> -->
+            </div>
+        </section>
+
+        <section class="documents-section">
+            <div class="documents-header">
+                <h2 class="documents-title">Property Documents</h2>
+                <div class="documents-actions">
+                    <input type="text" class="search-bar" placeholder="Search...">
+                    <button class="download-all-btn">Download All</button>
+                </div>
+            </div>
+            <div class="documents-list">
+                <div class="document-item">
+                    <i class="fas fa-file-pdf document-icon"></i>
+                    <div class="document-details">
+                        <div class="document-name">Property Deed</div>
+                        <div class="document-meta">PDF, 2.5 MB, 10 pages,Updated: July 10, 2024</div>
+                    </div>
+                    <div class="document-actions">
+                        <button class="document-action-btn">View</button>
+                        <button class="document-action-btn">Download</button>
+                    </div>
+                </div>
+                <div class="document-item">
+                    <i class="fas fa-file-image document-icon"></i>
+                    <div class="document-details">
+                        <div class="document-name">Floor Plan</div>
+                        <div class="document-meta">JPG, 1.8 MB, 1 page, Updated: July 8, 2024</div>
+                    </div>
+                    <div class="document-actions">
+                        <button class="document-action-btn">View</button>
+                        <button class="document-action-btn">Download</button>
+                    </div>
+                </div>
+                <div class="document-item">
+                    <i class="fas fa-file-alt document-icon"></i>
+                    <div class="document-details">
+                        <div class="document-name">Property Appraisal</div>
+                        <div class="document-meta">DOC, 500 KB, 5 pages, Updated: July 5, 2024</div>
+                    </div>
+                    <div class="document-actions">
+                        <button class="document-action-btn">View</button>
+                        <button class="document-action-btn">Download</button>
+                    </div>
+                </div>
+                <div class="document-item">
+                    <i class="fas fa-file-pdf document-icon"></i>
+                    <div class="document-details">
+                        <div class="document-name">Tax Records</div>
+                        <div class="document-meta">PDF, 1.2 MB, 3 pages, Updated: July 3, 2024</div>
+                    </div>
+                    <div class="document-actions">
+                        <button class="document-action-btn">View</button>
+                        <button class="document-action-btn">Download</button>
+                    </div>
+                </div>
+                <div class="document-item">
+                    <i class="fas fa-file-pdf document-icon"></i>
+                    <div class="document-details">
+                        <div class="document-name">Home Inspection Report</div>
+                        <div class="document-meta">PDF, 3.5 MB, 15 pages, Updated: July 1, 2024</div>
+                    </div>
+                    <div class="document-actions">
+                        <button class="document-action-btn">View</button>
+                        <button class="document-action-btn">Download</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>
