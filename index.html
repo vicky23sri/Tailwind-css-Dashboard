@@ -41,6 +41,17 @@
 			white-space: nowrap;
 			z-index: 10;
 		}
+
+		.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    opacity: 0;
+}
 	</style>
 </head>
 
@@ -211,6 +222,59 @@
 									:class="{ 'bg-blue-500 text-white hover:bg-blue-600': currentContent === 'expense' }">
 									<i class="fas fa-fw fa-chart-pie mr-3 text-lg"></i>
 									<span class="text-sm">Expense</span>
+								</button>
+							</div>
+						</div>
+					</li>
+					<li x-data="{ open: false }">
+						<a href="#" @click="open = !open; selectMainHeading('Task Management')"
+							class="flex items-center justify-between p-3 rounded-lg transition-all duration-200 hover:bg-gray-100 hover:text-black"
+							:class="{ 'bg-blue-500 text-white': selectedMainHeading === 'Task Management' }">
+							<div class="flex items-center">
+								<i class="fa-solid fa-bars-progress mr-3 text-lg"></i>
+								<span class="text-sm font-medium">Task Management</span>
+							</div>
+							<i class="fas" :class="open ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+						</a>
+						<div x-show="open" x-transition class="ml-6 mt-2 space-y-2">
+							<div class="flex flex-col space-y-2">
+								<button @click="changeContent('management/tasks')"
+									class="flex items-center p-2 rounded-lg transition-all duration-200 hover:bg-gray-100"
+									:class="{ 'bg-blue-500 text-white hover:bg-blue-600': currentContent === 'management/tasks' }">
+									<i class="fa-solid fa-list-check mr-3 text-lg"></i>
+									<span class="text-sm">Tasks</span>
+								</button>
+							</div>
+							<div class="flex flex-col space-y-2">
+								<button @click="changeContent('management/kanban')"
+									class="flex items-center p-2 rounded-lg transition-all duration-200 hover:bg-gray-100"
+									:class="{ 'bg-blue-500 text-white hover:bg-blue-600': currentContent === 'management/kanban' }">
+									<i class="fa-solid fa-grip mr-3 text-lg"></i>
+									<span class="text-sm">Kanaban Board</span>
+								</button>
+							</div>
+							<div class="flex flex-col space-y-2">
+								<button @click="changeContent('management/message')"
+									class="flex items-center p-2 rounded-lg transition-all duration-200 hover:bg-gray-100"
+									:class="{ 'bg-blue-500 text-white hover:bg-blue-600': currentContent === 'management/message' }">
+									<i class="fa-solid fa-comment mr-3 text-lg"></i>
+									<span class="text-sm">Messages</span>
+								</button>
+							</div>
+							<div class="flex flex-col space-y-2">
+								<button @click="changeContent('management/file')"
+									class="flex items-center p-2 rounded-lg transition-all duration-200 hover:bg-gray-100"
+									:class="{ 'bg-blue-500 text-white hover:bg-blue-600': currentContent === 'management/file' }">
+									<i class="fa-solid fa-file-import mr-3 text-lg"></i>
+									<span class="text-sm">Files</span>
+								</button>
+							</div>
+							<div class="flex flex-col space-y-2">
+								<button @click="changeContent('two-factor')"
+									class="flex items-center p-2 rounded-lg transition-all duration-200 hover:bg-gray-100"
+									:class="{ 'bg-blue-500 text-white hover:bg-blue-600': currentContent === 'two-factor' }">
+									<i class="fa-solid fa-file-import mr-3 text-lg"></i>
+									<span class="text-sm">TworFactor</span>
 								</button>
 							</div>
 						</div>

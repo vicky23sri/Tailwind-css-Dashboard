@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+</head>
+
+<body class="bg-gray-100 p-6">
+    <div class="flex divide-x divide-gray-800 mb-6">
+        <button @click="changeContent('management/tasks')"
+            class="align-middle select-none font-sans font-bold text-center uppercase transition-all text-xs py-3 px-6 bg-gray-100 text-black shadow-md hover:bg-blue-700 hover:text-white focus:bg-blue-700 focus:text-white focus:outline-none rounded-l-lg"
+            :class="{ 'bg-blue-700 text-white': currentContent === 'management/tasks' }" type="button">
+            <i class="fas fa-file-invoice mr-2"></i> Tasks
+        </button>
+        <button @click="changeContent('management/kanban')"
+            class="align-middle select-none font-sans font-bold text-center uppercase transition-all text-xs py-3 px-6 bg-gray-100 text-black shadow-md hover:bg-blue-700 hover:text-white focus:bg-blue-700 focus:text-white focus:outline-none"
+            :class="{ 'bg-blue-700 text-white': currentContent === 'management/kanban' }" type="button">
+            <i class="fas fa-cart-plus mr-2"></i> Kanaban Board
+        </button>
+        <button @click="changeContent('management/message')"
+            class="align-middle select-none font-sans font-bold text-center uppercase transition-all text-xs py-3 px-6 bg-gray-100 text-black shadow-md hover:bg-blue-700 hover:text-white focus:bg-blue-700 focus:text-white focus:outline-none"
+            :class="{ 'bg-blue-700 text-white': currentContent === 'management/message' }" type="button">
+            <i class="fas fa-quote-right mr-2"></i> Messages
+        </button>
+        <button @click="changeContent('management/file')"
+            class="align-middle select-none font-sans font-bold text-center uppercase transition-all text-xs py-3 px-6 bg-gray-100 text-black shadow-md hover:bg-blue-700 hover:text-white focus:bg-blue-700 focus:text-white focus:outline-none"
+            :class="{ 'bg-blue-700 text-white': currentContent === 'management/file' }" type="button">
+            <i class="fas fa-money-bill-trend-up mr-2"></i> Files
+        </button>
+    </div>
+    <div class="flex flex-col md:flex-row justify-between items-start mb-6 space-y-4 md:space-y-0">
+        <h1 class="text-3xl font-bold">Files</h1>
+    </div>
+
+</body>
+</html>

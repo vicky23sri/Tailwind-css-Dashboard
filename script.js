@@ -843,6 +843,112 @@ function updateChart() {
     expenseChart.update();
 }
 
+// kanbanboard
+
+function kanban() {
+    return {
+        columns: [
+            {
+                id: 1,
+                name: 'To Do',
+                tasks: [
+                    { id: 1, title: 'Design homepage', description: 'Create wireframes and mockups', priority: 'High', dueDate: '2024-07-15', progress: 20, assignees: [{name: 'John Doe', avatar: 'https://i.pravatar.cc/150?img=1'}] },
+                    { id: 2, title: 'Set up CI/CD', description: 'Configure Jenkins for automated deployments', priority: 'Medium', dueDate: '2024-07-20', progress: 0, assignees: [{name: 'Jane Smith', avatar: 'https://i.pravatar.cc/150?img=2'}] }
+                ]
+            },
+            {
+                id: 2,
+                name: 'In Progress',
+                tasks: [
+                    { id: 3, title: 'Implement authentication', description: 'Set up user login and registration', priority: 'High', dueDate: '2024-07-18', progress: 60, assignees: [{name: 'Bob Johnson', avatar: 'https://i.pravatar.cc/150?img=3'}, {name: 'Alice Williams', avatar: 'https://i.pravatar.cc/150?img=4'}] }
+                ]
+            },
+            {
+                id: 3,
+                name: 'Review',
+                tasks: [
+                    { id: 4, title: 'Code review: User API', description: 'Review pull request for user management API', priority: 'Medium', dueDate: '2024-07-16', progress: 80, assignees: [{name: 'Charlie Brown', avatar: 'https://i.pravatar.cc/150?img=5'}] }
+                ]
+            },
+            {
+                id: 4,
+                name: 'Done',
+                tasks: [
+                    { id: 5, title: 'Database schema design', description: 'Create ERD and SQL scripts', priority: 'Low', dueDate: '2024-07-10', progress: 100, assignees: [{name: 'Diana Prince', avatar: 'https://i.pravatar.cc/150?img=6'}] }
+                ]
+            }
+        ],
+        draggedTaskId: null,
+        
+        dragStart(event, taskId) {
+            this.draggedTaskId = taskId;
+            event.dataTransfer.effectAllowed = 'move';
+            event.dataTransfer.setData('text/plain', taskId);
+            event.target.classList.add('opacity-50');
+        },
+        
+        dropTask(event, columnId) {
+            event.target.classList.remove('bg-gray-100');
+            const taskId = parseInt(this.draggedTaskId);
+            const sourceColumnId = this.columns.find(col => col.tasks.some(task => task.id === taskId)).id;
+            const task = this.columns.find(col => col.id === sourceColumnId).tasks.find(t => t.id === taskId);
+            
+            if (sourceColumnId !== columnId) {
+                this.columns.find(col => col.id === sourceColumnId).tasks = this.columns.find(col => col.id === sourceColumnId).tasks.filter(t => t.id !== taskId);
+                this.columns.find(col => col.id === columnId).tasks.push(task);
+            }
+            
+            this.draggedTaskId = null;
+        },
+        
+        addTask(columnId) {
+            const newTask = {
+                id: Math.max(...this.columns.flatMap(col => col.tasks.map(t => t.id))) + 1,
+                title: 'New Task',
+                description: 'Task description',
+                priority: 'Medium',
+                dueDate: new Date().toISOString().split('T')[0],
+                progress: 0,
+                assignees: []
+            };
+            this.columns.find(col => col.id === columnId).tasks.push(newTask);
+        },
+
+        formatDate(dateString) {
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        }
+    }
+}
+
+function twoFactorAuth() {
+    return {
+        showModal: false,
+        method: 'sms',
+        step: 'choose',
+        code: ['', '', '', '', '', ''],
+        twoFAEnabled: false,
+        confirmMethod() {
+            if (this.method === 'sms') {
+                this.enableSMS();
+            } else {
+                this.step = 'app';
+            }
+        },
+        enableSMS() {
+            // Add logic to enable SMS authentication
+            console.log("SMS authentication enabled");
+            this.twoFAEnabled = true;
+            this.showModal = false;
+        },
+        verifyCode() {
+            console.log("Verifying code:", this.code.join(''));
+            this.twoFAEnabled = true;
+            this.showModal = false;
+        }
+    }
+}
+
 
 document.addEventListener('alpine:init', () => {
     Alpine.data('dashboard', () => ({
