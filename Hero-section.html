@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Dream Home | Innovative Real Estate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn { animation: fadeIn 0.5s ease-out forwards; }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div x-data="hero()" x-init="startSlideshow()" class="relative h-screen overflow-hidden">
+        <!-- Background image slideshow -->
+        <template x-for="(image, index) in images" :key="index">
+            <div class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out"
+                 :style="{ 'background-image': `url(${image})`, 'opacity': currentImage === index ? '1' : '0' }"></div>
+        </template>
+        
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black/50"></div>
+        
+        <div class="relative h-full flex flex-col justify-center items-center text-white px-4">
+            <h1 class="text-6xl md:text-8xl font-bold mb-6 text-center leading-tight animate-fadeIn" style="animation-delay: 0.2s;">
+                <span class="block">Find your Dream</span>
+                <span class="block text-blue-400">Home Today</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-12 text-center max-w-2xl animate-fadeIn" style="animation-delay: 0.4s;">Search our inventory for homes you won't find anywhere else.</p>
+            
+            <!-- Innovative search form -->
+            <div class="w-full max-w-6xl bg-white/100 rounded-3xl shadow-2xl p-6 animate-fadeIn" style="animation-delay: 0.6s;">
+                <form class="flex flex-wrap -mx-2">
+                    <div class="w-full sm:w-1/2 lg:w-1/2 xl:w-1/4 px-2 mb-4 flex flex-col">
+                        <label for="location" class="block mb-2 text-sm font-medium text-gray-700">Location</label>
+                        <div class="relative">
+                            <input type="text" placeholder="Location" class="w-full pl-12 pr-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded-lg border-2 border-blue-200 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-200 text-lg transition-all duration-300">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-map-marker-alt text-blue-400"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hidden xl:flex xl:items-center xl:px-2">
+                        <div class="h-14 w-px bg-black"></div>
+                    </div>
+
+                    <div class="w-full sm:w-1/2 lg:w-1/2 xl:w-1/4 px-2 mb-4 flex flex-col">
+                        <label for="bedrooms" class="block mb-2 text-sm font-medium text-gray-700">Bedrooms</label>
+                        <select id="bedrooms"
+                            class="w-full pl-12 pr-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded-lg border-2 border-blue-200 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-200 text-lg transition-all duration-300">
+                            <option value="">Bedrooms</option>
+                            <option value="1">1 Bedroom</option>
+                            <option value="2">2 Bedrooms</option>
+                            <option value="3">3 Bedrooms</option>
+                            <option value="4">4+ Bedrooms</option>
+                            <option value="add">+ Add Bedroom Option</option>
+                        </select>
+                    </div>
+
+                    <div class="hidden xl:flex xl:items-center xl:px-2">
+                        <div class="h-14 w-px bg-black"></div>
+                    </div>
+
+                   <div class="w-full sm:w-1/2 lg:w-1/2 xl:w-1/4 px-2 mb-4 flex flex-col">
+                        <label for="bathrooms" class="block mb-2 text-sm font-medium text-gray-700">Bathrooms</label>
+                        <select id="bathrooms"
+                            class="w-full pl-12 pr-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded-lg border-2 border-blue-200 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-200 text-lg transition-all duration-300">
+                            <option value="">Bathrooms</option>
+                            <option value="1">1 Bathroom</option>
+                            <option value="2">2 Bathrooms</option>
+                            <option value="3">3 Bathrooms</option>
+                            <option value="4">4+ Bathrooms</option>
+                            <option value="add">+ Add Bathroom Option</option>
+                        </select>
+                    </div>
+
+                    <div class="hidden xl:flex xl:items-center xl:px-2">
+                        <div class="h-14 w-px bg-black"></div>
+                    </div>
+
+                    <div class="w-full sm:w-1/2 lg:w-1/2 xl:w-1/6 px-2 mb-4 flex flex-col justify-end">
+                        <button
+                            class="w-full bg-blue-400 text-white px-6 py-3 rounded-tl-3xl rounded-br-3xl mb-2 hover:bg-blue-400 transition-colors duration-300 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                            Search
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Statistics Section -->
+            <div class="hidden md:flex flex-col mt-16 animate-fadeIn" style="animation-delay: 0.8s;">
+                <div class="flex gap-28 md:gap-36">
+                    <div class="relative group">
+                        <div class="w-10 h-5 bg-blue-500 rounded-t-full transform -rotate-45 group-hover:rotate-0 transition-transform duration-300"></div>
+                        <div class="absolute top-0 left-4 group-hover:translate-y-1 transition-transform duration-300">
+                            <span class="text-white text-5xl font-bold">100+</span>
+                            <span class="text-white text-md font-medium block mt-2">Listing Home</span>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <div class="w-10 h-5 bg-red-500 rounded-t-full transform -rotate-45 group-hover:rotate-0 transition-transform duration-300"></div>
+                        <div class="absolute top-0 left-4 group-hover:translate-y-1 transition-transform duration-300">
+                            <span class="text-white text-5xl font-bold">100+</span>
+                            <span class="text-white text-md font-medium block mt-2">Home Sale</span>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <div class="w-10 h-5 bg-green-500 rounded-t-full transform -rotate-45 group-hover:rotate-0 transition-transform duration-300"></div>
+                        <div class="absolute top-0 left-4 group-hover:translate-y-1 transition-transform duration-300">
+                            <span class="text-white text-5xl font-bold">99+</span>
+                            <span class="text-white text-md font-medium block mt-2">Realtors</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+        function hero() {
+            return {
+                images: [
+                    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c',
+                    'https://images.unsplash.com/photo-1564013799919-ab600027ffc6',
+                    'https://images.unsplash.com/photo-1576941089067-2de3c901e126',
+                    'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83',
+                    'https://images.unsplash.com/photo-1512917774080-9991f1c4c750'
+                ],
+                currentImage: 0,
+                startSlideshow() {
+                    setInterval(() => {
+                        this.currentImage = (this.currentImage + 1) % this.images.length;
+                    }, 5000);
+                }
+            }
+        }
+    </script>
+</body>
+</html>

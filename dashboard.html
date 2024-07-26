@@ -146,9 +146,12 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <div class="flex-shrink-0 w-10 h-10">
-                                        <img class="object-cover w-full h-full rounded-full"
-                                            src="https://img.freepik.com/free-photo/young-beautiful-woman-pink-warm-sweater-natural-look-smiling-portrait-isolated-long-hair_285396-896.jpg?size=626&ext=jpg&uid=R75331262&ga=GA1.1.1292211247.1718182866&semt=sph"
-                                            alt="Profile picture" />
+                                        <div x-data="{ name: 'Ahmed Kamel', image: '' }"
+                                             x-init="image ? $refs.avatarImage.src = image : $refs.avatarText.textContent = name.split(' ').map(n => n[0]).join('')"
+                                             class="relative flex items-center justify-center w-10 h-10 bg-gray-300 text-gray-800 rounded-full overflow-hidden">
+                                            <img x-ref="avatarImage" x-show="image" class="object-cover w-full h-full rounded-full" :src="image" alt="Profile picture" @error="image = ''">
+                                            <span x-ref="avatarText" x-show="!image" class="text-sm font-semibold flex items-center justify-center w-full h-full"></span>
+                                        </div>
                                     </div>
                                     <div class="ml-4">
                                         <div class="text-sm font-medium text-gray-900">Ahmed Kamel</div>

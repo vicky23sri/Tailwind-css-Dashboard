@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Private Open House - Innovative Design</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animate-gradient {
+            background: linear-gradient(-45deg, #ff3366, #ba265d, #0033cc, #5d34af);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        .nav-item {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.1);
+            transform: translateX(-100%) skew(-10deg);
+            transition: all 0.3s ease;
+        }
+        .nav-item:hover::before {
+            transform: translateX(0) skew(-10deg);
+        }
+        .hero-text {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .glitch {
+            position: relative;
+        }
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 #ff00c1;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 #00fff9, 2px 2px #ff00c1;
+            animation: glitch-anim2 1s infinite linear alternate-reverse;
+        }
+        @keyframes glitch-anim {
+            0% { clip: rect(10px, 9999px, 31px, 0); }
+            25% { clip: rect(25px, 9999px, 98px, 0); }
+            50% { clip: rect(42px, 9999px, 73px, 0); }
+            75% { clip: rect(67px, 9999px, 62px, 0); }
+            100% { clip: rect(13px, 9999px, 44px, 0); }
+        }
+        @keyframes glitch-anim2 {
+            0% { clip: rect(65px, 9999px, 119px, 0); }
+            25% { clip: rect(79px, 9999px, 12px, 0); }
+            50% { clip: rect(7px, 9999px, 97px, 0); }
+            75% { clip: rect(48px, 9999px, 35px, 0); }
+            100% { clip: rect(35px, 9999px, 53px, 0); }
+        }
+    </style>
+</head>
+<body class="font-sans bg-black text-white overflow-x-hidden">
+    <!-- Innovative Navbar -->
+    <nav class="fixed w-full z-50 p-6 animate-gradient">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://privateopenhouse.com/images/logo.svg" alt="Private Open House Logo" class="h-12 mr-4 transform hover:rotate-12 transition-transform duration-300">
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#" class="nav-item text-xl font-bold py-2 px-4 rounded-lg hover:bg-white hover:text-black transition duration-300">Home</a>
+                <a href="#" class="nav-item text-xl font-bold py-2 px-4 rounded-lg hover:bg-white hover:text-black transition duration-300">Gallery</a>
+                <a href="#" class="nav-item text-xl font-bold py-2 px-4 rounded-lg hover:bg-white hover:text-black transition duration-300">Virtual Tour</a>
+                <a href="#" class="nav-item text-xl font-bold py-2 px-4 rounded-lg hover:bg-white hover:text-black transition duration-300">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div id="hero" class="relative h-screen overflow-hidden flex items-center justify-center">
+        <div id="threeJsContainer" class="absolute inset-0"></div>
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div class="relative z-10 text-center">
+            <h1 class="text-6xl md:text-8xl font-extrabold mb-4 hero-text glitch" data-text="Parc at Town Center">Parc at Town Center</h1>
+            <p class="text-2xl md:text-3xl mb-8 hero-text">901 Myers Point Drive | Morrisville, NC 27560</p>
+            <a href="#" class="bg-white text-black font-bold text-xl py-4 px-10 rounded-full hover:bg-opacity-80 transition duration-300 transform hover:scale-105">Explore Property</a>
+        </div>
+    </div>
+
+    <script>
+        // Three.js scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('threeJsContainer').appendChild(renderer.domElement);
+
+        // Create particles
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 5000;
+        const posArray = new Float32Array(particlesCount * 3);
+
+        for(let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 5;
+        }
+
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.005,
+            color: 0xffffff
+        });
+
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+
+        camera.position.z = 2;
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            particlesMesh.rotation.y += 0.001;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Responsive Three.js scene
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Parallax effect on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX / window.innerWidth - 0.5;
+            const mouseY = e.clientY / window.innerHeight - 0.5;
+            particlesMesh.rotation.y = mouseX * 0.5;
+            particlesMesh.rotation.x = mouseY * 0.5;
+        });
+    </script>
+</body>
+</html>
