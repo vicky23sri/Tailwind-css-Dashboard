@@ -3,106 +3,374 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Villa Serenity Showcase</title>
+    <title>Celestial Haven - Luxury Property</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.0.2.x/dist/cdn.min.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: #000;
             color: #fff;
         }
         .property-name {
-            font-family: 'Playfair Display', serif;
             writing-mode: vertical-rl;
             text-orientation: mixed;
             transform: rotate(180deg);
+            padding-left: 30px;
         }
-        @keyframes fadeInLeft {
-            from { opacity: 0; transform: translateX(-20px) rotate(180deg); }
-            to { opacity: 1; transform: translateX(0) rotate(180deg); }
+        @keyframes kenBurns {
+            0% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.05) translate(-1%, -1%); }
+            100% { transform: scale(1) translate(0, 0); }
         }
-        .animate-fadeInLeft {
-            animation: fadeInLeft 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        .background-image img {
+            animation: kenBurns 20s ease-in-out infinite alternate;
         }
-        .slider .item {
-            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .thumbnail .item {
-            transition: all 0.3s ease;
+        .animate-fadeInUp {
+            animation: fadeInUp 1s ease-out forwards;
         }
-        .thumbnail .item:hover {
-            transform: scale(1.1);
-            z-index: 10;
-        }
-        .thumbnail .item.active {
-            border: 2px solid #fff;
-            transform: scale(1.15);
-            z-index: 20;
-        }
-        @keyframes zoomIn {
-            from { transform: scale(1.1); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-        .animate-zoomIn {
-            animation: zoomIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-        }
-        .glass-effect {
-            background: rgba(0, 0, 0, 0.3);
+        .realtor-card {
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        .parallax {
-            transition: transform 0.1s ease-out;
+        .realtor-image {
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+        .header-bg {
+            background-color: rgba(0, 0, 0, 0.5); 
+            padding: 20px;
+            border-radius: 8px; 
+        }
+          .modal-image {
+            max-width: 90%;
+            max-height: 90%;
         }
     </style>
 </head>
-<body class="bg-black">
-    <div class="slider relative h-screen overflow-hidden">
-        <div class="list">
-            <div class="item absolute inset-0">
-                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80" alt="Villa Serenity" class="w-full h-full object-cover parallax">
+<body>
+    <!-- Navbar -->
+    <nav class="bg-white text-white py-4 px-8 fixed top-0 left-0 right-0 shadow-md z-40">
+        <div class="container mx-auto flex items-center justify-between">
+            <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+                <img src="/images/image/logo.svg" class="h-14" alt="Flowbite Logo" />
+            </a>
+            <button id="menuToggle" class="block md:hidden text-xl">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6" style="stroke: black;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>            
+            <div id="menu" class="hidden md:flex space-x-10">
+                <a href="#" class="relative text-black font-bold text-lg group transition-colors duration-300 hover:text-blue-600">
+                    Home
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#property-details" class="relative text-black font-bold text-lg group transition-colors duration-300 hover:text-blue-600">
+                    Details
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#gallery" class="relative text-black font-bold text-lg group transition-colors duration-300 hover:text-blue-600">
+                    Gallery
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#" class="relative text-black font-bold text-lg group transition-colors duration-300 hover:text-blue-600">
+                    FloorPlan
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#" class="relative text-black font-bold text-lg group transition-colors duration-300 hover:text-blue-600">
+                    Contact
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#" class="relative text-black font-bold text-lg group transition-colors duration-300 hover:text-blue-600">
+                    Map
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </div>
+            
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed inset-0 bg-black/90 z-40 hidden flex flex-col items-center space-y-20 mt-34 p-10">
+        <button id="closeMenu" class="absolute top-4 right-4 text-white text-2xl">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-8 h-8" style="stroke: white;">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <a href="#" class="relative text-white font-bold text-lg group transition-colors duration-300 hover:text-blue-600">
+            Home
+            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+        </a>
+        <a href="#property-details" class="relative text-white font-bold text-lg group transition-colors duration-300 hover:text-blue-600">
+            Details
+            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+        </a>
+        <a href="#gallery" class="relative text-white font-bold text-lg group transition-colors duration-300 hover:text-blue-600">
+            Gallery
+            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+        </a>
+        <a href="#" class="relative text-white font-bold text-lg group transition-colors duration-300 hover:text-blue-600">
+            FloorPlan
+            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+        </a>
+        <a href="#" class="relative text-white font-bold text-lg group transition-colors duration-300 hover:text-blue-600">
+            Contact
+            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+        </a>
+        <a href="#" class="relative text-white font-bold text-lg group transition-colors duration-300 hover:text-blue-600">
+            Map
+            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <section class="relative h-screen overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="background-image absolute inset-0 transition-opacity duration-2000 ease-in-out">
+                <img src="" alt="Luxury Property" class="w-full h-full object-cover">
+            </div>
+            <div class="background-image absolute inset-0 transition-opacity duration-2000 ease-in-out opacity-0">
+                <img src="" alt="Luxury Property" class="w-full h-full object-cover">
             </div>
         </div>
 
-        <div class="property-name-container absolute left-8 top-1/2 transform -translate-y-1/2 z-10 bg-black bg-opacity-50 p-4 rounded-lg">
-            <h1 class="property-name text-6xl md:text-8xl font-bold text-white animate-fadeInLeft">Villa Serenity</h1>
-        </div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70 z-10"></div>
 
-        <!-- <div class="content absolute bottom-0 left-0 right-0 p-8">
-            <div class="glass-effect p-4 rounded-lg max-w-xl animate-fadeInLeft" style="animation-delay: 0.2s;">
-                <p class="text-lg text-white">Offered by Jane Doe, Luxury Realty</p>
-                <p class="text-sm text-gray-300 mt-2">Contact: +1 (123) 456-7890</p>
-            </div>
-        </div> -->
+        <div class="relative z-20 h-full flex flex-col p-8">
+            <header class="absolute bottom-0 left-0 mb-8 text-center property-name header-bg">
+                <h1 class="text-5xl md:text-7xl font-bold text-white mb-4 opacity-0 animate-fadeInUp" style="animation-delay: 0.5s;">Celestial Haven</h1>
+                <p class="text-xl md:text-2xl text-gray-200 opacity-0 animate-fadeInUp" style="animation-delay: 0.7s;">Where Luxury Meets the Sky</p>
+            </header>
+        
+            <footer class="absolute bottom-0 right-0 mb-12 mr-4">
+                <div class="realtor-card p-6 rounded-xl max-w-md md:max-w-lg bg-gradient-to-br from-white via-gray-100 to-gray-200 backdrop-blur-lg border border-gray-300 shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-xl opacity-0 animate-fadeInUp" style="animation-delay: 1s;">
+                    <div class="flex flex-col md:flex-row items-center space-y-6 md:space-x-6 md:space-y-0">
+                        <!-- Image Section -->
+                        <div class="relative group">
+                            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Jane Doe" class="w-40 h-48 rounded-lg border-2 border-gray-300 shadow-md object-cover transition-all duration-300 group-hover:shadow-lg group-hover:border-gray-400">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-50 transition-opacity duration-300 rounded-lg"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-4 text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <p class="text-xs font-semibold">Tap to connect</p>
+                            </div>
+                        </div>
+                        <!-- Details Section -->
+                        <div class="text-gray-800 space-y-4 flex-grow text-center md:text-left">
+                            <h2 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-500 to-yellow-500">Jane Doe</h2>
+                            <!-- <p class="text-base text-gray-600 font-light tracking-wide">Luxury Real Estate Specialist</p> -->
+                            <div class="space-y-1">
+                                <p class="text-lg font-semibold text-amber-500">Corcoran Icon Properties</p>
+                                <p class="text-lg font-light">209-566-5723</p>
+                            </div>
+                            <p class="text-sm text-gray-500">License #02006584</p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>        
 
-        <div class="thumbnail-container absolute bottom-0 left-0 right-0 h-40 md:h-48">
-            <div class="thumbnail flex justify-center items-center h-full gap-4 px-4 overflow-x-auto">
-                <!-- Thumbnail items will be added dynamically -->
-            </div>
-        </div>
-
-        <div class="controls absolute top-1/2 left-0 right-0 flex justify-between px-4 transform -translate-y-1/2">
-            <button id="prevBtn" class="bg-white bg-opacity-20 text-white p-3 rounded-full hover:bg-opacity-40 transition-all focus:outline-none">
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 flex space-x-4">
+            <button id="prevBtn" class="bg-white/20 text-white p-3 rounded-full hover:bg-white/40 transition-all focus:outline-none">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
             </button>
-            <button id="nextBtn" class="bg-white bg-opacity-20 text-white p-3 rounded-full hover:bg-opacity-40 transition-all focus:outline-none">
+            <button id="nextBtn" class="bg-white/20 text-white p-3 rounded-full hover:bg-white/40 transition-all focus:outline-none">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
             </button>
         </div>
-    </div>
+    </section>
+
+    <!-- Details Section -->
+    <section id="property-details" class="p-10 lg:p-12 mx-auto container my-10 rounded-3xl shadow-2xl overflow-hidden bg-gradient-to-br from-blue-50 to-purple-50">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Beds -->
+            <div class="group hover:scale-105 transition-all duration-300 bg-white bg-opacity-70 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-gray-200 hover:border-blue-300">
+                <div class="flex items-center justify-between">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center group-hover:bg-blue-200 transition-colors duration-300">
+                        <i class="fa-solid fa-bed text-3xl text-blue-500 group-hover:text-blue-600 transition-colors duration-300"></i>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-3xl font-bold text-gray-800">4</span>
+                        <p class="text-sm text-gray-600 uppercase tracking-wide">Beds</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Baths -->
+            <div class="group hover:scale-105 transition-all duration-300 bg-white bg-opacity-70 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-gray-200 hover:border-purple-300">
+                <div class="flex items-center justify-between">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center group-hover:bg-purple-200 transition-colors duration-300">
+                        <i class="fa-solid fa-bath text-3xl text-purple-500 group-hover:text-purple-600 transition-colors duration-300"></i>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-3xl font-bold text-gray-800">3</span>
+                        <p class="text-sm text-gray-600 uppercase tracking-wide">Baths</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Price -->
+            <div class="group hover:scale-105 transition-all duration-300 bg-white bg-opacity-70 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-gray-200 hover:border-green-300">
+                <div class="flex items-center justify-between">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center group-hover:bg-green-200 transition-colors duration-300">
+                        <i class="fa-solid fa-dollar-sign text-3xl text-green-500 group-hover:text-green-600 transition-colors duration-300"></i>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-3xl font-bold text-gray-800">500,000</span>
+                        <p class="text-sm text-gray-600 uppercase tracking-wide">Price</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Car Garage -->
+            <div class="group hover:scale-105 transition-all duration-300 bg-white bg-opacity-70 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-gray-200 hover:border-red-300">
+                <div class="flex items-center justify-between">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center group-hover:bg-red-200 transition-colors duration-300">
+                        <i class="fa-solid fa-car text-3xl text-red-500 group-hover:text-red-600 transition-colors duration-300"></i>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-3xl font-bold text-gray-800">2</span>
+                        <p class="text-sm text-gray-600 uppercase tracking-wide">Car Garage</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Lot Size -->
+            <div class="group hover:scale-105 transition-all duration-300 bg-white bg-opacity-70 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-gray-200 hover:border-yellow-300">
+                <div class="flex items-center justify-between">
+                    <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center group-hover:bg-yellow-200 transition-colors duration-300">
+                        <i class="fa-solid fa-ruler-combined text-3xl text-yellow-500 group-hover:text-yellow-600 transition-colors duration-300"></i>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-3xl font-bold text-gray-800">5000</span>
+                        <p class="text-sm text-gray-600 uppercase tracking-wide">sq ft</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Year Built -->
+            <div class="group hover:scale-105 transition-all duration-300 bg-white bg-opacity-70 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-gray-200 hover:border-indigo-300">
+                <div class="flex items-center justify-between">
+                    <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center group-hover:bg-indigo-200 transition-colors duration-300">
+                        <i class="fas fa-hotel text-3xl text-indigo-500 group-hover:text-indigo-600 transition-colors duration-300"></i>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-3xl font-bold text-gray-800">1990</span>
+                        <p class="text-sm text-gray-600 uppercase tracking-wide">Year Built</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Property Description -->
+        <div class="mt-16 bg-white bg-opacity-80 backdrop-blur-lg p-10 rounded-3xl shadow-xl border border-gray-200 hover:border-blue-300 transition-all duration-300">
+            <h3 class="text-3xl font-bold text-gray-800 mb-6">Discover Your Dream Home</h3>
+            <p class="text-gray-700 leading-relaxed text-lg">
+                Immerse yourself in luxury with this exquisite property. Boasting spacious living areas and cutting-edge amenities, it's a haven of comfort and style. The meticulously landscaped backyard sets the perfect stage for unforgettable gatherings. Nestled in an exclusive neighborhood, this home seamlessly blends elegance with convenience. 
+            </p>
+            <!-- <button class="mt-8 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 shadow-lg hover:shadow-xl">
+                Schedule a Viewing
+            </button> -->
+        </div>
+    </section>
+    
+    <section id="gallery" class="p-4 lg:p-8 mx-auto container my-12 bg-gray-100" x-data="imageGallery()">
+        <h2 class="text-5xl font-bold text-center mb-10 text-gray-800 font-serif">Celestial Haven Gallery</h2>
+        
+        <!-- Simple 4-Image Row Gallery -->
+        <div class="flex flex-wrap -mx-2">
+            <template x-for="(image, index) in images" :key="index">
+                <div class="w-full sm:w-1/2 md:w-1/4 lg:1/5 p-2">
+                    <div @click="openLightbox(index)" class="cursor-pointer overflow-hidden rounded-xl shadow-lg">
+                        <div class="relative" style="height: 200px;">
+                            <img :src="image.thumbnail" :alt="image.alt" class="w-full h-full object-cover">
+                            <!-- <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-50 flex items-center justify-center">
+                                <p x-text="image.alt" class="text-white text-center opacity-0 hover:opacity-100 px-4 text-sm md:text-base"></p>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    
+        <!-- Enhanced Lightbox -->
+        <div x-show="lightboxOpen" 
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 transform scale-90"
+             x-transition:enter-end="opacity-100 transform scale-100"
+             x-transition:leave="transition ease-in duration-300"
+             x-transition:leave-start="opacity-100 transform scale-100"
+             x-transition:leave-end="opacity-0 transform scale-90"
+             @keydown.escape.window="closeLightbox"
+             @keydown.arrow-left.window="prevImage"
+             @keydown.arrow-right.window="nextImage"
+             class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-95">
+            
+            <div @click.away="closeLightbox" class="relative max-w-7xl w-full h-full flex flex-col items-center justify-center px-4">
+                <img :src="currentImage.full" :alt="currentImage.alt" class="max-h-[80vh] max-w-full object-contain rounded-lg shadow-2xl">
+                
+                <!-- Navigation Arrows -->
+                <button @click.stop="prevImage" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-40 rounded-full p-3 transition-all duration-300 ease-in-out focus:outline-none">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <button @click.stop="nextImage" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-40 rounded-full p-3 transition-all duration-300 ease-in-out focus:outline-none">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+                
+                <!-- Close Button -->
+                <button @click="closeLightbox" class="absolute top-4 right-4 text-white text-4xl hover:text-gray-300 transition-colors duration-300 focus:outline-none">&times;</button>
+                
+                <!-- Image Caption -->
+                <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-70 text-white px-6 py-3 rounded-full text-center max-w-lg w-full">
+                    <p x-text="currentImage.alt" class="text-sm md:text-base"></p>
+                    <p class="text-xs mt-1"><span x-text="currentIndex + 1"></span> / <span x-text="images.length"></span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floor Plan Section -->
+    <section id="floor-plan" class="p-10 lg:p-12 mx-auto container my-10 rounded-3xl shadow-2xl bg-gradient-to-br from-gray-100 to-gray-200">
+        <div class="p-6">
+            <div x-data="floorPlans">
+                <!-- Grid of floor plan images -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <template x-for="(img, index) in images" :key="index">
+                        <div class="relative">
+                            <img :src="img" class="cursor-pointer rounded-md shadow-md hover:opacity-80 transition-opacity duration-300" @click="openImage(img)">
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Modal for full-screen image view -->
+                <div x-show="open" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50" @click.self="open = false">
+                    <img :src="currentImage" class="modal-image object-contain rounded-md">
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <script>
-        const slider = document.querySelector('.slider');
-        const sliderList = slider.querySelector('.list');
-        const thumbnail = slider.querySelector('.thumbnail');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-
+        document.addEventListener('DOMContentLoaded', () => {
+            const propertySection = document.getElementById('property-details');
+            
+            // Example: Scroll to the section
+            document.getElementById('scroll-to-property').addEventListener('click', () => {
+                propertySection.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+    
+    <script>
         const images = [
             'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80',
             'https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80',
@@ -111,114 +379,157 @@
             'https://images.unsplash.com/photo-1600585154526-990dced4db0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80',
             'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80',
             'https://images.unsplash.com/photo-1600566752355-35792bedcfea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80',
-            'https://images.unsplash.com/photo-1600566753151-384129cf4e3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80',
+            'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80',
+            'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80',
+            'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80',
         ];
 
-        function createSliderItem(index) {
-            return `
-                <div class="item absolute inset-0">
-                    <img src="${images[index]}" alt="Villa Serenity" class="w-full h-full object-cover parallax">
-                </div>
-            `;
-        }
+        let currentIndex = 0;
+        const backgroundImages = document.querySelectorAll('.background-image');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const closeMenu = document.getElementById('closeMenu');
 
-        function createThumbnailItem(index) {
-            return `
-                <div class="item w-32 h-32 md:w-40 md:h-40 flex-shrink-0 rounded-lg overflow-hidden cursor-pointer transition-all duration-300 ease-in-out">
-                    <img src="${images[index]}" alt="Villa Serenity Thumbnail" class="w-full h-full object-cover">
-                </div>
-            `;
-        }
-
-        function initializeSlider() {
-            sliderList.innerHTML = createSliderItem(0);
-            
-            if (images.length > 1) {
-                thumbnail.innerHTML = images.map((_, index) => createThumbnailItem(index)).join('');
-                
-                const thumbnailItems = thumbnail.querySelectorAll('.item');
-                thumbnailItems.forEach((item, index) => {
-                    item.addEventListener('click', () => changeSlide(index));
-                });
-
-                thumbnailItems[0].classList.add('active');
-                
-                // Show controls
-                prevBtn.style.display = 'block';
-                nextBtn.style.display = 'block';
-            } else {
-                // Hide thumbnails and controls if there's only one image
-                thumbnail.style.display = 'none';
-                prevBtn.style.display = 'none';
-                nextBtn.style.display = 'none';
-            }
-        }
-
-        function changeSlide(index) {
-            const currentItem = sliderList.querySelector('.item');
-            const newItem = document.createElement('div');
-            newItem.innerHTML = createSliderItem(index);
-            newItem.classList.add('item', 'absolute', 'inset-0', 'opacity-0', 'animate-zoomIn');
-            
-            sliderList.appendChild(newItem);
-            
-            setTimeout(() => {
-                currentItem.style.opacity = '0';
-                newItem.style.opacity = '1';
-            }, 50);
-
-            setTimeout(() => {
-                sliderList.removeChild(currentItem);
-            }, 800);
-
-            updateActiveThumbnail(index);
-        }
-
-        function updateActiveThumbnail(index) {
-            const thumbnailItems = thumbnail.querySelectorAll('.item');
-            thumbnailItems.forEach((item, i) => {
-                if (i === index) {
-                    item.classList.add('active');
-                } else {
-                    item.classList.remove('active');
-                }
+        function preloadImage(url) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = resolve;
+                img.onerror = reject;
+                img.src = url;
             });
-
-            // Center the active thumbnail
-            const activeItem = thumbnailItems[index];
-            const containerWidth = thumbnail.offsetWidth;
-            const itemWidth = activeItem.offsetWidth;
-            const scrollLeft = activeItem.offsetLeft - (containerWidth / 2) + (itemWidth / 2);
-            thumbnail.scrollTo({ left: scrollLeft, behavior: 'smooth' });
         }
 
-        function autoChangeSlide() {
-            if (images.length > 1) {
-                const thumbnailItems = thumbnail.querySelectorAll('.item');
-                let currentIndex = Array.from(thumbnailItems).findIndex(item => item.classList.contains('active'));
-                let nextIndex = (currentIndex + 1) % images.length;
-                changeSlide(nextIndex);
+        async function changeBackgroundImage(index) {
+            await preloadImage(images[index]);
+            
+            const currentImage = backgroundImages[currentIndex % 2];
+            const nextImage = backgroundImages[(currentIndex + 1) % 2];
+            
+            nextImage.querySelector('img').src = images[index];
+            nextImage.style.opacity = '1';
+            currentImage.style.opacity = '0';
+            
+            currentIndex = index;
+        }
+
+        function nextSlide() {
+            const nextIndex = (currentIndex + 1) % images.length;
+            changeBackgroundImage(nextIndex);
+        }
+
+        function prevSlide() {
+            const prevIndex = (currentIndex - 1 + images.length) % images.length;
+            changeBackgroundImage(prevIndex);
+        }
+
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        closeMenu.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+        });
+
+        // Initialize the first image
+        changeBackgroundImage(0);
+        setInterval(nextSlide, 10000);
+    </script>
+
+    <script>
+        function imageGallery() {
+            return {
+                images: [
+                    { thumbnail: 'https://images.pexels.com/photos/2356059/pexels-photo-2356059.jpeg?auto=compress&cs=tinysrgb&w=600', full: 'https://images.pexels.com/photos/2356059/pexels-photo-2356059.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', alt: 'Luxurious living room with panoramic views' },
+                    { thumbnail: 'https://images.pexels.com/photos/3618162/pexels-photo-3618162.jpeg?auto=compress&cs=tinysrgb&w=600', full: 'https://images.pexels.com/photos/3618162/pexels-photo-3618162.jpeg', alt: 'State-of-the-art kitchen with marble countertops' },
+                    { thumbnail: 'https://images.unsplash.com/photo-1689217634234-38efb49cb664?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80', full: 'https://images.unsplash.com/photo-1689217634234-38efb49cb664?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80', alt: 'Master bedroom with king-size bed and ensuite' },
+                    { thumbnail: 'https://images.unsplash.com/photo-1520350094754-f0fdcac35c1c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=80', full: 'https://images.unsplash.com/photo-1520350094754-f0fdcac35c1c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80', alt: 'Spa-like bathroom with freestanding tub' },
+                    { thumbnail: 'https://cdn.devdojo.com/images/june2023/mountains-10.jpeg?w=600', full: 'https://cdn.devdojo.com/images/june2023/mountains-10.jpeg', alt: 'Breathtaking mountain view from the terrace' },
+                    { thumbnail: 'https://cdn.devdojo.com/images/june2023/mountains-06.jpeg?w=600', full: 'https://cdn.devdojo.com/images/june2023/mountains-06.jpeg', alt: 'Private hiking trail on the property' },
+                    { thumbnail: 'https://images.pexels.com/photos/1891234/pexels-photo-1891234.jpeg?auto=compress&cs=tinysrgb&w=600', full: 'https://images.pexels.com/photos/1891234/pexels-photo-1891234.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', alt: 'Stunning exterior with modern architecture' },
+                    { thumbnail: 'https://images.unsplash.com/photo-1529655683826-aba9b3e77383?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80', full: 'https://images.unsplash.com/photo-1529655683826-aba9b3e77383?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1965&q=80', alt: 'Infinity pool overlooking the valley' },
+                    { thumbnail: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80', full: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80', alt: 'Cozy fireplace in the family room' },
+                    { thumbnail: 'https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80', full: 'https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80', alt: 'Home office with built-in bookshelves' },
+                    { thumbnail: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80', full: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80', alt: 'Guest house with private entrance' },
+                    { thumbnail: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80', full: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80', alt: 'Wine cellar and tasting room' },
+                    { thumbnail: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80', full: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80', alt: 'Home theater with reclining seats' },
+                    { thumbnail: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80', full: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80', alt: 'Gym and wellness center' },
+                ],
+                lightboxOpen: false,
+                currentIndex: 0,
+                get currentImage() {
+                    return this.images[this.currentIndex];
+                },
+                openLightbox(index) {
+                    this.currentIndex = index;
+                    this.lightboxOpen = true;
+                },
+                closeLightbox() {
+                    this.lightboxOpen = false;
+                },
+                nextImage() {
+                    this.currentIndex = (this.currentIndex + 1) % this.images.length;
+                },
+                prevImage() {
+                    this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
+                },
+                // New function to handle keyboard navigation
+                handleKeydown(event) {
+                    if (!this.lightboxOpen) return;
+                    
+                    switch(event.key) {
+                        case 'ArrowRight':
+                            this.nextImage();
+                            break;
+                        case 'ArrowLeft':
+                            this.prevImage();
+                            break;
+                        case 'Escape':
+                            this.closeLightbox();
+                            break;
+                    }
+                },
+                // New function to preload images
+                preloadImages() {
+                    this.images.forEach(image => {
+                        const img = new Image();
+                        img.src = image.full;
+                    });
+                },
+                // Initialize the gallery
+                init() {
+                    this.preloadImages();
+                    window.addEventListener('keydown', this.handleKeydown.bind(this));
+                },
+                // Clean up event listeners when the component is destroyed
+                destroy() {
+                    window.removeEventListener('keydown', this.handleKeydown.bind(this));
+                }
             }
         }
+    </script>
 
-        prevBtn.addEventListener('click', () => {
-            const thumbnailItems = thumbnail.querySelectorAll('.item');
-            let currentIndex = Array.from(thumbnailItems).findIndex(item => item.classList.contains('active'));
-            let prevIndex = (currentIndex - 1 + images.length) % images.length;
-            changeSlide(prevIndex);
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('floorPlans', () => ({
+                images: [
+                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQAxbx-CO62gpDrbXZhSK8nxD61RXRcTPUWA&s',
+                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFQRswumFP53g49rbmbuM5Pmv4kt8ZTiHtpA&s',
+                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYwxNd6uF45t808-YVnlIpa3hAcXia2M8MLA&s'
+                ],
+                open: false,
+                currentImage: '',
+
+                openImage(image) {
+                    this.currentImage = image;
+                    this.open = true;
+                }
+            }));
         });
-
-        nextBtn.addEventListener('click', () => {
-            const thumbnailItems = thumbnail.querySelectorAll('.item');
-            let currentIndex = Array.from(thumbnailItems).findIndex(item => item.classList.contains('active'));
-            let nextIndex = (currentIndex + 1) % images.length;
-            changeSlide(nextIndex);
-        });
-
-        initializeSlider();
-        if (images.length > 1) {
-            setInterval(autoChangeSlide, 10000); // Change slide every 5 seconds
-        }
     </script>
 </body>
 </html>
