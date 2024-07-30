@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Logo Upload</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-6">
+    <div class="w-full max-w-3xl">
+        <div class="bg-white rounded-2xl shadow-xl p-8 transition-all duration-300 hover:shadow-2xl">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Company Logo</h2>
+            <div class="space-y-6">
+                <div class="relative group">
+                    <div class="flex items-center justify-center w-full">
+                        <label for="company_logo" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-all duration-300 group-hover:border-indigo-500">
+                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 group-hover:text-indigo-500 transition-all duration-300 mb-3"></i>
+                                <p class="mb-2 text-sm text-gray-500 group-hover:text-indigo-500 transition-all duration-300"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                                <p class="text-xs text-gray-500 group-hover:text-indigo-500 transition-all duration-300">PNG, JPG, GIF up to 10MB</p>
+                            </div>
+                            <input id="company_logo" type="file" class="hidden" onchange="previewPhoto(event)" accept="image/*" />
+                        </label>
+                    </div>
+                </div>
+                <div id="photo-preview" class="hidden mt-8">
+                    <div class="relative bg-gradient-to-r from-indigo-500 to-purple-600 p-1 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl">
+                        <div class="bg-white p-2 rounded-lg flex items-center justify-center" style="width: 300px; height: 200px;">
+                            <img id="photo-preview-img" class="max-w-full max-h-full object-contain" alt="Company Logo Preview" />
+                        </div>
+                        <button onclick="removePreview()" class="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <p class="mt-4 text-sm text-gray-600 text-center font-medium">
+                        <span class="bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">
+                            Your logo is ready!
+                        </span>
+                        <br>
+                        <span class="text-xs text-gray-500">
+                            Click the X to remove the image
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function previewPhoto(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const previewContainer = document.getElementById('photo-preview');
+                    const previewImage = document.getElementById('photo-preview-img');
+                    previewImage.src = e.target.result;
+                    previewContainer.classList.remove('hidden');
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removePreview() {
+            const previewContainer = document.getElementById('photo-preview');
+            const fileInput = document.getElementById('company_logo');
+            previewContainer.classList.add('hidden');
+            fileInput.value = ''; // Reset the file input
+        }
+    </script>
+</body>
+</html>
