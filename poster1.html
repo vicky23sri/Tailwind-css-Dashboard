@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lavender Sky Estate-1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            padding: 32px;
+            background-color: #f3f4f6;
+        }
+        .container {
+            max-width: 1152px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.9);
+            background-image: url('https://www.transparenttextures.com/patterns/subtle-white-feathers.png');
+            box-shadow: 0 0 40px rgba(96, 165, 250, 0.2);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .blue-gradient {
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+        }
+        .hover-zoom {
+            transition: transform 0.3s ease-in-out;
+        }
+        .hover-zoom:hover {
+            transform: scale(1.05);
+        }
+        header {
+            text-align: center;
+            padding: 24px 32px;
+            position: relative;
+        }
+        h1 {
+            font-family: 'Marcellus', serif;
+            font-size: 4.5rem;
+            font-weight: bold;
+            margin-bottom: 16px;
+            color: white;
+            text-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header p {
+            font-size: 1.875rem;
+            color: white;
+            font-weight: 300;
+        }
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #60a5fa;
+            opacity: 0.2;
+            border-radius: 9999px;
+            filter: blur(24px);
+            z-index: -10;
+        }
+        .main-image {
+            position: relative;
+            padding: 32px;
+        }
+        .main-image img {
+            width: 100%;
+            height: 600px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .image-overlay {
+            position: absolute;
+            bottom: 48px;
+            left: 48px;
+            right: 48px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .image-overlay h2 {
+            font-family: 'Marcellus', serif;
+            font-size: 3rem;
+            font-weight: bold;
+            color: #1e40af;
+            margin-bottom: 16px;
+        }
+        .image-overlay p {
+            font-size: 1.5rem;
+            color: #3b82f6;
+        }
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            padding: 32px;
+        }
+        .image-grid div {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .image-grid img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .price-section {
+            background-color: #dbeafe;
+            padding: 20px;
+            text-align: center;
+        }
+        .price-section h2 {
+            font-family: 'Marcellus', serif;
+            font-size: 3.75rem;
+            font-weight: bold;
+            color: #1e40af;
+            margin-bottom: 30px;
+        }
+        .price-section h1 {
+            font-size: 3.75rem;
+            font-weight: bold;
+            color: #3b82f6;
+            margin-bottom: 24px;
+        }
+        .price-section p {
+            font-size: 1.5rem;
+            font-style: italic;
+            color: #3b82f6;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 48px;
+            padding: 48px;
+        }
+        .feature-box {
+            background-color: white;
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease-in-out;
+        }
+        .feature-box:hover {
+            transform: scale(1.05);
+        }
+        .feature-box h2 {
+            font-family: 'Marcellus', serif;
+            font-size: 2.25rem;
+            font-weight: bold;
+            color: #1e40af;
+            margin-bottom: 32px;
+            border-bottom: 2px solid #93c5fd;
+            padding-bottom: 16px;
+        }
+        .feature-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            font-size: 1.25rem;
+            margin-bottom: 24px;
+        }
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #3b82f6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+        }
+        .feature-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+        .description {
+            padding: 48px;
+            margin-top: -48px;
+        }
+        .description-box {
+            background-color: white;
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease-in-out;
+        }
+        .description-box:hover {
+            transform: scale(1.05);
+        }
+        .description-box p {
+            font-size: 1.25rem;
+            line-height: 1.75;
+            color: black;
+        }
+        .contact-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 60px;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-radius: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .realtor-info {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .realtor-info:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .realtor-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 6px solid #93c5fd;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            margin-right: 40px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .realtor-image:hover {
+            transform: scale(1.05);
+            border-color: #3b82f6;
+        }
+
+        .realtor-details h3 {
+            font-family: 'Marcellus', serif;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1e40af;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .realtor-details .title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #3b82f6;
+            font-style: italic;
+        }
+
+        .contact-info {
+            margin-bottom: 20px;
+        }
+
+        .realtor-contact {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+            color: #4b5563;
+            display: flex;
+            align-items: center;
+        }
+
+        .realtor-contact i {
+            color: #3b82f6;
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        .contact-button {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .contact-button:hover {
+            background-color: #1e40af;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .qr-code {
+            text-align: center;
+            background-color: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .qr-code:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .qr-code img {
+            margin: 0 auto;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .qr-code img:hover {
+            transform: scale(1.1);
+        }
+
+        .qr-code p {
+            margin-top: 20px;
+            color: #3b82f6;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        footer {
+            text-align: center;
+            padding: 32px;
+        }
+        footer h2 {
+            font-family: 'Marcellus', serif;
+            font-size: 2.25rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 8px;
+        }
+        footer p {
+            font-size: 1.25rem;
+            color: #dbeafe;
+            font-style: italic;
+        }
+        .social-links {
+            margin-top: 16px;
+        }
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 8px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="blue-gradient">
+            <h1>Lavender Sky Estate</h1>
+            <p>Where Dreams Touch the Horizon</p>
+            <div class="header-bg"></div>
+        </header>
+
+        <div class="main-image">
+            <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80" alt="Lavender Sky Estate">
+            <div class="image-overlay">
+                <h2>A Symphony of Luxury</h2>
+                <p>Beverly Hills' Crown Jewel</p>
+            </div>
+        </div>
+
+        <div class="image-grid">
+            <div>
+                <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Luxury Interior" class="hover-zoom">
+            </div>
+            <div>
+                <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Luxury Kitchen" class="hover-zoom">
+            </div>
+            <div>
+                <img src="https://img.freepik.com/free-photo/photorealistic-house-with-wooden-architecture-timber-structure_23-2151302742.jpg?ga=GA1.1.1292211247.1718182866&semt=ais_hybrid" alt="Luxury Bedroom" class="hover-zoom">
+            </div>
+            <div>
+                <img src="https://img.freepik.com/free-photo/american-colors-household-decorations-independence-day-celebration_23-2151469776.jpg?ga=GA1.1.1292211247.1718182866&semt=ais_hybrid" alt="Luxury Pool" class="hover-zoom">
+            </div>
+        </div>
+
+        <div class="price-section">
+            <h2>Offered at</h2>
+            <h1>$135,000,000</h1>
+            <p>A Legacy Beyond Compare</p>
+        </div>
+
+        <div class="features">
+            <div class="feature-box">
+                <h2>Unrivaled Amenities</h2>
+                <ul class="feature-list">
+                    <li>
+                        <span class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M9 16.17l-4.88-4.88L2.12 13l6 6 13-13-1.41-1.41L9 16.17z"/>
+                            </svg>
+                        </span>
+                        35,000 sq. ft. of Curated Living Space
+                    </li>
+                    <li>
+                        <span class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M9 16.17l-4.88-4.88L2.12 13l6 6 13-13-1.41-1.41L9 16.17z"/>
+                            </svg>
+                        </span>
+                        Michelin-Star Chef's Kitchen
+                    </li>
+                    <li>
+                        <span class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M9 16.17l-4.88-4.88L2.12 13l6 6 13-13-1.41-1.41L9 16.17z"/>
+                            </svg>
+                        </span>
+                        Private Wine Cellar & Tasting Room
+                    </li>
+                    <li>
+                        <span class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M9 16.17l-4.88-4.88L2.12 13l6 6 13-13-1.41-1.41L9 16.17z"/>
+                            </svg>
+                        </span>
+                        Rooftop Infinity Pool with City Views
+                    </li>
+                    <li>
+                        <span class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M9 16.17l-4.88-4.88L2.12 13l6 6 13-13-1.41-1.41L9 16.17z"/>
+                            </svg>
+                        </span>
+                        20-Car Underground Showroom
+                    </li>
+                </ul>
+            </div>
+            <div class="feature-box">
+                <h2>Exclusive Viewing</h2>
+                <ul class="feature-list">
+                    <li>
+                        <span class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M9 16.17l-4.88-4.88L2.12 13l6 6 13-13-1.41-1.41L9 16.17z"/>
+                            </svg>
+                        </span>
+                        August 20-21, 2024
+                    </li>
+                    <li>
+                        <span class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M9 16.17l-4.88-4.88L2.12 13l6 6 13-13-1.41-1.41L9 16.17z"/>
+                            </svg>
+                        </span>
+                        10:00 AM - 8:00 PM
+                    </li>
+                    <li>
+                        <span class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M9 16.17l-4.88-4.88L2.12 13l6 6 13-13-1.41-1.41L9 16.17z"/>
+                            </svg>
+                        </span>
+                        1 Lavender Sky Drive, Beverly Hills
+                    </li>
+                </ul>
+                <p style="font-size: 1.25rem; font-style: italic; text-align: center; background-color: #dbeafe; padding: 16px; border-radius: 8px; margin-top: 32px;">By Private Invitation Only</p>
+            </div>   
+        </div>
+
+        <div class="description">
+            <div class="description-box">
+                <p>
+                    Lavender Sky Estate is not just a home; it's a masterpiece of architectural brilliance and luxurious living. 
+                    Perched atop Beverly Hills, this 35,000 sq. ft. marvel offers breathtaking panoramic views of the city and ocean. 
+                    With its state-of-the-art amenities, including a Michelin-star chef's kitchen, private wine cellar, and rooftop infinity pool, 
+                    it sets a new standard in ultra-luxury real estate. This is more than an acquisition; it's an investment in an unparalleled lifestyle.
+                </p>
+            </div>
+        </div>
+
+        <div class="contact-section">
+            <div class="realtor-info">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80" alt="Realtor" class="realtor-image">
+                <div class="realtor-details">
+                    <h3>Alexander Rothschild</h3>
+                    <p class="title">Global Luxury Property Curator</p>
+                    <div class="contact-info">
+                        <p class="realtor-contact"><i class="fas fa-phone"></i> (310) 555-8888</p>
+                        <p class="realtor-contact"><i class="fas fa-envelope"></i> alexander@lavenderskyestate.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="qr-code">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://example.com/virtual-tour" alt="QR Code" class="hover-zoom">
+                <p>Scan for Virtual Tour</p>
+            </div>
+        </div>
+
+        <footer class="blue-gradient">
+            <h2>Lavender Sky Luxury Estates</h2>
+            <p>Elevating Living to an Art Form</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
