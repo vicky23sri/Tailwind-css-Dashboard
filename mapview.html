@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full-Page Real Estate Property Map</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.0.2.x/dist/cdn.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcFkryfezwY6YzknqTUnwncJTLdzUBLfU"></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCU9z_GS17qloEe5q60IUGvGsyUF9gRbw8"></script> -->
+    <style>
+        [x-cloak] { display: none !important; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+    </style>
+</head>
+<body class="h-screen">
+    <div x-data="realEstate()" x-init="init()" class="h-full flex flex-col lg:flex-row" x-cloak>
+        <!-- Map Section -->
+        <div class="w-full lg:w-1/2 h-1/2 lg:h-full">
+            <div id="map" class="w-full h-full"></div>
+        </div>
+        
+        <!-- Property List Section -->
+        <div class="w-full lg:w-1/2 h-1/2 lg:h-full overflow-y-auto p-4 bg-white shadow-lg">
+            <h1 class="text-2xl font-bold mb-4">Properties List</h1>
+            
+            <!-- Search and Filter Section -->
+            <div x-show="!selectedProperty" class="mb-4 space-y-2">
+                <input x-model="searchQuery" @input="filterProperties()" type="text" placeholder="Search properties..." 
+                       class="w-full p-4 border rounded-md">
+                <div class="flex gap-2">
+                    <select x-model="sortBy" @change="sortProperties()" class="p-4 border rounded-md flex-grow">
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="name">Name</option>
+                    </select>
+                    <select x-model="filterType" @change="filterProperties()" class="p-4 border rounded-md flex-grow">
+                        <option value="all">All Types</option>
+                        <option value="house">House</option>
+                        <option value="apartment">Apartment</option>
+                        <option value="condo">Condo</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Property Cards -->
+            <div x-show="!selectedProperty" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-6">
+                <template x-for="property in filteredProperties" :key="property.id">
+                    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 overflow-hidden fade-in"
+                         :class="{ 'ring-2 ring-blue-500': selectedProperty === property.id }"
+                         @click="selectProperty(property.id)">
+                        <div class="relative h-64">
+                            <img :src="property.image" :alt="property.name" class="w-full h-full object-cover">
+                            <div class="absolute top-4 right-4 bg-white px-2 py-1 rounded-full text-sm font-semibold text-blue-600">
+                                <span x-text="property.type"></span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h2 x-text="property.name" class="text-2xl font-bold mb-2 text-gray-800"></h2>
+                            <p class="text-gray-600 mb-4 flex items-center">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                                <span x-text="property.address"></span>
+                            </p>
+                            <p class="text-3xl font-bold mb-6 text-green-600" x-text="'$' + property.price.toLocaleString()"></p>
+                            <div class="flex justify-between text-sm text-gray-600 mb-6">
+                                <span class="flex items-center">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                                    </svg>
+                                    <span x-text="`${property.beds} beds`"></span>
+                                </span>
+                                <span class="flex items-center">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                    <span x-text="`${property.baths} baths`"></span>
+                                </span>
+                                <span class="flex items-center">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
+                                    </svg>
+                                    <span x-text="`${property.sqft} sqft`"></span>
+                                </span>
+                            </div>
+                            <p class="text-gray-700 text-base leading-relaxed" x-text="property.description"></p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Selected Property Detail -->
+            <div x-show="selectedProperty" class="bg-white rounded-2xl shadow-2xl overflow-hidden fade-in max-w-3xl mx-auto">
+                <template x-if="getSelectedProperty()">
+                    <div>
+                        <div class="relative h-64 sm:h-96">
+                            <img :src="getSelectedProperty().image" :alt="getSelectedProperty().name" class="w-full h-full object-cover">
+                            <div class="absolute top-6 right-6 bg-white px-4 py-2 rounded-full text-sm font-semibold text-blue-600 shadow-md">
+                                <span x-text="getSelectedProperty().type" class="uppercase tracking-wide"></span>
+                            </div>
+                            <button @click="clearSelection()" class="absolute top-6 left-6 bg-white p-3 rounded-full shadow-md hover:bg-gray-100 transition duration-300">
+                                <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <!-- Property Details -->
+                        <div class="p-6 sm:p-8">
+                            <div class="flex justify-between items-start mb-6">
+                                <div>
+                                    <h2 x-text="getSelectedProperty().name" class="text-4xl font-bold mb-2 text-gray-800"></h2>
+                                    <p x-text="getSelectedProperty().address" class="text-xl text-gray-600 flex items-center">
+                                        <svg class="w-6 h-6 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        </svg>
+                                    </p>
+                                </div>
+                                <p class="text-5xl font-bold text-green-600" x-text="'$' + getSelectedProperty().price.toLocaleString()"></p>
+                            </div>
+                            
+                            <!-- Key Features -->
+                            <div class="flex justify-between text-lg sm:text-xl text-gray-600 mb-8 bg-gray-100 rounded-xl p-4 sm:p-6">
+                                <span class="flex items-center">
+                                    <svg class="w-8 h-8 mr-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                                    </svg>
+                                    <span x-text="`${getSelectedProperty().beds} beds`" class="font-semibold"></span>
+                                </span>
+                                <span class="flex items-center">
+                                    <svg class="w-8 h-8 mr-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                    <span x-text="`${getSelectedProperty().baths} baths`" class="font-semibold"></span>
+                                </span>
+                                <span class="flex items-center">
+                                    <svg class="w-8 h-8 mr-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
+                                    </svg>
+                                    <span x-text="`${getSelectedProperty().sqft} sqft`" class="font-semibold"></span>
+                                </span>
+                            </div>
+                            
+                            <!-- Description -->
+                            <div class="mb-8">
+                                <h3 class="text-2xl font-semibold mb-4 text-gray-800">Description</h3>
+                                <p class="text-gray-700 text-lg leading-relaxed" x-text="getSelectedProperty().description"></p>
+                            </div>
+                            
+                            <!-- Additional Features -->
+                            <div class="mb-8">
+                                <h3 class="text-2xl font-semibold mb-4 text-gray-800">Features</h3>
+                                <ul class="grid grid-cols-2 gap-4 text-lg text-gray-600">
+                                    <li class="flex items-center">
+                                        <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                        Air Conditioning
+                                    </li>
+                                    <li class="flex items-center">
+                                        <svg class="w-6 h-6 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                        Swimming Pool
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Call to Action -->
+                            <div class="mt-10 flex justify-center">
+                                <button class="bg-blue-600 text-white px-8 py-3 rounded-full text-xl font-semibold hover:bg-blue-700 transition duration-300">
+                                    Schedule a Viewing
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function realEstate() {
+            return {
+                properties: [
+                    { id: 1, name: "Sunny Villa", address: "123 Sun Street", price: 500000, lat: 40.7128, lng: -74.0060, type: "house", 
+                      image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=300&q=80",
+                      description: "Beautiful sunny villa with a spacious garden and modern amenities.",
+                      beds: 4, baths: 3, sqft: 2500 },
+                    { id: 2, name: "Mountain View Cabin", address: "456 Peak Road", price: 350000, lat: 40.7228, lng: -73.9960, type: "house",
+                      image: "https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&w=300&q=80",
+                      description: "Cozy cabin with breathtaking mountain views and a fireplace.",
+                      beds: 2, baths: 1, sqft: 1200 },
+                    { id: 3, name: "Downtown Loft", address: "789 City Center", price: 750000, lat: 40.7328, lng: -74.0160, type: "apartment",
+                      image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=300&q=80",
+                      description: "Modern loft in the heart of downtown with high ceilings and city views.",
+                      beds: 2, baths: 2, sqft: 1800 },
+                    { id: 4, name: "Seaside Condo", address: "101 Ocean Drive", price: 600000, lat: 40.7428, lng: -73.9860, type: "condo",
+                      image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=300&q=80",
+                      description: "Luxurious condo with direct access to the beach and stunning ocean views.",
+                      beds: 3, baths: 2, sqft: 2000 },
+                    { id: 5, name: "Rustic Farmhouse", address: "222 Country Lane", price: 450000, lat: 40.7528, lng: -74.0260, type: "house",
+                      image: "https://images.unsplash.com/photo-1531411055094-c40f52e6d602?auto=format&fit=crop&w=300&q=80",
+                      description: "Charming farmhouse with original features and modern updates on a large lot.",
+                      beds: 4, baths: 2, sqft: 2200 },
+                    { id: 6, name: "City View Penthouse", address: "333 Skyline Avenue", price: 1200000, lat: 40.7628, lng: -73.9760, type: "apartment",
+                      image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=300&q=80",
+                      description: "Luxurious penthouse with panoramic city views and high-end finishes.",
+                      beds: 3, baths: 3, sqft: 2800 },
+                    { id: 7, name: "Cozy Cottage", address: "444 Willow Street", price: 280000, lat: 40.7728, lng: -74.0360, type: "house",
+                      image: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=300&q=80",
+                      description: "Adorable cottage with a white picket fence and beautiful garden.",
+                      beds: 2, baths: 1, sqft: 1000 },
+                    { id: 8, name: "Modern Townhouse", address: "555 Urban Lane", price: 550000, lat: 40.7828, lng: -73.9660, type: "condo",
+                      image: "https://images.unsplash.com/photo-1605276373954-0c4a0dac5b12?auto=format&fit=crop&w=300&q=80",
+                      description: "Sleek townhouse with open floor plan and rooftop terrace.",
+                      beds: 3, baths: 2.5, sqft: 1800 },
+                    { id: 9, name: "Lakefront Retreat", address: "666 Lakeview Drive", price: 820000, lat: 40.7928, lng: -74.0460, type: "house",
+                      image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=300&q=80",
+                      description: "Stunning lakefront property with private dock and panoramic water views.",
+                      beds: 5, baths: 4, sqft: 3500 },
+                    { id: 10, name: "Historic Brownstone", address: "777 Heritage Row", price: 1500000, lat: 40.8028, lng: -73.9560, type: "house",
+                      image: "https://images.unsplash.com/photo-1567496898669-ee935f5f647a?auto=format&fit=crop&w=300&q=80",
+                      description: "Beautifully restored brownstone with original details and modern amenities.",
+                      beds: 4, baths: 3.5, sqft: 4000 },
+                ],
+                selectedProperty: null,
+                map: null,
+                markers: {},
+                searchQuery: '',
+                sortBy: 'price-asc',
+                filterType: 'all',
+                filteredProperties: [],
+
+                init() {
+                    this.initMap();
+                    this.addMarkers();
+                    this.filterProperties();
+                },
+
+                initMap() {
+                    this.map = new google.maps.Map(document.getElementById('map'), {
+                        center: { lat: 40.7128, lng: -74.0060 },
+                        zoom: 12,
+                        styles: [
+                            {
+                                featureType: "poi",
+                                elementType: "labels",
+                                stylers: [{ visibility: "off" }]
+                            }
+                        ]
+                    });
+
+                    window.addEventListener('resize', () => {
+                        google.maps.event.trigger(this.map, 'resize');
+                    });
+                },
+
+                addMarkers() {
+                    this.properties.forEach(property => {
+                        const marker = new google.maps.Marker({
+                            position: { lat: property.lat, lng: property.lng },
+                            map: this.map,
+                            title: property.name
+                        });
+
+                        const infowindow = new google.maps.InfoWindow({
+                            content: this.createInfoWindowContent(property)
+                        });
+
+                        marker.addListener('click', () => {
+                            this.selectProperty(property.id);
+                            infowindow.open(this.map, marker);
+                        });
+
+                        this.markers[property.id] = { marker, infowindow };
+                    });
+                    window.closeInfoWindow = () => this.closeInfoWindow();
+                },
+
+                createInfoWindowContent(property) {
+                    return `
+                        <div class="w-[300px]">
+                            <div class="relative">
+                                <img src="${property.image}" alt="${property.name}" class="w-full h-48 object-cover rounded-t-lg">
+                                <span class="absolute top-2 right-2 bg-blue-600 text-white px-2 py-1 rounded-full text-xs font-semibold">${property.type}</span>
+                            </div>
+                            <div class="mt-4">
+                                <h3 class="font-bold text-xl text-gray-800">${property.name}</h3>
+                                <p class="text-sm text-gray-600 mt-1">${property.address}</p>
+                                <p class="font-semibold text-2xl text-green-600 mt-2">$${property.price.toLocaleString()}</p>
+                                <div class="flex justify-between text-sm text-gray-600 mt-3">
+                                    <span class="flex items-center">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                                        </svg>
+                                        ${property.beds} beds
+                                    </span>
+                                    <span class="flex items-center">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                        </svg>
+                                        ${property.baths} baths
+                                    </span>
+                                    <span class="flex items-center">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
+                                        </svg>
+                                        ${property.sqft} sqft
+                                    </span>
+                                </div>
+                                <p class="text-sm text-gray-700 mt-3">${property.description}</p>
+                                <button onclick="closeInfoWindow()" class="mt-4 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-300">Close</button>
+                            </div>
+                        </div>
+                    `;
+                },
+
+                closeInfoWindow() {
+                    if (this.selectedProperty) {
+                        this.markers[this.selectedProperty].infowindow.close();
+                        this.selectedProperty = null;
+                    }
+                },
+
+                getSelectedProperty() {
+                    return this.properties.find(p => p.id === this.selectedProperty);
+                },
+
+                selectProperty(id) {
+                    this.selectedProperty = id;
+                    const property = this.getSelectedProperty();
+                    this.map.setCenter({ lat: property.lat, lng: property.lng });
+                    this.map.setZoom(15);
+                    Object.values(this.markers).forEach(({ infowindow }) => infowindow.close());
+                    this.markers[id].infowindow.open(this.map, this.markers[id].marker);
+                },
+
+                clearSelection() {
+                    this.selectedProperty = null;
+                    this.map.setZoom(12);
+                    this.map.setCenter({ lat: 40.7128, lng: -74.0060 });
+                    Object.values(this.markers).forEach(({ infowindow }) => infowindow.close());
+                },
+
+                filterProperties() {
+                    this.filteredProperties = this.properties.filter(property => {
+                        const matchesSearch = property.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                                              property.address.toLowerCase().includes(this.searchQuery.toLowerCase());
+                        const matchesType = this.filterType === 'all' || property.type === this.filterType;
+                        return matchesSearch && matchesType;
+                    });
+                    this.sortProperties();
+                },
+
+                sortProperties() {
+                    this.filteredProperties.sort((a, b) => {
+                        if (this.sortBy === 'price-asc') return a.price - b.price;
+                        if (this.sortBy === 'price-desc') return b.price - a.price;
+                        if (this.sortBy === 'name') return a.name.localeCompare(b.name);
+                    });
+                }
+            }
+        }
+    </script>
+</body>
+</html>
