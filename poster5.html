@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lavender Sky Estate - Exclusive Open House</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        .playfair { font-family: 'Playfair Display', serif; }
+        .montserrat { font-family: 'Montserrat', sans-serif; }
+        .bg-luxury { background-color: #1a1a1a; }
+        .text-gold { color: #d4af37; }
+        .border-gold { border-color: #d4af37; }
+        .gold-gradient {
+            background: linear-gradient(135deg, #d4af37, #f9f095);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .poster-shadow {
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-luxury flex items-center justify-center min-h-screen p-4">
+    <div class="max-w-4xl w-full bg-white poster-shadow rounded-lg overflow-hidden">
+        <!-- Header -->
+        <div class="bg-luxury text-white p-8 relative">
+            <h1 class="playfair text-4xl md:text-6xl font-bold mb-2 gold-gradient">Lavender Sky Estate</h1>
+            <p class="montserrat text-xl md:text-2xl italic">Exclusive Open House Event</p>
+            <div class="absolute top-0 right-0 w-24 h-24 md:w-32 md:h-32 bg-gold-gradient rounded-bl-full"></div>
+        </div>
+
+        <!-- Main Image -->
+        <div class="relative h-64 md:h-96 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80" 
+                 alt="Lavender Sky Estate" 
+                 class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+            <div class="absolute bottom-4 left-4 right-4 bg-white bg-opacity-90 p-4 rounded">
+                <p class="playfair text-2xl md:text-3xl font-bold text-luxury">Where Luxury Meets the Horizon</p>
+            </div>
+        </div>
+
+        <!-- Details -->
+        <div class="p-8 space-y-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div>
+                    <h2 class="playfair text-3xl font-bold text-luxury mb-2">Date & Time</h2>
+                    <p class="montserrat text-xl">August 20-21, 2024</p>
+                    <p class="montserrat text-xl">10:00 AM - 8:00 PM</p>
+                </div>
+                <div class="mt-4 md:mt-0">
+                    <h2 class="playfair text-3xl font-bold text-luxury mb-2">Location</h2>
+                    <p class="montserrat text-xl">1 Lavender Sky Drive</p>
+                    <p class="montserrat text-xl">Beverly Hills, CA 90210</p>
+                </div>
+            </div>
+
+            <div class="border-t border-b border-gold py-6">
+                <h2 class="playfair text-3xl font-bold text-luxury mb-4">Featured Amenities</h2>
+                <ul class="montserrat text-lg space-y-2">
+                    <li>• 35,000 sq. ft. of Luxurious Living Space</li>
+                    <li>• Michelin-Star Chef's Kitchen</li>
+                    <li>• Rooftop Infinity Pool with Panoramic Views</li>
+                    <li>• Private Wine Cellar & Tasting Room</li>
+                </ul>
+            </div>
+
+            <div class="text-center">
+                <p class="playfair text-4xl md:text-5xl font-bold gold-gradient mb-4">$135,000,000</p>
+                <p class="montserrat text-xl italic">A Legacy Beyond Compare</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="bg-luxury text-white p-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="playfair text-2xl font-bold mb-2">Alexander Rothschild</h3>
+                    <p class="montserrat">Global Luxury Property Curator</p>
+                    <p class="montserrat">(310) 555-8888</p>
+                </div>
+                <div class="text-center md:text-right">
+                    <p class="montserrat text-xl mb-2">RSVP Required</p>
+                    <p class="montserrat italic">Limited Availability</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

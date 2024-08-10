@@ -11,8 +11,8 @@
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcFkryfezwY6YzknqTUnwncJTLdzUBLfU"></script>
-    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCU9z_GS17qloEe5q60IUGvGsyUF9gRbw8"></script> -->
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcFkryfezwY6YzknqTUnwncJTLdzUBLfU"></script> -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCU9z_GS17qloEe5q60IUGvGsyUF9gRbw8"></script>
     <style>
         [x-cloak] { display: none !important; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -270,7 +270,12 @@
                         const marker = new google.maps.Marker({
                             position: { lat: property.lat, lng: property.lng },
                             map: this.map,
-                            title: property.name
+                            icon: {
+                                url: property.image, // Ensure this is a circular image
+                                scaledSize: new google.maps.Size(50, 50), // Adjust size as needed
+                                anchor: new google.maps.Point(25, 25) // Center the image
+                            },
+                            title: property.address
                         });
 
                         const infowindow = new google.maps.InfoWindow({
@@ -284,6 +289,7 @@
 
                         this.markers[property.id] = { marker, infowindow };
                     });
+
                     window.closeInfoWindow = () => this.closeInfoWindow();
                 },
 
