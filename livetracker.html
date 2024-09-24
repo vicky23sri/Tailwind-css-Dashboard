@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Location Tracker</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        #map {
+            height: 600px;
+            width: 100%;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .form-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333333;
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .form-container label {
+            font-weight: bold;
+            color: #555555;
+            font-size: 14px;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .form-container input {
+            width: calc(100% - 24px); 
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #cccccc;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            box-sizing: border-box; 
+        }
+        .form-container input:focus {
+            border-color: #18A7B8;
+            box-shadow: 0px 0px 5px rgba(24, 167, 184, 0.5);
+            outline: none;
+        }
+        .form-container button {
+            width: calc(100% - 24px); 
+            padding: 12px;
+            background-color: #18A7B8;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-sizing: border-box; 
+        }
+        .form-container button:hover {
+            background-color: #148a99;
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Enter Locations</h2>
+        <form id="location-form">
+            <label for="start-location">Start Location:</label>
+            <input type="text" id="start-location" name="start-location" required>
+
+            <label for="end-location">End Location:</label>
+            <input type="text" id="end-location" name="end-location" required>
+
+            <button type="submit">Track Locations</button>
+        </form>
+    </div>
+
+    <div id="map"></div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCU9z_GS17qloEe5q60IUGvGsyUF9gRbw8&libraries=places&callback=initMap" async defer></script>
+
+    <script>
+        let map;
+        let startMarker, endMarker;
+        let polyline;
+        let path = [];
+        let autocompleteStart, autocompleteEnd;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 4,
+                center: { lat: 39.8283, lng: -98.5795 } // Centered on the USA
+            });
+
+            autocompleteStart = new google.maps.places.Autocomplete(
+                document.getElementById('start-location')
+            );
+            autocompleteEnd = new google.maps.places.Autocomplete(
+                document.getElementById('end-location')
+            );
+        }
+
+        document.getElementById('location-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const startPlace = autocompleteStart.getPlace();
+            const endPlace = autocompleteEnd.getPlace();
+
+            if (!startPlace.geometry || !endPlace.geometry) {
+                alert('Please select locations from the autocomplete suggestions.');
+                return;
+            }
+
+            const startLocation = startPlace.geometry.location;
+            const endLocation = endPlace.geometry.location;
+
+            // Log start and end coordinates
+            console.log('Start Location:', startLocation.lat(), startLocation.lng());
+            console.log('End Location:', endLocation.lat(), endLocation.lng());
+
+            // Clear existing markers and polyline
+            if (startMarker) startMarker.setMap(null);
+            if (endMarker) endMarker.setMap(null);
+            if (polyline) polyline.setMap(null);
+
+            // Add a green marker for the start location
+            startMarker = new google.maps.Marker({
+                position: startLocation,
+                map: map,
+                icon: {
+                    url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+                }
+            });
+
+            // Add a red marker for the end location
+            endMarker = new google.maps.Marker({
+                position: endLocation,
+                map: map,
+                icon: {
+                    url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
+                }
+            });
+
+            // Draw a polyline between the two locations
+            path = [startLocation, endLocation];
+            polyline = new google.maps.Polyline({
+                path: path,
+                geodesic: true,
+                strokeColor: "#4285F4",
+                strokeOpacity: 1.0,
+                strokeWeight: 3,
+                map: map
+            });
+
+            // Zoom and center the map to show both locations
+            const bounds = new google.maps.LatLngBounds();
+            bounds.extend(startLocation);
+            bounds.extend(endLocation);
+            map.fitBounds(bounds);
+        });
+    </script>
+
+</body>
+</html>
