@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Property Showcase</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <style>
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeInUp {
+            animation: fadeInUp 0.5s ease-out;
+        }
+        .image-overlay {
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 py-8">
+        <!-- Improved Property Image Slider with Fancybox -->
+        <div id="propertyGallery" class="mb-8 relative overflow-hidden rounded-xl shadow-2xl">
+            <!-- Main Image -->
+            <img id="mainImage" src="https://img.freepik.com/free-photo/modern-residential-district-with-green-roof-balcony-generated-by-ai_188544-10276.jpg" alt="Luxury Property" class="w-full h-[70vh] object-cover">
+            
+            <!-- Text Overlay (Bottom) -->
+            <div class="absolute bottom-0 left-0 right-0 p-8 image-overlay">
+                <h1 class="text-5xl font-bold mb-2 text-white animate-fadeInUp">Exquisite Seaside Manor</h1>
+                <p class="text-2xl text-blue-200 animate-fadeInUp" style="animation-delay: 0.2s;">789 Coastal Highway, Malibu, CA</p>
+            </div>
+        
+            <!-- User Avatar and Info (Top-Right Corner) -->
+            <div class="absolute top-8 right-8 flex items-center bg-white p-4 rounded-lg shadow-lg">
+                <img src="https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg" alt="User Avatar" class="w-20 h-20 rounded-full mr-4 border-4 border-blue-500 shadow-lg">
+                <div>
+                    <p class="font-semibold text-2xl text-blue-800">Michael Johnson</p>
+                    <p class="text-blue-600 text-lg">Luxury Property Specialist</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Improved Documents Section -->
+        <div class="bg-white rounded-xl shadow-lg p-8 animate-fadeInUp" style="animation-delay: 0.6s;">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <h2 class="text-3xl font-bold text-blue-800 mb-4 md:mb-0">Property Documents</h2>
+                <div class="flex space-x-4">
+                    <button id="listView" class="bg-blue-600 text-white px-6 py-3 rounded-lg transition duration-300 hover:bg-blue-700 transform hover:scale-105">
+                        <i class="fas fa-list mr-2"></i>List View
+                    </button>
+                    <button id="gridView" class="bg-blue-100 text-blue-600 px-6 py-3 rounded-lg transition duration-300 hover:bg-blue-200 transform hover:scale-105">
+                        <i class="fas fa-th-large mr-2"></i>Grid View
+                    </button>
+                </div>
+            </div>
+            
+            <div class="mb-8 flex flex-wrap gap-4">
+                <button class="bg-green-500 text-white px-6 py-3 rounded-lg transition duration-300 hover:bg-green-600 transform hover:scale-105 flex items-center">
+                    <i class="fas fa-download mr-2"></i>Download All
+                </button>
+                <button class="bg-yellow-500 text-white px-6 py-3 rounded-lg transition duration-300 hover:bg-yellow-600 transform hover:scale-105 flex items-center">
+                    <i class="fas fa-file-archive mr-2"></i>Leave Package
+                </button>
+            </div>
+
+            <!-- Improved List View (default) -->
+            <div id="documentsTable" class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="bg-blue-100 text-blue-800">
+                            <th class="p-4 text-left rounded-tl-lg">Document Name</th>
+                            <th class="p-4 text-left">Size</th>
+                            <th class="p-4 text-left">Type</th>
+                            <th class="p-4 text-left">Updated At</th>
+                            <th class="p-4 text-left rounded-tr-lg">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-blue-100 hover:bg-blue-50 transition duration-300">
+                            <td class="p-4">Property Deed</td>
+                            <td class="p-4">2.5 MB</td>
+                            <td class="p-4">PDF</td>
+                            <td class="p-4">Oct 15, 2023</td>
+                            <td class="p-4">
+                                <button class="text-blue-500 mr-2 hover:text-blue-700 transition duration-300 transform hover:scale-110">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="text-green-500 hover:text-green-700 transition duration-300 transform hover:scale-110">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-blue-100 hover:bg-blue-50 transition duration-300">
+                            <td class="p-4">Floor Plan</td>
+                            <td class="p-4">5.1 MB</td>
+                            <td class="p-4">JPG</td>
+                            <td class="p-4">Sep 28, 2023</td>
+                            <td class="p-4">
+                                <button class="text-blue-500 mr-2 hover:text-blue-700 transition duration-300 transform hover:scale-110">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="text-green-500 hover:text-green-700 transition duration-300 transform hover:scale-110">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-blue-100 hover:bg-blue-50 transition duration-300">
+                            <td class="p-4">Property Appraisal</td>
+                            <td class="p-4">3.7 MB</td>
+                            <td class="p-4">PDF</td>
+                            <td class="p-4">Oct 5, 2023</td>
+                            <td class="p-4">
+                                <button class="text-blue-500 mr-2 hover:text-blue-700 transition duration-300 transform hover:scale-110">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="text-green-500 hover:text-green-700 transition duration-300 transform hover:scale-110">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Improved Grid View (hidden by default) -->
+            <div id="documentsGrid" class="hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Grid items will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const images = [
+                "https://img.freepik.com/free-photo/modern-residential-district-with-green-roof-balcony-generated-by-ai_188544-10276.jpg",
+                "https://img.freepik.com/free-photo/blue-house-with-blue-roof-sky-background_1340-25953.jpg",
+                "https://img.freepik.com/free-photo/3d-electric-car-building_23-2148972401.jpg"
+            ];
+            let currentImageIndex = 0;
+            const mainImage = document.getElementById('mainImage');
+
+            function changeImage() {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                mainImage.style.opacity = 0;
+                setTimeout(() => {
+                    mainImage.src = images[currentImageIndex];
+                    mainImage.style.opacity = 1;
+                }, 500);
+            }
+
+            setInterval(changeImage, 10000); 
+
+            // Initialize Fancybox
+            Fancybox.bind("#propertyGallery", {
+                Images: images.map(src => ({ src })),
+                loop: true,
+                buttons: ["slideShow", "fullScreen", "thumbs", "close"],
+                thumbs: {
+                    autoStart: true
+                }
+            });
+
+            // Toggle between List and Grid views
+            document.getElementById('listView').addEventListener('click', function() {
+                document.getElementById('documentsTable').style.display = 'block';
+                document.getElementById('documentsGrid').style.display = 'none';
+                this.classList.remove('bg-blue-100', 'text-blue-600');
+                this.classList.add('bg-blue-600', 'text-white');
+                document.getElementById('gridView').classList.remove('bg-blue-600', 'text-white');
+                document.getElementById('gridView').classList.add('bg-blue-100', 'text-blue-600');
+            });
+
+            document.getElementById('gridView').addEventListener('click', function() {
+                document.getElementById('documentsTable').style.display = 'none';
+                document.getElementById('documentsGrid').style.display = 'grid';
+                this.classList.remove('bg-blue-100', 'text-blue-600');
+                this.classList.add('bg-blue-600', 'text-white');
+                document.getElementById('listView').classList.remove('bg-blue-600', 'text-white');
+                document.getElementById('listView').classList.add('bg-blue-100', 'text-blue-600');
+                
+                // Populate grid items
+                const grid = document.getElementById('documentsGrid');
+                grid.innerHTML = ''; // Clear existing items
+                const rows = document.querySelectorAll('#documentsTable tbody tr');
+                rows.forEach(row => {
+                    const name = row.cells[0].textContent;
+                    const type = row.cells[2].textContent.toLowerCase();
+                    const date = row.cells[3].textContent;
+                    const iconClass = type === 'pdf' ? 'fa-file-pdf' : 'fa-file-image';
+                    const bgColor = type === 'pdf' ? 'bg-red-100' : 'bg-blue-100';
+                    const iconColor = type === 'pdf' ? 'text-red-500' : 'text-blue-500';
+                    
+                    const gridItem = document.createElement('div');
+                    gridItem.className = 'bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 transform hover:scale-105';
+                    gridItem.innerHTML = `
+                        <div class="flex items-center justify-center ${bgColor} w-16 h-16 rounded-full mb-4">
+                            <i class="fas ${iconClass} text-3xl ${iconColor}"></i>
+                        </div>
+                        <h3 class="font-semibold text-lg mb-2 text-blue-800">${name}</h3>
+                        <p class="text-blue-600 mb-4">${date}</p>
+                        <div class="flex justify-between">
+                            <button class="text-blue-500 hover:text-blue-700 transition duration-300">
+                                <i class="fas fa-eye mr-1"></i> View
+                            </button>
+                            <button class="text-green-500 hover:text-green-700 transition duration-300">
+                                <i class="fas fa-download mr-1"></i> Download
+                            </button>
+                        </div>
+                    `;
+                    grid.appendChild(gridItem);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

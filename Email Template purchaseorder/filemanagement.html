@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern File Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="mx-auto container">
+    <main class="flex flex-col lg:flex-row gap-6 py-24 p-5">
+        <!-- Sidebar -->
+        <aside class="w-full lg:w-72 flex-shrink-0 overflow-y-auto">
+            <div class="bg-white rounded-xl shadow-sm h-72 md:h-[450px]  flex-shrink-0 overflow-y-auto border border-gray-200">
+                <h3 id="propertyName" class="text-md bg-blue-400 text-white flex justify-center font-bold mb-2 px-2 py-3">22100 Mount Eden Road</h3>
+                <div class="py-4 px-3">
+                    <button id="addFolderBtn" class="group w-full flex items-center justify-center px-4 py-3 rounded-lg text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transform hover:scale-105">
+                        <span class="flex items-center">
+                            <i class="fas fa-folder-plus text-lg mr-2 group-hover:animate-bounce"></i>
+                            <span class="relative">
+                                New Folder
+                                <span class="absolute bottom-0 left-0 w-full h-0.5 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                            </span>
+                        </span>
+                    </button>
+                </div>
+                
+                <div class="px-3 pb-4">
+                    <nav class="space-y-3" id="folderList">
+                        
+                    </nav>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main content -->
+        <div class="flex-1 bg-white rounded-xl shadow-sm border border-gray-200 h-[450px] overflow-y-auto">
+            <div class="border-b border-gray-200">
+                <div class="px-4 py-4 sm:px-6">
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center space-y-4 lg:space-y-0">
+                        <h2 id="currentFolder" class="text-xl font-semibold text-gray-900">Images</h2>
+                        
+                        <div class="flex flex-col sm:flex-row  w-full lg:w-auto space-y-3 sm:space-y-0 sm:space-x-3">
+                            <div class="relative flex-1 sm:flex-initial">
+                                <input type="text" id="searchInput" class="w-full px-4 py-2 pl-10 pr-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200" placeholder="Search files...">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-search text-gray-400"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="flex space-x-2">
+                                <button id="addFileBtn" class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-200">
+                                    <i class="fas fa-file-upload mr-2"></i>Upload
+                                </button>
+                                <button id="pasteBtn" class="hidden inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                                    <i class="fas fa-paste mr-2"></i>Paste
+                                </button>
+                                <div class="flex border rounded-lg overflow-hidden">
+                                    <button id="gridViewBtn" class="px-3 py-2 bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors duration-200">
+                                        <i class="fas fa-th-large"></i>
+                                    </button>
+                                    <button id="listViewBtn" class="px-3 py-2 bg-white text-gray-400 hover:bg-gray-50 transition-colors duration-200">
+                                        <i class="fas fa-list"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-4 sm:p-6">
+                <div id="fileContainer" class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-7">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Folder Modal -->
+    <div id="addFolderModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-modal="true">
+        <div class="flex items-center justify-center min-h-screen px-4">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all w-full md:max-w-lg sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Create New Folder</h3>
+                    <input type="text" id="newFolderName" class="mt-1 block w-full border-2 border-blue-500 p-3 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Folder name">
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button id="confirmAddFolder" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">Create</button>
+                    <button id="cancelAddFolder" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div id="deleteModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
+        <div class="flex items-center justify-center min-h-screen px-4">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                            <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                        </div>
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                            <h3 class="text-lg font-semibold text-gray-900">Confirm Delete</h3>
+                            <div class="mt-2">
+                                <p id="deleteMessage" class="text-gray-500 mb-4"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button id="cancelDelete" class="mt-3 w-full inline-flex justify-center rounded-lg border border-gray-300 px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm transition-colors duration-200">Cancel</button>
+                    <button id="confirmDelete" class="w-full inline-flex justify-center rounded-lg border border-transparent px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm transition-colors duration-200">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const fileManager = {
+            currentFolder: 'root',
+            clipboard: null,
+            currentView: 'grid',
+            folders: {
+                root: { name: "Home", files: [
+                    
+                ]},
+            },
+
+            init() {
+                this.renderFolders();
+                this.renderFiles();
+                this.setupEventListeners();
+                this.setupFileUpload();
+            },
+
+            renderFolders() {
+                const folderList = document.getElementById('folderList');
+                folderList.innerHTML = '';
+                
+                Object.entries(this.folders).forEach(([folderId, folder]) => {
+                    const isActive = this.currentFolder === folderId;
+
+                    const folderItem = document.createElement('div');
+                    folderItem.className = `
+                        group relative flex justify-between items-center px-4 py-2 text-sm font-medium rounded-md cursor-pointer 
+                        ${isActive ? 'bg-blue-400 text-white' : 'text-gray-600 hover:bg-blue-400 hover:text-white'} 
+                        mb-4
+                    `;
+                    folderItem.dataset.folderId = folderId;
+                    
+                    folderItem.innerHTML = `
+                        <i class="fas fa-folder py-3 mr-3 ${isActive ? 'text-white' : 'text-gray-400 group-hover:text-white'}"></i>
+                        <span class="flex-1">${folder.name}</span>
+                        <div class="hidden group-hover:flex space-x-2">
+                            ${folderId !== 'root' ? `
+                                <button class="flex items-center justify-center w-8 h-8 rounded-full bg-red-600 text-white hover:bg-red-700 delete-folder" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            ` : ''}
+                        </div>
+                    `;
+                    
+                    folderList.appendChild(folderItem);
+                });
+            },
+
+            renderFiles() {
+                const fileContainer = document.getElementById('fileContainer');
+                fileContainer.innerHTML = '';
+                const currentFolderName = this.folders[this.currentFolder].name;
+                document.getElementById('currentFolder').textContent = currentFolderName;
+                
+                if (this.currentView === 'grid') {
+                    fileContainer.className = 'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-7';
+                    this.folders[this.currentFolder].files.forEach(file => {
+                        const fileItem = document.createElement('div');
+                        fileItem.className = `
+                            relative group bg-white rounded-xl border border-gray-200 
+                            shadow-lg transition-all duration-300 hover:shadow-2xl hover:border-blue-300
+                            flex flex-col overflow-hidden
+                        `;
+
+                        const iconClass = this.getFileIconClass(file.type);
+                        const fileExtension = file.name.split('.').pop().toUpperCase();
+
+                        fileItem.innerHTML = `
+                            <div class="absolute top-0 right-0 p-2">
+                                <span class="px-2 py-1 text-xs font-medium bg-gray-100 text-gray-600 rounded-full">
+                                    ${fileExtension}
+                                </span>
+                            </div>
+                            <div class="p-6 flex-grow flex flex-col items-center">
+                                <div class="w-16 h-16 mb-4 flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl">
+                                    <i class="${iconClass} text-3xl text-blue-600"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-800 truncate mb-1">${file.name}</h3>
+                                <p class="text-sm text-gray-500 mb-4">${file.size}</p>
+                                <div class="flex space-x-2">
+                                    <span class="px-2 py-1 text-xs bg-blue-50 text-blue-600 rounded">Modified today</span>
+                                    <span class="px-2 py-1 text-xs bg-green-50 text-green-600 rounded">Shared</span>
+                                </div>
+                            </div>
+                            <div class="border-t border-gray-100 bg-gray-50 p-4 flex justify-between items-center">
+                                <div class="flex space-x-2">
+                                    <button class="px-3 py-2 rounded-full bg-blue-100 text-gray-500 hover:bg-blue-600 hover:text-white transition duration-300 view-file" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="px-3 py-2 rounded-full bg-green-100 text-gray-600 hover:bg-green-600 hover:text-white transition duration-300 copy-file" title="Copy">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                    <button class="px-3 py-2 rounded-full bg-yellow-100 text-gray-600 hover:bg-yellow-600 hover:text-white transition duration-300 cut-file" title="Cut">
+                                        <i class="fas fa-cut"></i>
+                                    </button>
+                                    <button class="px-3 py-2 rounded-full bg-red-100 text-gray-600 hover:bg-red-600 transition hover:text-white duration-300 delete-file" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                    <button class="px-3 py-2 rounded-full bg-purple-100 text-gray-600 hover:bg-purple-600 transition hover:text-white duration-300 share-file" title="Share">
+                                        <i class="fas fa-share"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+
+                        fileContainer.appendChild(fileItem);
+                    });
+
+                } else {
+                    fileContainer.className = 'overflow-hidden rounded-lg border border-gray-200 shadow';
+                    
+                    // Create a wrapper div for horizontal scrolling
+                    const tableWrapper = document.createElement('div');
+                    tableWrapper.className = 'overflow-x-auto';
+                    
+                    const table = document.createElement('table');
+                    table.className = 'min-w-full divide-y divide-gray-200';
+                    
+                    const thead = document.createElement('thead');
+                    thead.className = 'bg-gray-50';
+                    thead.innerHTML = `
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">File Name</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Size</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Modified</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                            <th scope="col" class="relative px-6 py-3">
+                                <span class="sr-only">Actions</span>
+                            </th>
+                        </tr>
+                    `;
+                    
+                    const tbody = document.createElement('tbody');
+                    tbody.className = 'bg-white divide-y divide-gray-200';
+                    
+                    this.folders[this.currentFolder].files.forEach((file, index) => {
+                        const tr = document.createElement('tr');
+                        tr.className = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+                        
+                        const iconClass = this.getFileIconClass(file.type);
+                        const fileExtension = file.name.split('.').pop().toUpperCase();
+                        
+                        tr.innerHTML = `
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10 flex items-center justify-center rounded-lg bg-blue-50">
+                                        <i class="${iconClass} text-xl text-blue-600"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="text-sm font-medium text-gray-900">${file.name}</div>
+                                        <div class="text-sm text-gray-500">Last opened 2 days ago</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900">${file.size}</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900">Today</div>
+                                <div class="text-sm text-gray-500">13:45 PM</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                    ${fileExtension}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <div class="flex justify-end space-x-2">
+                                    <button class="px-3 py-2 rounded-full bg-blue-100 text-gray-500 hover:bg-blue-600 hover:text-white transition duration-300 view-file" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="px-3 py-2 rounded-full bg-green-100 text-gray-600 hover:bg-green-600 hover:text-white transition duration-300 copy-file" title="Copy">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                    <button class="px-3 py-2 rounded-full bg-yellow-100 text-gray-600 hover:bg-yellow-600 hover:text-white transition duration-300 cut-file" title="Cut">
+                                        <i class="fas fa-cut"></i>
+                                    </button>
+                                    <button class="px-3 py-2 rounded-full bg-red-100 text-gray-600 hover:bg-red-600 transition hover:text-white duration-300 delete-file" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                    <button class="px-3 py-2 rounded-full bg-purple-100 text-gray-600 hover:bg-purple-600 transition hover:text-white duration-300 share-file" title="Share">
+                                        <i class="fas fa-share"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        `;
+                        
+                        tbody.appendChild(tr);
+                    });
+                    
+                    table.appendChild(thead);
+                    table.appendChild(tbody);
+                    
+                    // Add the table to the wrapper, then the wrapper to the container
+                    tableWrapper.appendChild(table);
+                    fileContainer.appendChild(tableWrapper);
+                }
+            },
+
+            getFileIconClass(fileType) {
+                const iconMap = {
+                    pdf: 'fas fa-file-pdf',
+                    word: 'fas fa-file-word',
+                    powerpoint: 'fas fa-file-powerpoint',
+                    image: 'fas fa-file-image',
+                    default: 'fas fa-file'
+                };
+                return iconMap[fileType] || iconMap.default;
+            },
+
+            setupEventListeners() {
+                // Folder navigation
+                document.getElementById('folderList').addEventListener('click', (e) => {
+                    const folderItem = e.target.closest('[data-folder-id]');
+                    if (!folderItem) return;
+
+                    const folderId = folderItem.dataset.folderId;
+
+                    if (e.target.closest('.delete-folder')) {
+                        this.showDeleteModal('folder', this.folders[folderId].name);
+                    } else if (!e.target.closest('button')) {
+                        this.currentFolder = folderId;
+                        this.renderFolders();
+                        this.renderFiles();
+                    }
+                });
+
+                // File operations
+                document.getElementById('fileContainer').addEventListener('click', (e) => {
+                    const fileItem = e.target.closest('.group');
+                    if (!fileItem) return;
+
+                    let fileName;
+                    if (this.currentView === 'grid') {
+                        fileName = fileItem.querySelector('.text-lg.font-semibold').textContent;
+                    } else {
+                        fileName = fileItem.querySelector('.text-sm.font-medium.text-gray-900').textContent;
+                    }
+
+                    if (!fileName) return;
+
+                    if (e.target.closest('.view-file')) {
+                        this.viewFile(fileName);
+                    } else if (e.target.closest('.copy-file')) {
+                        this.copyFile(fileName);
+                    } else if (e.target.closest('.cut-file')) {
+                        this.cutFile(fileName);
+                    } else if (e.target.closest('.delete-file')) {
+                        this.showDeleteModal('file', fileName);
+                    }
+                });
+
+                // Folder operations
+                document.getElementById('folderList').addEventListener('click', (e) => {
+                    const folderItem = e.target.closest('[data-folder-id]');
+                    if (!folderItem) return;
+
+                    const folderId = folderItem.dataset.folderId;
+
+                    if (e.target.closest('.copy-folder')) {
+                        this.copyFolder(folderId);
+                    } else if (e.target.closest('.cut-folder')) {
+                        this.cutFolder(folderId);
+                    } else if (e.target.closest('.delete-folder')) {
+                        this.showDeleteModal('folder', this.folders[folderId].name);
+                    }
+                });
+
+                // Paste operation
+                document.getElementById('pasteBtn').addEventListener('click', () => this.pasteItem());
+
+                // Search functionality
+                document.getElementById('searchInput').addEventListener('input', (e) => {
+                    this.searchFiles(e.target.value);
+                });
+
+                // View toggle
+                document.getElementById('gridViewBtn').addEventListener('click', () => {
+                    this.currentView = 'grid';
+                    this.renderFiles();
+                });
+                document.getElementById('listViewBtn').addEventListener('click', () => {
+                    this.currentView = 'list';
+                    this.renderFiles();
+                });
+
+                // Modal handlers
+                this.setupModalHandlers();
+            },
+
+            setupModalHandlers() {
+                const addFolderModal = document.getElementById('addFolderModal');
+                const addFolderBtn = document.getElementById('addFolderBtn');
+                const cancelAddFolder = document.getElementById('cancelAddFolder');
+                const confirmAddFolder = document.getElementById('confirmAddFolder');
+                const newFolderName = document.getElementById('newFolderName');
+
+                addFolderBtn.addEventListener('click', () => {
+                    addFolderModal.classList.remove('hidden');
+                });
+
+                cancelAddFolder.addEventListener('click', () => {
+                    addFolderModal.classList.add('hidden');
+                    newFolderName.value = '';
+                });
+
+                confirmAddFolder.addEventListener('click', () => {
+                    const folderName = newFolderName.value.trim();
+                    if (folderName) {
+                        this.createNewFolder(folderName);
+                        addFolderModal.classList.add('hidden');
+                        newFolderName.value = '';
+                    }
+                });
+
+                // Delete Modal
+                const deleteModal = document.getElementById('deleteModal');
+                const cancelDelete = document.getElementById('cancelDelete');
+                const confirmDelete = document.getElementById('confirmDelete');
+                let deleteCallback = null;
+
+                cancelDelete.addEventListener('click', () => {
+                    deleteModal.classList.add('hidden');
+                    deleteCallback = null;
+                });
+
+                confirmDelete.addEventListener('click', () => {
+                    if (deleteCallback) {
+                        deleteCallback();
+                        deleteModal.classList.add('hidden');
+                    }
+                });
+            },
+
+            showDeleteModal(type, name) {
+                const deleteModal = document.getElementById('deleteModal');
+                const deleteMessage = document.getElementById('deleteMessage');
+                
+                deleteMessage.textContent = `Are you sure you want to delete the ${type} "${name}"?`;
+                
+                deleteModal.classList.remove('hidden');
+                
+                const callback = () => {
+                    if (type === 'folder') {
+                        this.deleteFolder(name);
+                    } else {
+                        this.deleteFile(name);
+                    }
+                };
+                
+                document.getElementById('confirmDelete').onclick = callback;
+            },
+
+            createNewFolder(folderName) {
+                const folderId = folderName.toLowerCase().replace(/\s+/g, '_');
+                if (this.folders[folderId]) {
+                    alert('A folder with this name already exists.');
+                    return;
+                }
+                this.folders[folderId] = { name: folderName, files: [] };
+                this.renderFolders();
+            },
+
+            copyFile(fileName) {
+                this.clipboard = { type: 'file', action: 'copy', item: fileName, sourceFolder: this.currentFolder };
+                this.updatePasteButton();
+            },
+
+            cutFile(fileName) {
+                this.clipboard = { type: 'file', action: 'cut', item: fileName, sourceFolder: this.currentFolder };
+                this.updatePasteButton();
+            },
+
+            copyFolder(folderId) {
+                if (folderId === 'root') {
+                    alert("The root folder cannot be copied.");
+                    return;
+                }
+                this.clipboard = { type: 'folder', action: 'copy', item: folderId };
+                this.updatePasteButton();
+            },
+
+            cutFolder(folderId) {
+                if (folderId === 'root') {
+                    alert("The root folder cannot be cut.");
+                    return;
+                }
+                if (folderId === this.currentFolder) {
+                    alert("You cannot cut the current folder.");
+                    return;
+                }
+                this.clipboard = { type: 'folder', action: 'cut', item: folderId };
+                this.updatePasteButton();
+            },
+
+            pasteItem() {
+                if (!this.clipboard) return;
+
+                if (this.clipboard.type === 'file') {
+                    this.pasteFile();
+                } else if (this.clipboard.type === 'folder') {
+                    this.pasteFolder();
+                }
+
+                if (this.clipboard.action === 'cut') {
+                    this.clipboard = null;
+                }
+                
+                this.updatePasteButton();
+                this.renderFolders();
+                this.renderFiles();
+            },
+
+            pasteFile() {
+                const { sourceFolder, item } = this.clipboard;
+                if (sourceFolder === this.currentFolder) return;
+
+                const sourceFiles = this.folders[sourceFolder].files;
+                const targetFiles = this.folders[this.currentFolder].files;
+                const fileToPaste = sourceFiles.find(f => f.name === item);
+                
+                if (!fileToPaste) return;
+
+                // Check for naming conflict
+                let newFileName = fileToPaste.name;
+                let counter = 1;
+                while (targetFiles.some(f => f.name === newFileName)) {
+                    const [name, ext] = fileToPaste.name.split('.');
+                    newFileName = `${name} (${counter}).${ext}`;
+                    counter++;
+                }
+
+                const newFile = { ...fileToPaste, name: newFileName };
+                targetFiles.push(newFile);
+
+                if (this.clipboard.action === 'cut') {
+                    this.folders[sourceFolder].files = sourceFiles.filter(f => f.name !== item);
+                }
+            },
+
+            pasteFolder() {
+                const sourceFolderId = this.clipboard.item;
+                if (sourceFolderId === this.currentFolder) return;
+
+                let newFolderId = sourceFolderId;
+                let counter = 1;
+                while (this.folders[newFolderId]) {
+                    newFolderId = `${sourceFolderId}_${counter}`;
+                    counter++;
+                }
+
+                const sourceFolder = this.folders[sourceFolderId];
+                this.folders[newFolderId] = {
+                    name: counter > 1 ? `${sourceFolder.name} (${counter - 1})` : sourceFolder.name,
+                    files: [...sourceFolder.files]
+                };
+
+                if (this.clipboard.action === 'cut') {
+                    delete this.folders[sourceFolderId];
+                }
+            },
+
+            viewFile(fileName) {
+                const file = this.folders[this.currentFolder].files.find(f => f.name === fileName);
+                if (!file) return;
+                
+                // In a real application, this would open the file or show a preview
+                alert(`Viewing ${fileName}\nSize: ${file.size}\nType: ${file.type}`);
+            },
+
+            deleteFile(fileName) {
+                this.folders[this.currentFolder].files = this.folders[this.currentFolder].files.filter(f => f.name !== fileName);
+                this.renderFiles();
+            },
+
+            deleteFolder(folderName) {
+                const folderId = Object.keys(this.folders).find(key => this.folders[key].name === folderName);
+                if (folderId && folderId !== 'root') {
+                    delete this.folders[folderId];
+                    this.renderFolders();
+                    if (this.currentFolder === folderId) {
+                        this.currentFolder = 'root';
+                        this.renderFiles();
+                    }
+                    console.log("Folder structure after deletion:", this.folders);
+                }
+            },
+
+            searchFiles(searchTerm) {
+                const fileContainer = document.getElementById('fileContainer');
+                const files = fileContainer.querySelectorAll('.group');
+                
+                searchTerm = searchTerm.toLowerCase();
+                
+                files.forEach(file => {
+                    const fileName = file.querySelector('.text-gray-900').textContent.toLowerCase();
+                    if (fileName.includes(searchTerm)) {
+                        file.classList.remove('hidden');
+                    } else {
+                        file.classList.add('hidden');
+                    }
+                });
+            },
+
+            updatePasteButton() {
+                const pasteBtn = document.getElementById('pasteBtn');
+                if (this.clipboard) {
+                    pasteBtn.classList.remove('hidden');
+                    const actionText = this.clipboard.action === 'cut' ? 'Move' : 'Copy';
+                    const itemType = this.clipboard.type === 'file' ? 'File' : 'Folder';
+                    pasteBtn.innerHTML = `<i class="fas fa-paste mr-2"></i>${actionText} ${itemType}`;
+                } else {
+                    pasteBtn.classList.add('hidden');
+                }
+            },
+
+            setupFileUpload() {
+                const addFileBtn = document.getElementById('addFileBtn');
+                const fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.style.display = 'none';
+                document.body.appendChild(fileInput);
+
+                addFileBtn.addEventListener('click', () => {
+                    fileInput.click();
+                });
+
+                fileInput.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        console.log(`Selected file: ${file}`);
+                        this.addNewFile(file);
+                        fileInput.value = ''; 
+                    }
+                });
+            },
+
+            addNewFile(file) {
+                const fileSize = this.formatFileSize(file.size);
+                const fileType = this.getFileType(file.name);
+                
+                const newFile = {
+                    name: file.name,
+                    size: fileSize,
+                    type: fileType
+                };
+
+                let counter = 1;
+                while (this.folders[this.currentFolder].files.some(f => f.name === newFile.name)) {
+                    const [name, ext] = file.name.split('.');
+                    newFile.name = `${name} (${counter}).${ext}`;
+                    counter++;
+                }
+
+                this.folders[this.currentFolder].files.push(newFile);
+                this.renderFiles();
+                console.log("File uploaded:", newFile);
+                console.log("Current folder structure:", this.folders);
+            },
+
+            formatFileSize(bytes) {
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                if (bytes === 0) return '0 Byte';
+                const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+                return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+            },
+
+            getFileType(fileName) {
+                const extension = fileName.split('.').pop().toLowerCase();
+                const typeMap = {
+                    pdf: 'pdf',
+                    doc: 'word', docx: 'word',
+                    ppt: 'powerpoint', pptx: 'powerpoint',
+                    jpg: 'image', jpeg: 'image', png: 'image', gif: 'image'
+                };
+                return typeMap[extension] || 'default';
+            }
+        };
+
+        // Initialize the file manager when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            fileManager.init();
+        });
+    </script>
+</body>
+</html>

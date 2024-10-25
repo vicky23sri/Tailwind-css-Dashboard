@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Property Info</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap');
+
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #f0b67f;
+            --accent-color: #d6e0f0;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            background-color: var(--white);
+            overflow: hidden;
+        }
+
+        .header {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .logo {
+            max-width: 150px;
+            height: auto;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .property-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .property-info {
+            padding: 20px;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-item {
+            background-color: var(--light-bg);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+
+        .info-item strong {
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .review-button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            text-align: center;
+        }
+
+        .review-button:hover {
+            background-color: #0532c7;
+        }
+
+        .message-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .message-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .signature {
+            margin-top: 20px;
+            font-style: italic;
+        }
+
+        .security-notice {
+            margin-top: 30px;
+            font-size: 0.8em;
+            color: #666;
+            text-align: center;
+            font-style: italic;
+            padding: 10px;
+            background-color: var(--light-bg);
+            border-radius: 5px;
+        }
+
+        .footer {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer-links {
+            margin-top: 15px;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 0.9em;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.8;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                max-width: 750px;
+                margin: 40px auto;
+                border-radius: 15px;
+                overflow: hidden;
+            }
+
+            .hero-image {
+                height: 300px;
+            }
+
+            .info-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            h1 {
+                font-size: 2.2em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="http://localhost:8000/images/logo.png" alt="Company Logo" class="logo">
+        </div>
+        <div class="content">
+            <div class="property-card">
+                <img src="https://img.freepik.com/free-photo/paper-clip-mail-file-attachment-graphic_53876-125402.jpg?t=st=1729146847~exp=1729150447~hmac=ae481060d5c999686c309e68bf378339027a41692c675ee365b2f1ff1cd6d5e1&w=1380" alt="Property Image" class="hero-image">
+                <div class="property-info">
+                    <h1>Exclusive Property Showcase</h1>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <strong>Shared by</strong>
+                            <span>Rodney Rodr</span>
+                        </div>
+                        <div class="info-item">
+                            <strong>Address</strong>
+                            <span>1790 Rawhide Drive</span>
+                        </div>
+                        <div class="info-item">
+                            <strong>Location</strong>
+                            <span>Arnold, CA</span>
+                        </div>
+                    </div>
+                    <a href="http://localhost:5174/shareDocuments" class="review-button">
+                        View Documents Details
+                    </a>
+                </div>
+            </div>
+
+            <div class="message-card">
+                <h3>Message from Rodney Rodr</h3>
+                <p>Dear [Customer Name],</p>
+                <p>Please review this Property Info packet for 1790 Rawhide Drive. If you have any additional questions
+                    about the property or if you'd like to discuss making an offer, let me know.</p>
+                <p>Please do not forward this email, the link is specific to you.</p>
+                <p>If you have any questions, I'm here to help you!</p>
+                <div class="signature">
+                    <p>Best regards,</p>
+                    <p><strong>Rodney Rodr</strong></p>
+                </div>
+            </div>
+
+            <p class="security-notice">This document contains confidential information intended solely for the
+                recipient. Unauthorized distribution is strictly prohibited.</p>
+        </div>
+        <div class="footer">
+            <img src="http://localhost:8000/images/logo.png" alt="Company Logo" class="logo">
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact Us</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

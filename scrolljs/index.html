@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link
+            href="https://cdn.jsdelivr.net/gh/yesiamrocks/cssanimation.io@1.0.3/cssanimation.min.css"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <section
+            data-scrolly-top="background-position: 50% 0%;"
+            data-scrolly-bottom="background-position: 50% 50%;"
+            class="min-h-screen bg-fixed bg-center bg-no-repeat bg-cover relative flex items-center justify-center"
+            style="background-image: url('/api/placeholder/1920/1080')"
+        >
+        <div class="absolute inset-0 bg-black/50"></div>
+        <div class="relative z-10 text-center max-w-4xl mx-auto px-4">
+            <h1
+                data-scrolly-top="opacity: 1; transform: translateY(0px);"
+                data-scrolly-bottom="opacity: 0; transform: translateY(-100px);"
+                class="text-5xl md:text-7xl font-bold text-white mb-6"
+            >
+            Welcome to the Future
+            </h1>
+            <p
+                data-scrolly-top="opacity: 1; transform: translateY(0px);"
+                data-scrolly-bottom="opacity: 0; transform: translateY(100px);"
+                class="text-xl text-white/90 mb-8"
+            >
+                Experience innovation through stunning scroll animations
+            </p>
+        </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="py-20 bg-gray-800">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2
+                class="text-4xl md:text-5xl font-bold text-white text-center mb-16"
+                data-scrolly-top="opacity: 0; transform: translateY(100px);"
+                data-scrolly="opacity: 1; transform: translateY(0px);"
+            >
+            Our Services
+            </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Feature Cards -->
+            <div
+                class="bg-gray-700 rounded-xl p-8 transform transition-all duration-300 hover:-translate-y-2"
+                data-scrolly-top="opacity: 0; transform: translateX(-100px);"
+                data-scrolly="opacity: 1; transform: translateX(0px);"
+            >
+                <div
+                    class="h-16 w-16 bg-blue-500 rounded-lg flex items-center justify-center mb-6"
+                >
+                <svg
+                    class="w-8 h-8 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    ></path>
+                </svg>
+                </div>
+                <h3 class="text-2xl font-semibold text-white mb-4">Web Design</h3>
+                <p class="text-gray-300">
+                Creating beautiful and functional websites that captivate your
+                audience.
+                </p>
+            </div>
+
+            <div
+                class="bg-gray-700 rounded-xl p-8 transform transition-all duration-300 hover:-translate-y-2"
+                data-scrolly-top="opacity: 0; transform: translateY(100px);"
+                data-scrolly="opacity: 1; transform: translateY(0px);"
+            >
+                <div
+                class="h-16 w-16 bg-purple-500 rounded-lg flex items-center justify-center mb-6"
+                >
+                <svg
+                    class="w-8 h-8 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                    ></path>
+                </svg>
+                </div>
+                <h3 class="text-2xl font-semibold text-white mb-4">Development</h3>
+                <p class="text-gray-300">
+                Building robust applications that scale with your business needs.
+                </p>
+            </div>
+
+            <div
+                class="bg-gray-700 rounded-xl p-8 transform transition-all duration-300 hover:-translate-y-2"
+                data-scrolly-top="opacity: 0; transform: translateX(100px);"
+                data-scrolly="opacity: 1; transform: translateX(0px);"
+            >
+                <div
+                class="h-16 w-16 bg-pink-500 rounded-lg flex items-center justify-center mb-6"
+                >
+                <svg
+                    class="w-8 h-8 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"
+                    ></path>
+                </svg>
+                </div>
+                <h3 class="text-2xl font-semibold text-white mb-4">UI/UX Design</h3>
+                <p class="text-gray-300">
+                    Crafting intuitive user experiences that delight your customers.
+                </p>
+            </div>
+            </div>
+        </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section class="py-20 bg-gray-900">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2
+                class="text-4xl md:text-5xl font-bold text-white text-center mb-16"
+                data-scrolly-top="opacity: 0; transform: scale(0.8);"
+                data-scrolly="opacity: 1; transform: scale(1);"
+            >
+            Our Latest Work
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div
+                class="relative overflow-hidden rounded-xl group"
+                data-scrolly-top="opacity: 0; transform: rotateY(-30deg);"
+                data-scrolly="opacity: 1; transform: rotateY(0deg);"
+            >
+                <img
+                    src="/api/placeholder/600/400"
+                    alt="Project 1"
+                    class="w-full transition-transform duration-500 group-hover:scale-110"
+                />
+                <div
+                    class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+                >
+                <div class="text-white text-center">
+                    <h3 class="text-2xl font-bold mb-2">Project Alpha</h3>
+                    <p class="text-lg">Web Development</p>
+                </div>
+                </div>
+            </div>
+            <div
+                class="relative overflow-hidden rounded-xl group"
+                data-scrolly-top="opacity: 0; transform: rotateY(30deg);"
+                data-scrolly="opacity: 1; transform: rotateY(0deg);"
+            >
+                <img
+                    src="/api/placeholder/600/400"
+                    alt="Project 2"
+                    class="w-full transition-transform duration-500 group-hover:scale-110"
+                />
+                <div
+                    class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+                >
+                <div class="text-white text-center">
+                    <h3 class="text-2xl font-bold mb-2">Project Beta</h3>
+                    <p class="text-lg">UI/UX Design</p>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="min-h-screen bg-gray-800 flex items-center justify-center">
+        <div
+            class="max-w-4xl mx-auto text-center px-4"
+            data-scrolly-top="opacity: 0; transform: translateY(100px);"
+            data-scrolly="opacity: 1; transform: translateY(0px);"
+        >
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-8">
+                Get in Touch
+            </h2>
+            <p class="text-xl text-gray-300 mb-12">
+                Ready to start your next project? We'd love to hear from you!
+            </p>
+            <a
+            href="#"
+                class="inline-block bg-blue-500 text-white font-semibold px-8 py-4 rounded-lg hover:bg-blue-600 transition-colors duration-300"
+            >
+            Contact Us
+            </a>
+        </div>
+        </section>
+        <script type="text/javascript" src="/scrolljs/index.js"></script>
+        <script>
+            // Initialize Scrolly
+            document.addEventListener('DOMContentLoaded', function() {
+                const scrolly = new Scrolly();
+                scrolly.init({
+                    easing: 'easeInOutQuad',
+                    duration: 1000,
+                    triggerHook: 0.8
+                });
+            });
+        </script>
+    </body>
+</html>
