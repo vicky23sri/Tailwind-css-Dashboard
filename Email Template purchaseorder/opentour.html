@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxurious Property Tour Emails</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a5f7a;
+            --secondary-color: #135d7c;
+            --accent-color: #2c9ab7;
+            --text-color: #2c3e50;
+            --background-color: #f4f7f9;
+            --gradient-primary: linear-gradient(135deg, #1a5f7a, #135d7c);
+            --gradient-success: linear-gradient(135deg, #4CAF50, #2E7D32);
+            --gradient-danger: linear-gradient(135deg, #f44336, #d32f2f);
+            --soft-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', 'Roboto', Arial, sans-serif;
+            line-height: 1.7;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 15px;
+        }
+
+        .email-wrapper {
+            width: 600px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--soft-shadow);
+            overflow: hidden;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .email-wrapper:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        }
+
+        .email-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .logo {
+            max-width: 200px;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+        }
+
+        .header-title {
+            font-size: 2em;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .email-content {
+            padding: 40px;
+        }
+
+        .property-details {
+            background: linear-gradient(to right, #f8f9fa, #f1f3f5);
+            border-left: 8px solid var(--accent-color);
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .property-details h2 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            font-size: 1.6em;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+        }
+
+        .property-detail-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            background: rgba(45, 156, 219, 0.05);
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .property-detail-item i {
+            color: var(--accent-color);
+            margin-right: 15px;
+            font-size: 1.3em;
+            min-width: 35px;
+            text-align: center;
+        }
+
+        .action-section {
+            background-color: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            display: inline-block;
+            padding: 15px 25px;
+            text-decoration: none;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-confirm {
+            background: var(--gradient-success);
+            color: white;
+        }
+
+        .btn-reject {
+            background: var(--gradient-danger);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .email-footer {
+            background: var(--secondary-color);
+            color: rgba(255,255,255,0.8);
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+
+        .confirmation-header {
+            background: var(--gradient-success);
+        }
+
+        .rejection-header {
+            background: var(--gradient-danger);
+        }
+
+        .email-content h3 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+        }
+
+        .email-content ul {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        .email-content ul li {
+            position: relative;
+            padding-left: 40px;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        .email-content ul li::before {
+            content: '\f058';  
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            color: var(--accent-color);
+            font-size: 1.2em;
+        }
+
+        .email-content ul li:last-child {
+            margin-bottom: 0;
+        }
+
+        @media screen and (max-width: 650px) {
+            .email-wrapper {
+                width: 95%;
+                margin: 20px auto;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Open House Invitation Template -->
+    <!-- Buyer's Confirmation Email -->
+    <div class="email-wrapper">
+        <div class="email-header ">
+            <img src="https://privateopenhouse.com/images/logo.png" alt="PrivateOpenHouseInc" class="logo">
+            <h1 class="header-title">Your Private Property Tour</h1>
+        </div>
+        <div class="email-content">
+            <div class="property-details">
+                <h2>Tour Confirmation Details</h2>
+                <div class="property-detail-item">
+                    <i class="fas fa-home"></i>
+                    <span>Luxe Panorama Residence</span>
+                </div>
+                <div class="property-detail-item">
+                    <i class="far fa-calendar-check"></i>
+                    <span>Wednesday, July 24, 2024 | 10:00 AM</span>
+                </div>
+                <div class="property-detail-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>123 Scenic Boulevard, Prestigious City</span>
+                </div>
+            </div>
+
+            <p>Dear Emily Rodriguez,</p>
+
+            <p>We are delighted to confirm your exclusive private tour of the Luxe Panorama Residence. This is an incredible opportunity to explore a truly exceptional property that matches your unique preferences.</p>
+
+            <h3>What to Expect</h3>
+            <ul>
+                <li>Personalized tour led by our experienced agent</li>
+                <li>Comprehensive property walkthrough</li>
+                <li>Detailed insights into property features and neighborhood</li>
+                <li>Opportunity to ask questions and discuss potential next steps</li>
+            </ul>
+
+            <h3>Preparation Tips</h3>
+            <ul>
+                <li>Arrive 15 minutes before the scheduled time</li>
+                <li>Bring a valid photo ID</li>
+                <li>Wear comfortable shoes for property exploration</li>
+                <li>Bring a notepad or digital device for taking notes</li>
+            </ul>
+        </div>
+        <div class="email-footer">
+            © 2024 PrivateOpenHouseInc
+        </div>
+    </div>
+
+    <!-- Buyer's Agent Confirmation Email -->
+    <div class="email-wrapper">
+        <div class="email-header ">
+            <img src="https://privateopenhouse.com/images/logo.png" alt="PrivateOpenHouseInc" class="logo">
+            <h1 class="header-title">Private Tour Coordination</h1>
+        </div>
+        <div class="email-content">
+            <div class="property-details">
+                <h2>Tour Logistics</h2>
+                <div class="property-detail-item">
+                    <i class="fas fa-home"></i>
+                    <span>Luxe Panorama Residence</span>
+                </div>
+                <div class="property-detail-item">
+                    <i class="far fa-calendar-check"></i>
+                    <span>Wednesday, July 24, 2024 | 10:00 AM</span>
+                </div>
+                <div class="property-detail-item">
+                    <i class="fas fa-user"></i>
+                    <span>Client: Emily Rodriguez</span>
+                </div>
+            </div>
+
+            <p>Dear David Chen,</p>
+
+            <p>We are writing to confirm the private tour details for your client, Emily Rodriguez, for the Luxe Panorama Residence scheduled on Wednesday, July 24, 2024, at 10:00 AM.</p>
+
+            <h3>Agent Coordination Details</h3>
+            <ul>
+                <li>Selling Agent: Michael Thompson</li>
+                <li>Contact Number: (555) 456-7890</li>
+                <li>Email: michael.thompson@eliterealestate.com</li>
+            </ul>
+
+            <h3>Client Preparation</h3>
+            <p>We recommend preparing your client with the following information:</p>
+            <ul>
+                <li>Property features and unique selling points</li>
+                <li>Potential questions to ask during the tour</li>
+                <li>Current market comparables in the area</li>
+                <li>Financing and offer strategy discussions</li>
+            </ul>
+
+            <p>Please ensure your client arrives 15 minutes before the scheduled tour time. If you have any special requirements or need additional information, don't hesitate to contact our team.</p>
+
+            <div class="action-section">
+                <div class="action-buttons">
+                    <a href="#" class="btn btn-confirm">Download Tour Details</a>
+                    <a href="#" class="btn btn-reject">Contact Selling Agent</a>
+                </div>
+            </div>
+        </div>
+        <div class="email-footer">
+            © 2024 PrivateOpenHouseInc
+        </div>
+    </div>
+
+    <!-- Private Tour Confirmation Template -->
+    <div class="email-wrapper">
+        <div class="email-header ">
+            <img src="https://privateopenhouse.com/images/logo.png" alt="PrivateOpenHouseInc" class="logo">
+            <h1 class="header-title">Private Tour Confirmed</h1>
+        </div>
+        <div class="email-content">
+            <div class="property-details">
+                <h2>Exclusive Private Tour Details</h2>
+                <div class="property-detail-item">
+                    <i class="fas fa-home"></i>
+                    <span>Luxe Panorama Residence</span>
+                </div>
+                <div class="property-detail-item">
+                    <i class="far fa-calendar-check"></i>
+                    <span>Wednesday, July 24, 2024 | 10:00 AM</span>
+                </div>
+                <div class="property-detail-item">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Agent: Michael Thompson</span>
+                </div>
+            </div>
+
+            <p>Congratulations! Your private tour has been successfully confirmed. Our dedicated agent is looking forward to providing you with a personalized walkthrough of this exceptional property.</p>
+<!-- 
+            <div class="action-section">
+                <div class="action-buttons">
+                    <a href="#" class="btn btn-confirm">Add to Calendar</a>
+                    <a href="#" class="btn btn-reject">Contact Agent</a>
+                </div>
+            </div> -->
+        </div>
+        <div class="email-footer">
+            © 2024 PrivateOpenHouseInc
+        </div>
+    </div>
+
+    <!-- Tour Rejection Template -->
+    <div class="email-wrapper">
+        <div class="email-header rejection-header">
+            <img src="https://privateopenhouse.com/images/logo.png" alt="PrivateOpenHouseInc" class="logo">
+            <h1 class="header-title">Tour Request Unavailable</h1>
+        </div>
+        <div class="email-content">
+            <div class="property-details">
+                <h2>Request Update</h2>
+                <div class="property-detail-item">
+                    <i class="fas fa-calendar-times"></i>
+                    <span>Requested Date: July 24, 2024</span>
+                </div>
+                <div class="property-detail-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Requested Time: 10:00 AM</span>
+                </div>
+            </div>
+
+            <p>We apologize for the inconvenience. The requested tour time is currently unavailable. Our dedicated team is committed to finding the perfect solution for you.</p>
+
+            <!-- <div class="action-section">
+                <div class="action-buttons">
+                    <a href="#" class="btn btn-confirm">Explore Alternatives</a>
+                    <a href="#" class="btn btn-reject">Contact Support</a>
+                </div>
+            </div> -->
+        </div>
+        <div class="email-footer">
+            © 2024 PrivateOpenHouseInc 
+        </div>
+    </div>
+</body>
+</html>
