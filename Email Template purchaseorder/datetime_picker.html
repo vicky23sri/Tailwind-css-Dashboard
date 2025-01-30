@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced DateTime Picker</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-50 min-h-screen p-6">
+    <div class="max-w-4xl mx-auto">
+        <!-- Main Input Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <!-- Start Time Card -->
+            <div class="bg-white rounded-xl shadow-lg p-4 hover:shadow-xl transition-shadow duration-300">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Start Time</label>
+                <input type="text" id="startTimeInput" 
+                    class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
+                    placeholder="Select start time">
+            </div>
+
+            <!-- End Time Card -->
+            <div class="bg-white rounded-xl shadow-lg p-4 hover:shadow-xl transition-shadow duration-300">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">End Time</label>
+                <input type="text" id="endTimeInput" 
+                    class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
+                    placeholder="Select end time">
+            </div>
+        </div>
+
+        <!-- Selection Panel -->
+        <div id="selectionPanel" class="hidden">
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-2">
+                    <!-- Left side - Calendar -->
+                    <div class="p-6 border-r border-gray-100">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Select Date</h3>
+                        <div id="calendar" class="bg-gray-50 rounded-lg p-2"></div>
+                    </div>
+
+                    <!-- Right side - Time Selection -->
+                    <div class="p-6">
+                        <div class="mb-6">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">Select Start Time</h3>
+                            <div class="grid grid-cols-4 gap-2 max-h-[200px] overflow-y-auto" id="startTimeSlots">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">Select End Time</h3>
+                            <div class="grid grid-cols-4 gap-2 max-h-[200px] overflow-y-auto" id="endTimeSlots">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Selected Range Display -->
+        <div id="selectedRange" class="hidden">
+            <div class="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-lg p-6 text-white mb-6">
+                <h3 class="text-lg font-semibold mb-3">Selected Time Range</h3>
+                <div id="rangeDisplay" class="space-y-2 text-white/90"></div>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button id="submitBtn" 
+            class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 px-6 rounded-xl
+            hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 
+            focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg
+            hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5">
+            Confirm Schedule
+        </button>
+    </div>
+
+    <script>
+        let selectedDate = null;
+        let selectedStartHour = null;
+        let selectedEndHour = null;
+        let selectedStartMinute = 0;
+        let selectedEndMinute = 0;
+
+        // Initialize flatpickr
+        const fpInstance = flatpickr("#calendar", {
+            inline: true,
+            dateFormat: "Y-m-d",
+            minDate: "today",
+            onChange: function(selectedDates) {
+                selectedDate = selectedDates[0];
+                updateTimeSlots();
+                updateDisplay();
+            }
+        });
+
+        function createTimeButton(hour, minute, isStartTime = true) {
+            const timeSlot = document.createElement('button');
+            const timeString = formatTimeString(hour, minute);
+            
+            timeSlot.className = `
+                p-2 text-sm font-medium rounded-lg border border-gray-200
+                hover:bg-gradient-to-r hover:from-blue-500 hover:to-indigo-500 
+                hover:text-white hover:border-transparent
+                focus:outline-none focus:ring-2 focus:ring-blue-500
+                transition-all duration-200
+            `;
+            timeSlot.textContent = timeString;
+            
+            timeSlot.addEventListener('click', () => {
+                if (isStartTime) {
+                    selectStartTime(timeSlot, hour, minute);
+                } else {
+                    selectEndTime(timeSlot, hour, minute);
+                }
+            });
+            
+            return timeSlot;
+        }
+
+        function formatTimeString(hour, minute) {
+            const hour12 = hour % 12 || 12;
+            const ampm = hour < 12 ? 'AM' : 'PM';
+            return `${hour12}:${minute.toString().padStart(2, '0')} ${ampm}`;
+        }
+
+        function updateTimeSlots() {
+            const startContainer = document.getElementById('startTimeSlots');
+            const endContainer = document.getElementById('endTimeSlots');
+            startContainer.innerHTML = '';
+            endContainer.innerHTML = '';
+            
+            // Create time slots from 8 AM to 9 PM
+            for (let hour = 8; hour <= 21; hour++) {
+                startContainer.appendChild(createTimeButton(hour, 0, true));
+                startContainer.appendChild(createTimeButton(hour, 30, true));
+            }
+            
+            updateEndTimeSlots();
+        }
+
+        function updateEndTimeSlots() {
+            const endContainer = document.getElementById('endTimeSlots');
+            endContainer.innerHTML = '';
+            
+            if (selectedStartHour !== null) {
+                let startHour = selectedStartHour;
+                let startMinute = selectedStartMinute || 0;
+                
+                for (let hour = startHour; hour <= 22; hour++) {
+                    if (hour === startHour) {
+                        // For the first hour, only show times after the start time
+                        if (startMinute === 0) {
+                            endContainer.appendChild(createTimeButton(hour, 30, false));
+                        }
+                    } else {
+                        endContainer.appendChild(createTimeButton(hour, 0, false));
+                        endContainer.appendChild(createTimeButton(hour, 30, false));
+                    }
+                }
+            }
+        }
+
+        function selectStartTime(element, hour, minute) {
+            document.querySelectorAll('#startTimeSlots button').forEach(btn => {
+                btn.classList.remove('bg-gradient-to-r', 'from-blue-500', 'to-indigo-500', 'text-white');
+            });
+
+            element.classList.add('bg-gradient-to-r', 'from-blue-500', 'to-indigo-500', 'text-white');
+
+            selectedStartHour = hour;
+            selectedStartMinute = minute;
+            selectedEndHour = null;
+            selectedEndMinute = null;
+            updateEndTimeSlots();
+            updateDisplay();
+        }
+
+        function selectEndTime(element, hour, minute) {
+            document.querySelectorAll('#endTimeSlots button').forEach(btn => {
+                btn.classList.remove('bg-gradient-to-r', 'from-blue-500', 'to-indigo-500', 'text-white');
+            });
+
+            element.classList.add('bg-gradient-to-r', 'from-blue-500', 'to-indigo-500', 'text-white');
+
+            selectedEndHour = hour;
+            selectedEndMinute = minute;
+            updateDisplay();
+        }
+
+        function createDateTime(date, hour, minute) {
+            const dt = new Date(date);
+            dt.setHours(hour, minute, 0, 0);
+            return dt;
+        }
+
+        function formatDateTime(date, hour, minute) {
+            const dt = createDateTime(date, hour, minute);
+            
+            // For display - use local time
+            const displayTime = dt.toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            });
+
+            // For API - use ISO string and handle timezone offset
+            const utcDt = new Date(dt.getTime() - dt.getTimezoneOffset() * 60000);
+            const isoString = utcDt.toISOString().slice(0, 16);
+            const timestamp = Math.floor(utcDt.getTime() / 1000);
+
+            return {
+                display: displayTime,
+                iso: isoString,
+                timestamp: timestamp
+            };
+        }
+
+        function updateDisplay() {
+            if (selectedDate && selectedStartHour !== null) {
+                const startInfo = formatDateTime(selectedDate, selectedStartHour, selectedStartMinute);
+                document.getElementById('startTimeInput').value = startInfo.display;
+
+                if (selectedEndHour !== null) {
+                    const endInfo = formatDateTime(selectedDate, selectedEndHour, selectedEndMinute);
+                    document.getElementById('endTimeInput').value = endInfo.display;
+
+                    document.getElementById('selectedRange').classList.remove('hidden');
+                    document.getElementById('rangeDisplay').innerHTML = `
+                        <p><span class="font-semibold">Start:</span> ${startInfo.display}</p>
+                        <p><span class="font-semibold">End:</span> ${endInfo.display}</p>
+                    `;
+                }
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('submitBtn').addEventListener('click', async () => {
+            if (!selectedDate || selectedStartHour === null || selectedEndHour === null) {
+                alert('Please select both start and end times');
+                return;
+            }
+
+            const startInfo = formatDateTime(selectedDate, selectedStartHour, selectedStartMinute);
+            const endInfo = formatDateTime(selectedDate, selectedEndHour, selectedEndMinute);
+
+            const payload = {
+                event_start: startInfo.iso,
+                event_start_timestamp: startInfo.timestamp,
+                event_end: endInfo.iso,
+                event_end_timestamp: endInfo.timestamp
+            };
+
+            console.log('Payload:', payload);
+
+            try {
+                const response = await fetch('YOUR_API_ENDPOINT', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    alert('Schedule submitted successfully!');
+                    // Reset selections
+                    selectedStartHour = null;
+                    selectedEndHour = null;
+                    selectedStartMinute = null;
+                    selectedEndMinute = null;
+                    fpInstance.clear();
+                    document.getElementById('selectedRange').classList.add('hidden');
+                    document.getElementById('startTimeInput').value = '';
+                    document.getElementById('endTimeInput').value = '';
+                    document.getElementById('selectionPanel').classList.add('hidden');
+                } else {
+                    throw new Error('Failed to submit schedule');
+                }
+            } catch (error) {
+                alert('Error submitting schedule. Please try again.');
+                console.error('Error:', error);
+            }
+        });
+
+        // Show selection panel when inputs are clicked
+        document.getElementById('startTimeInput').addEventListener('click', () => {
+            document.getElementById('selectionPanel').classList.remove('hidden');
+        });
+
+        document.getElementById('endTimeInput').addEventListener('click', () => {
+            document.getElementById('selectionPanel').classList.remove('hidden');
+        });
+
+        // Initialize time slots
+        updateTimeSlots();
+    </script>
+</body>
+</html>
